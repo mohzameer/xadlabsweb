@@ -1,0 +1,24 @@
+title: XADLabs
+description: Innovative technology solutions for the modern world
+url: "https://xadlabs.com"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: Kramdown
+  hard_wrap: false
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Site settings
+brand: XADLabs
+email: zameermfm@gmail.com
+logo: /assets/images/logo.png
+
+# Collections
+collections:
+  products:
+    output: true
+
