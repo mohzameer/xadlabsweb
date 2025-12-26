@@ -32,14 +32,22 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
       
-      - name: Build with Jekyll
+      - name: Update baseurl in config
         run: |
           BASE_PATH="${{ steps.pages.outputs.base_path }}"
           if [ -z "$BASE_PATH" ] || [ "$BASE_PATH" == "/" ]; then
-            bundle exec jekyll build
+            # Empty baseurl for root deployment
+            sed -i 's|^baseurl:.*|baseurl: ""|' _config.yml
           else
-            bundle exec jekyll build --baseurl "$BASE_PATH"
+            # Ensure baseurl starts with / and doesn't end with /
+            BASE_PATH=$(echo "$BASE_PATH" | sed 's|^/*||' | sed 's|/*$||')
+            sed -i "s|^baseurl:.*|baseurl: \"/$BASE_PATH\"|" _config.yml
           fi
+          echo "Updated baseurl in _config.yml"
+          cat _config.yml | grep baseurl
+      
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
       
