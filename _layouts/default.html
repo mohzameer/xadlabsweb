@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="{{ '/' | relative_url }}" class="logo">
+                    {% if site.logo %}
+                        <img src="{{ site.logo | relative_url }}" alt="{{ site.brand }}" class="logo-img">
+                    {% else %}
+                        <span class="logo-text">{{ site.brand }}</span>
+                    {% endif %}
+                </a>
+                <nav class="main-nav">
+                    <a href="{{ '/' | relative_url }}">Home</a>
+                    <a href="{{ '/posts.html' | relative_url }}">Posts</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {{ content }}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ 'now' | date: "%Y" }} {{ site.brand }}. All rights reserved.</p>
+            <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+        </div>
+    </footer>
+</body>
+</html>
