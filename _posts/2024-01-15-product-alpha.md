@@ -1,58 +1,20 @@
 ---
 layout: post
-title: "Product Alpha - Enterprise Cloud Platform"
-date: 2024-01-15
+title: "ThinkPost - An AI free thinking tool"
+date: 2025-12-28
 category: product
-preview: "A comprehensive cloud platform designed for enterprise-level businesses seeking scalable, secure, and efficient cloud infrastructure solutions."
-image: /assets/images/product-alpha.jpg
+preview: "ThinkPost is an AI sans text editor and a drawing tool for thinking"
 ---
 
-# Product Alpha - Enterprise Cloud Platform
+# ThinkPost - AI sans text editor and a drawing tool for thinking
 
-Product Alpha is our flagship enterprise cloud platform, designed to revolutionize how businesses manage their infrastructure. Built with scalability and security at its core, Alpha provides everything your organization needs to thrive in the digital age.
+I wanted a tool to have text editing on one side and drawing on the other to think through ideas easily. I usually think with writing as well as drawing. The only tool that came close is eraser.io and that wasn't general purpose. So I had to build my own. I have let it free for now, as I dont have any running costs. I did not want AI pomps anywhere near this app as I believe we need spaces without gen AI and it doesn't add any value to this app. If I wanted an AI, I would just open Grok on another tab for discussion.
 
-## Key Features
+I had built a version of it on 2022 with react, editor.js, firebase and JoyUI. I had four collapse panels instead of two in the screen, and each panel on the right side can be turned into either a text editor, maths editor, code editor or a drawing editor. Idea was that you are able to move text blocks across these split panels as you think through them. I built any feature I could think of, like different type of panels, archiving, sharing, too many exporting formats and completely bloated the whole thing. I wanted to build collaboration with real time users. Editor.js was not a great solution for it and my architecture made it impossible with firebase bloating which had piled up. After a year I let it go.
 
-### Scalable Infrastructure
-Our cloud platform automatically scales to meet your demands. Whether you're handling a few hundred users or millions, Alpha adapts seamlessly to your needs without compromising performance.
+I got sometime late december and I quickly rebuilt the whole app completely stripped down to the essentials that I use. Motivation for the efforts was that I wanted a space to think about a new project of mine.
+It is architected for collaboration, but haven't implemented it yet. I built it this time using self hosted versions in mind, so react, supabase and mantine for UI.
 
-### Enterprise-Grade Security
-Security is paramount. Product Alpha includes:
-- End-to-end encryption
-- Multi-factor authentication
-- Advanced threat detection
-- Compliance with industry standards (SOC 2, ISO 27001)
+App will give you an easy comfortable place in the web to just relax and write something, have a quick drawing on it and even quickly switch between different documents from the side bar.
 
-### Intuitive Management Dashboard
-Manage your entire infrastructure from a single, user-friendly dashboard. Monitor performance, configure settings, and deploy resources with just a few clicks.
-
-### 24/7 Support
-Our dedicated support team is available around the clock to assist with any questions or issues you may encounter.
-
-## Use Cases
-
-- **Large Enterprises**: Scale your operations without worrying about infrastructure limitations
-- **Growing Startups**: Start small and grow without migration headaches
-- **Government Agencies**: Meet strict compliance requirements with confidence
-- **Healthcare Organizations**: Secure, HIPAA-compliant cloud solutions
-
-## Technical Specifications
-
-- **Availability**: 99.99% uptime SLA
-- **Data Centers**: 15+ locations worldwide
-- **Storage**: Unlimited scalable storage
-- **Bandwidth**: High-speed global CDN
-- **APIs**: RESTful API with comprehensive documentation
-
-## Getting Started
-
-Getting started with Product Alpha is simple. Our onboarding process takes less than 24 hours, and our team will guide you through every step. Contact us today to schedule a demo and see how Alpha can transform your business operations.
-
-## Pricing
-
-We offer flexible pricing plans to suit businesses of all sizes. Contact our sales team for a customized quote based on your specific needs.
-
----
-
-*For more information or to schedule a demo, please contact us at [contact@xadlabs.com](mailto:contact@xadlabs.com)*
-
+Do try it at [thinkpostapp.com](https://thinkpostapp.com)
