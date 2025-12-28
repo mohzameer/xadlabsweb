@@ -1,12 +1,10 @@
 ---
 layout: post
-title: "ThinkPost - An AI free thinking tool"
+title: "ThinkPost - An AI sans thinking tool"
 date: 2025-12-28
 category: product
 preview: "ThinkPost is an AI sans text editor and a drawing tool for thinking"
 ---
-
-# ThinkPost - AI sans text editor and a drawing tool for thinking
 
 I wanted a tool to have text editing on one side and drawing on the other to think through ideas easily. I usually think with writing as well as drawing. The only tool that came close is eraser.io and that wasn't general purpose. So I had to build my own. I have let it free for now, as I dont have any running costs. I did not want AI pomps anywhere near this app as I believe we need spaces without gen AI and it doesn't add any value to this app. If I wanted an AI, I would just open Grok on another tab for discussion.
 
