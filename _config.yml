@@ -1,4 +1,4 @@
-title: XAD
+title: XAD Labs
 description: Innovative technology solutions for the modern world
 url: "https://xadlabs.com"
 baseurl: ""
@@ -13,7 +13,7 @@ plugins:
   - jekyll-sitemap
 
 # Site settings
-brand: XAD
+brand: XAD Labs
 email: zameermfm@gmail.com
 logo: /assets/images/logo.png
 
