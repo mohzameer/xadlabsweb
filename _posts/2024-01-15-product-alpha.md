@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "ThinkPost - Document and Drawings Linked Note Taking and Thinking App"
+title: "ThinkPost - Document and Drawings Note Taking and Thinking App"
 date: 2025-12-28
 category: product
 preview: "ThinkPost is a document and drawings linked note taking and thinking app"
