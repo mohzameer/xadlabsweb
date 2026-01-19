@@ -18,16 +18,14 @@ layout: default
 
 <section class="experiments-section">
     <div class="container">
-        <div class="experiments-grid">
+        <h2 class="experiments-heading">Experiments</h2>
+        <div class="experiments-list">
             {% assign experiment_posts = site.posts | where: "category", "experiment" %}
             {% for post in experiment_posts %}
-            <article class="experiment-item">
-                <h2 class="experiment-item-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-                <div class="experiment-item-meta">
-                    <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%b %d, %Y" }}</time>
-                </div>
+            <div class="experiment-item">
+                <strong><a href="{{ post.url | relative_url }}">{{ post.title }}</a></strong>
                 <p class="experiment-preview">{{ post.preview | default: post.excerpt | strip_html | truncatewords: 30 }}</p>
-            </article>
+            </div>
             {% endfor %}
         </div>
     </div>
