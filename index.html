@@ -16,17 +16,17 @@ layout: default
     </div>
 </section>
 
-<section class="blog-section">
+<section class="experiments-section">
     <div class="container">
-        <div class="blog-grid">
-            {% assign blog_posts = site.posts | where_exp: "post", "post.category != 'product'" %}
-            {% for post in blog_posts limit: 3 %}
-            <article class="blog-item">
-                <h2 class="blog-item-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-                <div class="blog-item-meta">
+        <div class="experiments-grid">
+            {% assign experiment_posts = site.posts | where: "category", "experiment" %}
+            {% for post in experiment_posts %}
+            <article class="experiment-item">
+                <h2 class="experiment-item-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+                <div class="experiment-item-meta">
                     <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%b %d, %Y" }}</time>
                 </div>
-                <p class="blog-preview">{{ post.preview | default: post.excerpt | strip_html | truncatewords: 30 }}</p>
+                <p class="experiment-preview">{{ post.preview | default: post.excerpt | strip_html | truncatewords: 30 }}</p>
             </article>
             {% endfor %}
         </div>
