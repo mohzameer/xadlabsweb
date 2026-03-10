@@ -4,13 +4,12 @@ layout: default
 <section class="products-section">
     <div class="container">
         <div class="products-list">
-            {% for post in site.posts %}
-                {% if post.category == 'product' %}
+            {% assign product_posts = site.posts | where: "category", "product" | sort: "date" | reverse %}
+            {% for post in product_posts %}
                 <div class="product-item">
                     <strong><a href="{{ post.url | relative_url }}">{{ post.title }}</a></strong>
                     <p class="product-preview">{{ post.preview | default: post.excerpt | strip_html | truncatewords: 30 }}</p>
                 </div>
-                {% endif %}
             {% endfor %}
         </div>
     </div>
