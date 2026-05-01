@@ -1,0 +1,202 @@
+---
+import Base from '../layouts/Base.astro';
+
+const products = [
+  {
+    name: 'PodPDF',
+    domain: 'podpdf.com',
+    url: 'https://podpdf.com',
+    tagline: 'The PDF generation API built for automation.',
+    description:
+      'Generate professional PDFs from HTML, Markdown, or images in seconds. A simple REST API, drop-in for any language, at $0.01 per PDF.',
+    bullets: [
+      'REST API — works with any stack',
+      'HTML, Markdown, or images in',
+      '100 free PDFs, no credit card',
+    ],
+    cta: 'Try PodPDF',
+  },
+  {
+    name: 'MDSpec',
+    domain: 'mdspec.dev',
+    url: 'https://mdspec.dev',
+    tagline: 'Keep writing markdown. We\u2019ll handle the rest.',
+    description:
+      'Drop a mapping file in your repo, add one line to GitHub Actions, and every markdown file lands exactly where your team needs it — published as clean docs, or transformed by agents into release notes, task summaries, and more.',
+    bullets: [
+      'Repo-native, mapping-file driven',
+      'One line of GitHub Actions',
+      'Agent-powered transforms',
+    ],
+    cta: 'Visit MDSpec',
+  },
+];
+---
+
+<Base>
+  <div class="relative min-h-screen overflow-hidden">
+    <div class="grid-bg pointer-events-none absolute inset-0 -z-10"></div>
+
+    <!-- Nav -->
+    <header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 sm:py-8">
+      <a href="/" class="group flex items-center gap-2">
+        <span class="flex h-7 w-7 items-center justify-center rounded-md bg-ink-900 text-ink-50 text-[11px] font-semibold tracking-tight">
+          XL
+        </span>
+        <span class="text-sm font-medium tracking-tight text-ink-900">
+          XAD Labs
+        </span>
+      </a>
+      <nav class="flex items-center gap-6 text-sm">
+        <a href="#products" class="text-ink-900/70 transition hover:text-ink-900">
+          Products
+        </a>
+        <a
+          href="mailto:zameer@xadlabs.com"
+          class="rounded-full bg-ink-900 px-4 py-2 text-ink-50 transition hover:bg-accent"
+        >
+          Contact
+        </a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="mx-auto max-w-6xl px-6 pb-20 pt-16 sm:pt-24">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-2 rounded-full border border-ink-900/10 bg-white/60 px-3 py-1 text-xs font-medium text-ink-900/70 backdrop-blur">
+          <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+          A small studio shipping tools we wished existed
+        </span>
+
+        <h1 class="mt-6 font-serif text-5xl leading-[1.05] tracking-tightest text-ink-900 sm:text-7xl">
+          Small tools,
+          <span class="italic text-accent">sharply</span>
+          built.
+        </h1>
+
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-900/70">
+          We are XAD Labs — a focused product studio building developer tools that do one thing
+          really, really well. No fluff, no upsells, just useful software.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a
+            href="#products"
+            class="inline-flex items-center gap-2 rounded-full bg-ink-900 px-5 py-3 text-sm font-medium text-ink-50 transition hover:bg-accent"
+          >
+            See what we build
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a
+            href="mailto:zameer@xadlabs.com"
+            class="inline-flex items-center gap-2 rounded-full border border-ink-900/15 bg-white/60 px-5 py-3 text-sm font-medium text-ink-900 backdrop-blur transition hover:border-ink-900/30"
+          >
+            Say hello
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="mx-auto max-w-6xl px-6 pb-24">
+      <div class="mb-10 flex items-end justify-between">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[0.18em] text-ink-900/50">
+            Our products
+          </p>
+          <h2 class="mt-2 font-serif text-3xl tracking-tight text-ink-900 sm:text-4xl">
+            Two tools. Both shipping today.
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        {products.map((product) => (
+          <a
+            href={product.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group relative flex flex-col overflow-hidden rounded-2xl border border-ink-900/10 bg-white/70 p-8 backdrop-blur transition hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_20px_60px_-20px_rgba(55,48,163,0.25)]"
+          >
+            <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent opacity-0 transition group-hover:opacity-100"></div>
+
+            <div class="flex items-center justify-between">
+              <h3 class="font-serif text-3xl tracking-tight text-ink-900">
+                {product.name}
+              </h3>
+              <span class="font-mono text-xs text-ink-900/50">
+                {product.domain}
+              </span>
+            </div>
+
+            <p class="mt-3 text-base font-medium text-accent">
+              {product.tagline}
+            </p>
+
+            <p class="mt-4 text-[15px] leading-relaxed text-ink-900/70">
+              {product.description}
+            </p>
+
+            <ul class="mt-6 space-y-2 text-sm text-ink-900/70">
+              {product.bullets.map((b) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-[7px] h-1 w-1 flex-shrink-0 rounded-full bg-accent"></span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-8 flex items-center gap-2 text-sm font-medium text-ink-900 transition group-hover:text-accent">
+              {product.cta}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition group-hover:translate-x-0.5"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="mx-auto max-w-6xl px-6 pb-24">
+      <div class="relative overflow-hidden rounded-3xl border border-ink-900/10 bg-ink-900 px-8 py-14 sm:px-14 sm:py-20">
+        <div class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-accent/30 blur-3xl"></div>
+        <div class="absolute -bottom-24 -left-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl"></div>
+
+        <div class="relative max-w-2xl">
+          <p class="text-xs font-medium uppercase tracking-[0.18em] text-ink-50/50">
+            Get in touch
+          </p>
+          <h2 class="mt-3 font-serif text-4xl tracking-tight text-ink-50 sm:text-5xl">
+            Have an idea, a bug, or just want to chat?
+          </h2>
+          <p class="mt-5 text-lg leading-relaxed text-ink-50/70">
+            We read every email. Whether it&rsquo;s a feature request, a partnership, or you just
+            want to say hi — drop us a line.
+          </p>
+
+          <a
+            href="mailto:zameer@xadlabs.com"
+            class="mt-8 inline-flex items-center gap-3 rounded-full bg-ink-50 px-6 py-3.5 text-sm font-medium text-ink-900 transition hover:bg-accent hover:text-ink-50"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            zameer@xadlabs.com
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mx-auto max-w-6xl px-6 pb-10">
+      <div class="flex flex-col items-start justify-between gap-4 border-t border-ink-900/10 pt-8 text-sm text-ink-900/50 sm:flex-row sm:items-center">
+        <div class="flex items-center gap-2">
+          <span class="flex h-5 w-5 items-center justify-center rounded bg-ink-900 text-[9px] font-semibold text-ink-50">XL</span>
+          <span>&copy; {new Date().getFullYear()} XAD Labs. Built with care.</span>
+        </div>
+        <div class="flex items-center gap-5">
+          <a href="https://podpdf.com" target="_blank" rel="noopener noreferrer" class="transition hover:text-ink-900">PodPDF</a>
+          <a href="https://mdspec.dev" target="_blank" rel="noopener noreferrer" class="transition hover:text-ink-900">MDSpec</a>
+          <a href="mailto:zameer@xadlabs.com" class="transition hover:text-ink-900">Email</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</Base>

@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-ink-50 text-ink-900 font-sans;
+    background-image:
+      radial-gradient(circle at 12% -10%, rgba(55, 48, 163, 0.06), transparent 45%),
+      radial-gradient(circle at 90% 10%, rgba(55, 48, 163, 0.04), transparent 40%);
+  }
+
+  ::selection {
+    @apply bg-accent text-white;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(12, 12, 13, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(12, 12, 13, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  }
+}
