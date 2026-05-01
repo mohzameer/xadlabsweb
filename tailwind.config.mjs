@@ -10,9 +10,9 @@ export default {
           900: '#0c0c0d',
         },
         accent: {
-          DEFAULT: '#3730a3',
-          hover: '#2e2885',
-          soft: '#eef2ff',
+          DEFAULT: '#0d9488',
+          hover: '#0f766e',
+          soft: '#ccfbf1',
         },
       },
       fontFamily: {

@@ -39,13 +39,14 @@ const products = [
 
     <!-- Nav -->
     <header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 sm:py-8">
-      <a href="/" class="group flex items-center gap-2">
-        <span class="flex h-7 w-7 items-center justify-center rounded-md bg-ink-900 text-ink-50 text-[11px] font-semibold tracking-tight">
-          XL
-        </span>
-        <span class="text-sm font-medium tracking-tight text-ink-900">
-          XAD Labs
-        </span>
+      <a href="/" class="group flex items-center" aria-label="XAD Labs">
+        <img
+          src="/logoww.png"
+          alt="XAD Labs"
+          class="h-10 w-auto sm:h-12"
+          width="220"
+          height="48"
+        />
       </a>
       <nav class="flex items-center gap-6 text-sm">
         <a href="#products" class="text-ink-900/70 transition hover:text-ink-900">
@@ -187,8 +188,8 @@ const products = [
     <!-- Footer -->
     <footer class="mx-auto max-w-6xl px-6 pb-10">
       <div class="flex flex-col items-start justify-between gap-4 border-t border-ink-900/10 pt-8 text-sm text-ink-900/50 sm:flex-row sm:items-center">
-        <div class="flex items-center gap-2">
-          <span class="flex h-5 w-5 items-center justify-center rounded bg-ink-900 text-[9px] font-semibold text-ink-50">XL</span>
+        <div class="flex items-center gap-3">
+          <img src="/logoww.png" alt="XAD Labs" class="h-7 w-auto opacity-70" />
           <span>&copy; {new Date().getFullYear()} XAD Labs. Built with care.</span>
         </div>
         <div class="flex items-center gap-5">
