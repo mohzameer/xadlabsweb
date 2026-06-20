@@ -10,24 +10,100 @@
   }
 
   body {
-    @apply bg-ink-50 text-ink-900 font-sans;
-    background-image:
-      radial-gradient(circle at 12% -10%, rgba(13, 148, 136, 0.07), transparent 45%),
-      radial-gradient(circle at 90% 10%, rgba(13, 148, 136, 0.05), transparent 40%);
+    @apply bg-paper text-ink font-sans;
   }
 
   ::selection {
-    @apply bg-accent text-white;
+    @apply bg-ink text-paper;
   }
 }
 
-@layer utilities {
-  .grid-bg {
-    background-image:
-      linear-gradient(to right, rgba(12, 12, 13, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(12, 12, 13, 0.04) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+/* Reading typography modeled on Medium's article body:
+   warm serif at ~21px, 1.58 line-height, sans-serif bold section headings. */
+@layer components {
+  .prose {
+    @apply font-serif;
+    color: #242424;
+    font-size: 1.3125rem; /* 21px */
+    line-height: 1.58;
+    letter-spacing: -0.003em;
+  }
+
+  .prose > * + * {
+    margin-top: 1.7em;
+  }
+
+  .prose p {
+    color: #242424;
+  }
+
+  /* Section headings: sans-serif, bold, tight — Medium-style. */
+  .prose h2 {
+    @apply font-sans font-bold tracking-tight;
+    color: #242424;
+    font-size: 1.6rem;
+    line-height: 1.25;
+    margin-top: 2em;
+    letter-spacing: -0.02em;
+  }
+
+  .prose h3 {
+    @apply font-sans font-semibold tracking-tight;
+    color: #242424;
+    font-size: 1.3rem;
+    line-height: 1.3;
+    margin-top: 1.7em;
+  }
+
+  .prose a {
+    @apply underline underline-offset-2 decoration-ink/40 transition;
+    color: #242424;
+  }
+
+  .prose a:hover {
+    @apply decoration-ink;
+  }
+
+  .prose strong {
+    @apply font-semibold;
+    color: #242424;
+  }
+
+  .prose blockquote {
+    @apply border-l-[3px] border-ink/80 pl-5 italic;
+    color: rgba(36, 36, 36, 0.7);
+  }
+
+  .prose ul {
+    @apply list-disc pl-6;
+  }
+
+  .prose ol {
+    @apply list-decimal pl-6;
+  }
+
+  .prose li + li {
+    margin-top: 0.5em;
+  }
+
+  .prose code {
+    @apply font-mono bg-ink/5 rounded px-1.5 py-0.5;
+    font-size: 0.82em;
+  }
+
+  .prose pre {
+    @apply font-mono bg-ink text-paper rounded-lg p-5 overflow-x-auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0 text-paper;
+    font-size: inherit;
+  }
+
+  .prose hr {
+    @apply border-ink/15;
+    margin: 2.4em 0;
   }
 }

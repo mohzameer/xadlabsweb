@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base title={`${post.data.title} — XAD Labs`} description={post.data.description}>
+  <main class="mx-auto max-w-2xl px-6 py-16 sm:py-24">
+    <div class="flex items-center justify-between">
+      <a href="/" class="font-mono text-xs text-ink/40 transition hover:text-ink">← XAD Labs</a>
+      {
+        import.meta.env.DEV && (
+          <div class="flex items-center gap-4">
+            <a
+              href={`/editor?slug=${post.id}`}
+              class="font-mono text-xs text-ink/40 transition hover:text-ink"
+            >
+              Edit ✎
+            </a>
+            <button
+              id="delete-post"
+              data-slug={post.id}
+              class="font-mono text-xs text-ink/40 transition hover:text-ink"
+            >
+              Delete 🗑
+            </button>
+          </div>
+        )
+      }
+    </div>
+
+    <article class="mt-12">
+      <header class="mb-10">
+        <h1 class="font-sans text-4xl font-extrabold leading-[1.15] tracking-tight text-ink sm:text-[2.75rem]">
+          {post.data.title}
+        </h1>
+        <time
+          datetime={post.data.pubDate.toISOString()}
+          class="mt-4 block font-mono text-xs text-ink/40"
+        >
+          {fmt(post.data.pubDate)}
+        </time>
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+
+    <footer class="mt-20 border-t border-ink/10 pt-8 text-xs text-ink/40">
+      <a href="/" class="transition hover:text-ink">← Back to all posts</a>
+    </footer>
+  </main>
+
+  <script>
+    // Dev-only: the button only renders under import.meta.env.DEV.
+    const btn = document.getElementById('delete-post') as HTMLButtonElement | null;
+    btn?.addEventListener('click', async () => {
+      const slug = btn.dataset.slug;
+      if (!slug) return;
+      if (!confirm(`Delete this post permanently?\n\n${slug}.md will be removed.`)) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Deleting…';
+      try {
+        const res = await fetch('/api/delete-post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug }),
+        });
+        if (res.ok) {
+          location.href = '/';
+        } else {
+          const data = await res.json().catch(() => ({}));
+          alert(data.error ?? 'Failed to delete.');
+          btn.disabled = false;
+          btn.textContent = 'Delete 🗑';
+        }
+      } catch {
+        alert('Network error.');
+        btn.disabled = false;
+        btn.textContent = 'Delete 🗑';
+      }
+    });
+  </script>
+</Base>

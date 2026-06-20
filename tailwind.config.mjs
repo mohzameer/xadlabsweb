@@ -4,20 +4,23 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Minimal monochrome palette: near-black ink on warm off-white paper.
+        paper: '#faf9f6',
         ink: {
-          50: '#f7f7f5',
-          100: '#eeeeea',
-          900: '#0c0c0d',
-        },
-        accent: {
-          DEFAULT: '#0d9488',
-          hover: '#0f766e',
-          soft: '#ccfbf1',
+          DEFAULT: '#1a1a1a',
+          900: '#1a1a1a',
+          700: '#3d3d3d',
+          500: '#6b6b6b',
+          300: '#a3a3a3',
+          200: '#d6d4ce',
+          100: '#e8e6e0',
         },
       },
       fontFamily: {
+        // Headings/UI: Inter (Medium uses a bold sans for titles).
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
+        // Reading body: Charter-like serif, Medium's signature article face.
+        serif: ['"Source Serif 4"', 'Charter', '"Bitstream Charter"', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       letterSpacing: {

@@ -1,0 +1,235 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Local authoring only — the editor is hidden in production builds.
+export const prerender = false;
+if (!import.meta.env.DEV) return new Response('Not found', { status: 404 });
+---
+
+<Base title="Editor — XAD Labs">
+  <main class="mx-auto max-w-2xl px-6 py-12">
+    <!-- Top bar -->
+    <div class="flex items-center justify-between">
+      <a href="/" class="font-mono text-xs text-ink/40 transition hover:text-ink">← XAD Labs</a>
+      <div class="flex items-center gap-3">
+        <span id="status" class="font-mono text-xs text-ink/40"></span>
+        <button
+          id="publish"
+          class="rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper transition hover:opacity-80 disabled:opacity-40"
+        >
+          Publish
+        </button>
+      </div>
+    </div>
+
+    <!-- Editor canvas -->
+    <div class="mt-12">
+      <input
+        id="title"
+        type="text"
+        placeholder="Title"
+        class="w-full bg-transparent font-sans text-4xl font-extrabold tracking-tight text-ink placeholder:text-ink/25 focus:outline-none sm:text-[2.75rem]"
+      />
+
+      <div
+        id="body"
+        contenteditable="true"
+        data-placeholder="Tell your story…"
+        class="prose mt-8 min-h-[50vh] focus:outline-none"
+      >
+      </div>
+    </div>
+
+    <!-- Floating selection toolbar -->
+    <div
+      id="toolbar"
+      class="pointer-events-none fixed z-50 flex -translate-x-1/2 items-center gap-1 rounded-lg bg-ink px-1.5 py-1.5 opacity-0 shadow-lg transition-opacity"
+    >
+      <button data-cmd="bold" class="tb font-semibold">B</button>
+      <button data-cmd="italic" class="tb italic">i</button>
+      <span class="mx-0.5 h-4 w-px bg-paper/20"></span>
+      <button data-block="h2" class="tb">H2</button>
+      <button data-block="blockquote" class="tb">&ldquo;</button>
+      <button data-block="pre" class="tb font-mono">&lt;/&gt;</button>
+      <span class="mx-0.5 h-4 w-px bg-paper/20"></span>
+      <button data-cmd="link" class="tb">link</button>
+    </div>
+  </main>
+
+  <style is:global>
+    /* Placeholder for the contenteditable body */
+    #body:empty::before,
+    #body[data-empty]::before {
+      content: attr(data-placeholder);
+      color: rgba(26, 26, 26, 0.25);
+      pointer-events: none;
+    }
+    /* Toolbar buttons */
+    .tb {
+      display: flex;
+      height: 1.75rem;
+      min-width: 1.75rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.25rem;
+      padding: 0 0.5rem;
+      font-size: 0.875rem;
+      color: #faf9f6;
+      transition: background-color 0.15s;
+    }
+    .tb:hover {
+      background-color: rgba(250, 249, 246, 0.15);
+    }
+  </style>
+
+  <script>
+    const titleEl = document.getElementById('title') as HTMLInputElement;
+    const bodyEl = document.getElementById('body') as HTMLElement;
+    const toolbar = document.getElementById('toolbar') as HTMLElement;
+    const publishBtn = document.getElementById('publish') as HTMLButtonElement;
+    const statusEl = document.getElementById('status') as HTMLElement;
+
+    // --- Edit mode: ?slug=<slug> loads an existing post to overwrite ---
+    let editSlug: string | null = new URLSearchParams(location.search).get('slug');
+
+    const loadPost = async (slug: string) => {
+      try {
+        const res = await fetch(`/api/get-post?slug=${encodeURIComponent(slug)}`);
+        const data = await res.json();
+        if (!res.ok) {
+          editSlug = null;
+          setStatus(data.error ?? 'Could not load post.', true);
+          return;
+        }
+        titleEl.value = data.title;
+        bodyEl.innerHTML = data.html;
+        publishBtn.textContent = 'Update';
+        document.title = `Editing: ${data.title} — XAD Labs`;
+        refreshEmpty();
+      } catch {
+        editSlug = null;
+        setStatus('Could not load post.', true);
+      }
+    };
+
+    // --- Placeholder handling (empty contenteditable) ---
+    const refreshEmpty = () => {
+      const empty = bodyEl.textContent?.trim() === '' && bodyEl.children.length === 0;
+      bodyEl.toggleAttribute('data-empty', empty);
+    };
+    refreshEmpty();
+    bodyEl.addEventListener('input', refreshEmpty);
+
+    // --- Floating toolbar on selection ---
+    const hideToolbar = () => {
+      toolbar.style.opacity = '0';
+      toolbar.style.pointerEvents = 'none';
+    };
+
+    const showToolbar = () => {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || sel.rangeCount === 0) return hideToolbar();
+      const range = sel.getRangeAt(0);
+      if (!bodyEl.contains(range.commonAncestorContainer)) return hideToolbar();
+      const rect = range.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) return hideToolbar();
+      toolbar.style.left = `${rect.left + rect.width / 2}px`;
+      toolbar.style.top = `${rect.top - toolbar.offsetHeight - 8}px`;
+      toolbar.style.opacity = '1';
+      toolbar.style.pointerEvents = 'auto';
+    };
+
+    document.addEventListener('selectionchange', () => {
+      if (document.activeElement === bodyEl) showToolbar();
+    });
+    bodyEl.addEventListener('blur', () => setTimeout(hideToolbar, 150));
+
+    // --- Formatting commands (execCommand: deprecated but works everywhere) ---
+    const blockTag = (tag: string) => {
+      // Toggle back to <p> if the current block already matches.
+      const sel = window.getSelection();
+      let node = sel?.anchorNode as HTMLElement | null;
+      while (node && node !== bodyEl) {
+        if (node.nodeType === 1 && node.tagName.toLowerCase() === tag) {
+          document.execCommand('formatBlock', false, 'p');
+          refreshEmpty();
+          return;
+        }
+        node = node.parentElement;
+      }
+      document.execCommand('formatBlock', false, tag);
+      refreshEmpty();
+    };
+
+    toolbar.querySelectorAll<HTMLButtonElement>('button').forEach((btn) => {
+      // Use mousedown so the selection isn't lost before the command runs.
+      btn.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        const cmd = btn.dataset.cmd;
+        const block = btn.dataset.block;
+        if (block) {
+          blockTag(block);
+        } else if (cmd === 'link') {
+          const url = prompt('Link URL:');
+          if (url) document.execCommand('createLink', false, url);
+        } else if (cmd) {
+          document.execCommand(cmd, false);
+        }
+        showToolbar();
+      });
+    });
+
+    // --- Publish ---
+    const setStatus = (msg: string, isError = false) => {
+      statusEl.textContent = msg;
+      statusEl.className = `font-mono text-xs ${isError ? 'text-ink' : 'text-ink/40'}`;
+    };
+
+    // If we arrived with ?slug=, pull that post into the editor to edit it.
+    if (editSlug) loadPost(editSlug);
+
+    // Poll the new post URL until the content layer has picked it up (max ~8s).
+    const waitForPost = async (url: string) => {
+      for (let i = 0; i < 20; i++) {
+        try {
+          const res = await fetch(url, { cache: 'no-store' });
+          if (res.ok) return;
+        } catch {
+          /* keep trying */
+        }
+        await new Promise((r) => setTimeout(r, 400));
+      }
+    };
+
+    publishBtn.addEventListener('click', async () => {
+      const title = titleEl.value.trim();
+      const html = bodyEl.innerHTML.trim();
+      if (!title) return setStatus('Add a title first.', true);
+      if (bodyEl.textContent?.trim() === '') return setStatus('Write something first.', true);
+
+      publishBtn.disabled = true;
+      setStatus(editSlug ? 'Updating…' : 'Publishing…');
+      try {
+        const res = await fetch('/api/save-post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, html, slug: editSlug ?? undefined }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setStatus(data.error ?? 'Failed to save.', true);
+          publishBtn.disabled = false;
+          return;
+        }
+        // The file is written, but Astro's content layer needs a beat to
+        // re-scan it in dev before /blog/<slug> resolves. Poll until it's live.
+        setStatus(data.edited ? 'Updated ✓ opening…' : 'Published ✓ opening…');
+        await waitForPost(data.url);
+        window.location.href = data.url;
+      } catch (err) {
+        setStatus('Network error.', true);
+        publishBtn.disabled = false;
+      }
+    });
+  </script>
+</Base>
