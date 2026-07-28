@@ -157,7 +157,9 @@ const process = [
 
   <main>
     <!-- ================= HERO ================= -->
-    <section class="relative overflow-hidden">
+    <section
+      class="relative flex overflow-hidden sm:min-h-[calc(100svh-4rem)] sm:items-center"
+    >
       <div class="absolute inset-0 grid-backdrop opacity-70"></div>
       <div
         class="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full opacity-60 blur-3xl"
@@ -165,7 +167,7 @@ const process = [
       >
       </div>
 
-      <div class="container-x relative py-24 sm:py-32 lg:py-40">
+      <div class="container-x relative w-full py-14 sm:py-16">
         <div class="mx-auto max-w-3xl text-center" data-reveal>
           <span
             class="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-800/60 px-4 py-1.5 font-mono text-xs text-ink-200"
@@ -192,7 +194,7 @@ const process = [
             Skills form in context, so they show up on the job, not just in the test.
           </p>
 
-          <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a href="#approach" class="btn btn-primary w-full sm:w-auto">See how it works</a>
             <a href="#contact" class="btn btn-ghost w-full sm:w-auto">Get in touch</a>
           </div>
@@ -200,7 +202,7 @@ const process = [
 
         <!-- Stat band -->
         <div
-          class="mx-auto mt-20 grid max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink-700/70 bg-ink-700/50 lg:grid-cols-4"
+          class="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink-700/70 bg-ink-700/50 sm:mt-14 lg:grid-cols-4"
           data-reveal
           data-reveal-delay="120"
         >
