@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -18,52 +20,62 @@ const fmt = (d: Date) =>
 ---
 
 <Base title={`${post.data.title} — XAD Labs`} description={post.data.description}>
-  <main class="mx-auto max-w-2xl px-6 py-16 sm:py-24">
-    <div class="flex items-center justify-between">
-      <a href="/" class="font-mono text-xs text-ink/40 transition hover:text-ink">← XAD Labs</a>
-      {
-        import.meta.env.DEV && (
-          <div class="flex items-center gap-4">
-            <a
-              href={`/editor?slug=${post.id}`}
-              class="font-mono text-xs text-ink/40 transition hover:text-ink"
-            >
-              Edit ✎
-            </a>
-            <button
-              id="delete-post"
-              data-slug={post.id}
-              class="font-mono text-xs text-ink/40 transition hover:text-ink"
-            >
-              Delete 🗑
-            </button>
-          </div>
-        )
-      }
-    </div>
+  <Nav base="/" />
 
-    <article class="mt-12">
-      <header class="mb-10">
-        <h1 class="font-sans text-4xl font-extrabold leading-[1.15] tracking-tight text-ink sm:text-[2.75rem]">
-          {post.data.title}
-        </h1>
-        <time
-          datetime={post.data.pubDate.toISOString()}
-          class="mt-4 block font-mono text-xs text-ink/40"
+  <main class="container-x py-16 sm:py-24">
+    <div class="mx-auto max-w-2xl">
+      <div class="flex items-center justify-between">
+        <a href="/" class="font-mono text-xs text-ink-400 transition hover:text-accent-300"
+          >← XAD Labs</a
         >
-          {fmt(post.data.pubDate)}
-        </time>
-      </header>
-
-      <div class="prose">
-        <Content />
+        {
+          import.meta.env.DEV && (
+            <div class="flex items-center gap-4">
+              <a
+                href={`/editor?slug=${post.id}`}
+                class="font-mono text-xs text-ink-400 transition hover:text-accent-300"
+              >
+                Edit ✎
+              </a>
+              <button
+                id="delete-post"
+                data-slug={post.id}
+                class="font-mono text-xs text-ink-400 transition hover:text-accent-300"
+              >
+                Delete 🗑
+              </button>
+            </div>
+          )
+        }
       </div>
-    </article>
 
-    <footer class="mt-20 border-t border-ink/10 pt-8 text-xs text-ink/40">
-      <a href="/" class="transition hover:text-ink">← Back to all posts</a>
-    </footer>
+      <article class="mt-12">
+        <header class="mb-10">
+          <h1
+            class="font-display text-4xl font-bold leading-[1.1] tracking-tight text-paper sm:text-[2.75rem]"
+          >
+            {post.data.title}
+          </h1>
+          <time
+            datetime={post.data.pubDate.toISOString()}
+            class="mt-4 block font-mono text-xs text-ink-500"
+          >
+            {fmt(post.data.pubDate)}
+          </time>
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <footer class="mt-20 border-t border-ink-700/60 pt-8 text-xs text-ink-500">
+        <a href="/" class="transition hover:text-accent-300">← Back to XAD Labs</a>
+      </footer>
+    </div>
   </main>
+
+  <Footer />
 
   <script>
     // Dev-only: the button only renders under import.meta.env.DEV.

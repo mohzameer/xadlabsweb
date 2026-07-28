@@ -1,0 +1,64 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-ink-700/60 bg-ink-900">
+  <div class="container-x py-16">
+    <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div>
+        <a href="/" class="flex items-center gap-2.5">
+          <span
+            class="grid h-8 w-8 place-items-center rounded-lg bg-accent font-display text-lg font-bold text-ink-900"
+            >X</span
+          >
+          <span class="font-display text-lg font-bold tracking-tight text-paper">
+            XAD<span class="text-accent"> Labs</span>
+          </span>
+        </a>
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-ink-300">
+          Simulations and serious games that turn training into practice — built for corporate,
+          workforce, and field learning.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="eyebrow">Explore</h3>
+        <ul class="mt-4 space-y-3 text-sm text-ink-200">
+          <li><a href="/#approach" class="transition hover:text-accent-300">Approach</a></li>
+          <li><a href="/#games" class="transition hover:text-accent-300">Games</a></li>
+          <li><a href="/#research" class="transition hover:text-accent-300">Research</a></li>
+          <li><a href="/#about" class="transition hover:text-accent-300">About</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="eyebrow">Get in touch</h3>
+        <ul class="mt-4 space-y-3 text-sm text-ink-200">
+          <li>
+            <a href="mailto:zameer@xadlabs.com" class="transition hover:text-accent-300"
+              >zameer@xadlabs.com</a
+            >
+          </li>
+          <li>
+            <a href="/#contact" class="transition hover:text-accent-300">Get in touch</a>
+          </li>
+          <li>
+            <a
+              href="https://rtagi.online"
+              target="_blank"
+              rel="noopener"
+              class="transition hover:text-accent-300">Play Race to AGI ↗</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-14 flex flex-col items-start justify-between gap-4 border-t border-ink-700/60 pt-8 text-xs text-ink-500 sm:flex-row sm:items-center"
+    >
+      <p>&copy; {year} XAD Labs. All rights reserved.</p>
+      <p class="font-mono">Learning through simulation.</p>
+    </div>
+  </div>
+</footer>

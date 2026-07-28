@@ -7,103 +7,139 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-paper text-ink font-sans;
+    @apply bg-ink text-ink-100 font-sans antialiased;
   }
 
   ::selection {
-    @apply bg-ink text-paper;
+    @apply bg-accent text-ink-900;
+  }
+
+  /* Anchored sections clear the sticky nav. */
+  :where(section[id]) {
+    scroll-margin-top: 5rem;
   }
 }
 
-/* Reading typography modeled on Medium's article body:
-   warm serif at ~21px, 1.58 line-height, sans-serif bold section headings. */
+@layer components {
+  /* ---- Layout ---- */
+  .container-x {
+    @apply mx-auto w-full max-w-content px-6 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs font-medium uppercase tracking-[0.22em] text-accent-400;
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-200;
+  }
+  .btn-primary {
+    @apply bg-accent text-ink-900 hover:bg-accent-400 hover:shadow-[0_0_0_4px_rgba(0,214,143,0.18)];
+  }
+  .btn-ghost {
+    @apply border border-ink-600 text-ink-100 hover:border-accent hover:text-accent-300;
+  }
+  .btn-dark {
+    @apply bg-ink-900 text-paper hover:bg-ink-800;
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    @apply rounded-2xl border border-ink-700/70 bg-ink-800/40 backdrop-blur-sm transition duration-300;
+  }
+  .card-hover:hover {
+    @apply border-accent/50 -translate-y-1 shadow-[0_18px_40px_-24px_rgba(0,214,143,0.5)];
+  }
+
+  /* ---- Reveal-on-scroll ---- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---- Decorative grid backdrop ---- */
+  .grid-backdrop {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .accent-glow {
+    background: radial-gradient(
+      600px circle at var(--gx, 50%) var(--gy, 0%),
+      rgba(0, 214, 143, 0.16),
+      transparent 60%
+    );
+  }
+}
+
+/* ---- Article prose (kept for blog/insights routes) ---- */
 @layer components {
   .prose {
-    @apply font-serif;
-    color: #242424;
-    font-size: 1.3125rem; /* 21px */
-    line-height: 1.58;
-    letter-spacing: -0.003em;
+    @apply font-sans text-ink-100;
+    font-size: 1.125rem;
+    line-height: 1.7;
   }
-
   .prose > * + * {
-    margin-top: 1.7em;
+    margin-top: 1.5em;
   }
-
-  .prose p {
-    color: #242424;
-  }
-
-  /* Section headings: sans-serif, bold, tight — Medium-style. */
   .prose h2 {
-    @apply font-sans font-bold tracking-tight;
-    color: #242424;
-    font-size: 1.6rem;
+    @apply font-display font-bold tracking-tight text-paper;
+    font-size: 1.7rem;
     line-height: 1.25;
     margin-top: 2em;
-    letter-spacing: -0.02em;
   }
-
   .prose h3 {
-    @apply font-sans font-semibold tracking-tight;
-    color: #242424;
+    @apply font-display font-semibold tracking-tight text-paper;
     font-size: 1.3rem;
-    line-height: 1.3;
-    margin-top: 1.7em;
+    margin-top: 1.6em;
   }
-
   .prose a {
-    @apply underline underline-offset-2 decoration-ink/40 transition;
-    color: #242424;
+    @apply text-accent-300 underline decoration-accent/40 underline-offset-2 transition hover:decoration-accent;
   }
-
-  .prose a:hover {
-    @apply decoration-ink;
-  }
-
   .prose strong {
-    @apply font-semibold;
-    color: #242424;
+    @apply font-semibold text-paper;
   }
-
   .prose blockquote {
-    @apply border-l-[3px] border-ink/80 pl-5 italic;
-    color: rgba(36, 36, 36, 0.7);
+    @apply border-l-[3px] border-accent pl-5 italic text-ink-200;
   }
-
   .prose ul {
     @apply list-disc pl-6;
   }
-
   .prose ol {
     @apply list-decimal pl-6;
   }
-
   .prose li + li {
     margin-top: 0.5em;
   }
-
   .prose code {
-    @apply font-mono bg-ink/5 rounded px-1.5 py-0.5;
-    font-size: 0.82em;
+    @apply rounded bg-ink-700 px-1.5 py-0.5 font-mono text-accent-300;
+    font-size: 0.85em;
   }
-
   .prose pre {
-    @apply font-mono bg-ink text-paper rounded-lg p-5 overflow-x-auto;
+    @apply overflow-x-auto rounded-xl border border-ink-700 bg-ink-900 p-5 font-mono;
     font-size: 0.9rem;
     line-height: 1.6;
   }
-
   .prose pre code {
-    @apply bg-transparent p-0 text-paper;
-    font-size: inherit;
+    @apply bg-transparent p-0 text-ink-100;
   }
-
   .prose hr {
-    @apply border-ink/15;
+    @apply border-ink-700;
     margin: 2.4em 0;
   }
 }

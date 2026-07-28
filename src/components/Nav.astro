@@ -1,0 +1,49 @@
+---
+// Sticky top navigation. Links point to on-page section anchors on the
+// homepage; on other routes they resolve back to the homepage sections.
+interface Props {
+  base?: string; // prefix so links work from sub-routes (e.g. "/")
+}
+const { base = '' } = Astro.props;
+
+const links = [
+  { href: `${base}#approach`, label: 'Approach' },
+  { href: `${base}#games`, label: 'Games' },
+  { href: `${base}#research`, label: 'Research' },
+  { href: `${base}#about`, label: 'About' },
+];
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-ink-700/60 bg-ink-900/80 backdrop-blur-md"
+>
+  <nav class="container-x flex h-16 items-center justify-between">
+    <a href={base || '/'} class="group flex items-center gap-2.5" aria-label="XAD Labs home">
+      <span
+        class="grid h-8 w-8 place-items-center rounded-lg bg-accent font-display text-lg font-bold text-ink-900"
+        >X</span
+      >
+      <span class="font-display text-lg font-bold tracking-tight text-paper">
+        XAD<span class="text-accent"> Labs</span>
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-8 md:flex">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="text-sm font-medium text-ink-200 transition hover:text-accent-300"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a href={`${base}#contact`} class="btn btn-primary !px-5 !py-2">Get in touch</a>
+    </div>
+
+    <a href={`${base}#contact`} class="btn btn-primary !px-4 !py-2 text-xs md:hidden"
+      >Get in touch</a
+    >
+  </nav>
+</header>
