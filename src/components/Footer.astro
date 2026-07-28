@@ -1,4 +1,5 @@
 ---
+import Logo from './Logo.astro';
 const year = new Date().getFullYear();
 ---
 
@@ -6,14 +7,8 @@ const year = new Date().getFullYear();
   <div class="container-x py-16">
     <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
       <div>
-        <a href="/" class="flex items-center gap-2.5">
-          <span
-            class="grid h-8 w-8 place-items-center rounded-lg bg-accent font-display text-lg font-bold text-ink-900"
-            >X</span
-          >
-          <span class="font-display text-lg font-bold tracking-tight text-paper">
-            XAD<span class="text-accent"> Labs</span>
-          </span>
+        <a href="/" class="inline-flex items-center transition hover:opacity-80" aria-label="XAD Labs home">
+          <Logo size="md" />
         </a>
         <p class="mt-4 max-w-xs text-sm leading-relaxed text-ink-300">
           Training simulations that let staff rehearse critical procedures, operations, and

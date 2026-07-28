@@ -6,6 +6,8 @@ interface Props {
 }
 const { base = '' } = Astro.props;
 
+import Logo from './Logo.astro';
+
 const links = [
   { href: `${base}#approach`, label: 'Approach' },
   { href: `${base}#games`, label: 'Portfolio' },
@@ -18,14 +20,12 @@ const links = [
   class="sticky top-0 z-50 border-b border-ink-700/60 bg-ink-900/80 backdrop-blur-md"
 >
   <nav class="container-x flex h-16 items-center justify-between">
-    <a href={base || '/'} class="group flex items-center gap-2.5" aria-label="XAD Labs home">
-      <span
-        class="grid h-8 w-8 place-items-center rounded-lg bg-accent font-display text-lg font-bold text-ink-900"
-        >X</span
-      >
-      <span class="font-display text-lg font-bold tracking-tight text-paper">
-        XAD<span class="text-accent"> Labs</span>
-      </span>
+    <a
+      href={base || '/'}
+      class="group flex items-center transition hover:opacity-80"
+      aria-label="XAD Labs home"
+    >
+      <Logo size="md" />
     </a>
 
     <div class="hidden items-center gap-8 md:flex">

@@ -1,0 +1,17 @@
+---
+// Wordmark: "xad" in accent green + "labs" in paper, on a transparent
+// background. Rendered as live text so it uses the loaded Space Grotesk face.
+interface Props {
+  size?: 'sm' | 'md';
+  class?: string;
+}
+const { size = 'md', class: className = '' } = Astro.props;
+const sizeClass = size === 'sm' ? 'text-lg' : 'text-xl';
+---
+
+<span
+  class={`font-display font-bold lowercase leading-none tracking-tight ${sizeClass} ${className}`}
+  aria-hidden="true"
+>
+  <span class="text-accent">xad</span><span class="ml-1 text-paper">labs</span>
+</span>
