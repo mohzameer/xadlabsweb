@@ -1,0 +1,62 @@
+---
+// A single portfolio card. `status: 'live'` renders a Play link + Live badge;
+// anything else renders a "Custom sim" badge and an Enquire link.
+interface Game {
+  title: string;
+  domain: string;
+  status: string;
+  href: string;
+  blurb: string;
+  outcome: string;
+  accent: string;
+}
+interface Props {
+  game: Game;
+  delay?: number;
+}
+const { game: g, delay = 0 } = Astro.props;
+const external = g.href.startsWith('http');
+---
+
+<a
+  href={g.href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+  class="card card-hover group flex flex-col overflow-hidden"
+  data-reveal
+  data-reveal-delay={delay}
+>
+  <div class={`relative aspect-[16/9] w-full bg-gradient-to-br ${g.accent}`}>
+    <div class="absolute inset-0 grid-backdrop opacity-40"></div>
+    <div class="absolute left-5 top-5">
+      {
+        g.status === 'live' ? (
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink-900">
+            <span class="h-1.5 w-1.5 rounded-full bg-ink-900" /> Live
+          </span>
+        ) : (
+          <span class="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-ink-900/40 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-accent-300">
+            Custom sim
+          </span>
+        )
+      }
+    </div>
+    <div class="absolute bottom-4 right-5 font-display text-5xl font-bold text-paper/15">
+      {g.title.split(' ')[0]}
+    </div>
+  </div>
+
+  <div class="flex flex-1 flex-col p-7">
+    <p class="font-mono text-xs uppercase tracking-wider text-accent-400">{g.domain}</p>
+    <h3 class="mt-2 font-display text-2xl font-bold text-paper transition group-hover:text-accent-300">
+      {g.title}
+    </h3>
+    <p class="mt-3 flex-1 text-[15px] leading-relaxed text-ink-300">{g.blurb}</p>
+    <div class="mt-6 flex items-center justify-between border-t border-ink-700/60 pt-4">
+      <span class="text-sm text-ink-200">{g.outcome}</span>
+      <span class="text-sm font-semibold text-accent-300">
+        {g.status === 'live' ? 'Play ↗' : 'Enquire →'}
+      </span>
+    </div>
+  </div>
+</a>

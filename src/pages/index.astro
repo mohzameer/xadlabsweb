@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import GameCard from '../components/GameCard.astro';
 
 // ---------------------------------------------------------------------------
 // Headline research stats. Sources are named in full in the Research section.
@@ -25,9 +26,9 @@ const pillars = [
   },
   {
     icon: '⬡',
-    title: 'Serious games with real stakes',
+    title: 'Models of the scenarios that matter',
     body:
-      'Systems, resource pressure, and feedback loops that keep professionals genuinely engaged. Every mechanic maps to a learning objective — play is the delivery, mastery is the point.',
+      'We recreate the procedures, operations, and edge cases staff have to get right — routine onboarding through high-pressure exceptions — so they can rehearse safely, as many times as it takes.',
   },
   {
     icon: '⟳',
@@ -38,12 +39,13 @@ const pillars = [
 ];
 
 // ---------------------------------------------------------------------------
-// Portfolio. "Race to AGI" is a live title; the rest are custom simulations we
-// design and build for a client's specific training need.
+// Portfolio, in two categories:
+//   `titles`     — our own live games, playable now
+//   `customSims` — simulations we design & build for a client's training need
 // TO ADD A REAL GAME: drop an image in /public and set `image`, then fill in
 // `href` (store/play link), `status: 'live'`, and the copy below.
 // ---------------------------------------------------------------------------
-const games = [
+const titles = [
   {
     title: 'Race to AGI',
     domain: 'Strategy · AI Safety',
@@ -54,6 +56,19 @@ const games = [
     outcome: 'Teaches risk, governance & trade-off reasoning',
     accent: 'from-accent/25 to-spark/20',
   },
+  {
+    title: 'CloudSims',
+    domain: 'Management Sim · Cloud Ops',
+    status: 'live',
+    href: 'https://cloudsims.online',
+    blurb:
+      'Run a live cloud environment and juggle cost, latency, and availability under pressure. A terminal-styled management sim that teaches real infrastructure trade-offs — with an assessment mode for hiring and upskilling.',
+    outcome: 'Builds cloud cost & reliability judgment',
+    accent: 'from-spark/25 to-accent/20',
+  },
+];
+
+const customSims = [
   {
     title: 'Field & Technical Ops',
     domain: 'Frontline · Onboarding',
@@ -131,7 +146,7 @@ const research = [
 // ---------------------------------------------------------------------------
 const process = [
   { n: '01', title: 'Map the outcome', body: 'We start from the behavior you need to change and the metric that proves it — then work backward to the mechanics.' },
-  { n: '02', title: 'Design the loop', body: 'A core gameplay loop where every choice teaches, tuned with learning science: retrieval, spacing, and productive difficulty.' },
+  { n: '02', title: 'Design the loop', body: 'A core interaction loop where every choice teaches, tuned with learning science: retrieval, spacing, and productive difficulty.' },
   { n: '03', title: 'Build & instrument', body: 'We ship a playable simulation wired with analytics, so progress and mastery are visible, not assumed.' },
   { n: '04', title: 'Measure & iterate', body: 'Retention, confidence, and transfer data feed the next iteration. Learning that improves with evidence.' },
 ];
@@ -156,7 +171,7 @@ const process = [
             class="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-800/60 px-4 py-1.5 font-mono text-xs text-ink-200"
           >
             <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
-            Educational gaming &amp; simulation studio
+            Simulation &amp; modelling studio for training
           </span>
 
           <h1
@@ -172,13 +187,13 @@ const process = [
           </h1>
 
           <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
-            XAD Labs builds simulations and serious games for corporate, workforce, and field learning.
-            We turn dry training into practice with real stakes — so skills form in context, stay
-            in memory, and show up on the job.
+            XAD Labs builds simulations that let your team rehearse the real work — critical
+            procedures, live operations, day-one onboarding — until they can do it for real.
+            Skills form in context, so they show up on the job, not just in the test.
           </p>
 
           <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a href="#games" class="btn btn-primary w-full sm:w-auto">See our games</a>
+            <a href="#approach" class="btn btn-primary w-full sm:w-auto">See how it works</a>
             <a href="#contact" class="btn btn-ghost w-full sm:w-auto">Get in touch</a>
           </div>
         </div>
@@ -214,7 +229,7 @@ const process = [
           </h2>
           <p class="mt-4 text-lg leading-relaxed text-ink-200">
             People learn by acting, failing safely, and trying again. We design that loop
-            deliberately — grounded in learning science, delivered as a game.
+            deliberately — grounded in learning science, delivered as a working simulation.
           </p>
         </div>
 
@@ -241,7 +256,7 @@ const process = [
           <div class="max-w-2xl">
             <p class="eyebrow">The portfolio</p>
             <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              Games built to teach
+              Simulations built to train
             </h2>
             <p class="mt-4 text-lg leading-relaxed text-ink-200">
               From our own live titles to custom simulations we build for teams — each one designed
@@ -253,53 +268,24 @@ const process = [
           >
         </div>
 
-        <div class="mt-14 grid gap-6 md:grid-cols-2">
-          {
-            games.map((g, i) => (
-              <a
-                href={g.href}
-                target={g.href.startsWith('http') ? '_blank' : undefined}
-                rel={g.href.startsWith('http') ? 'noopener' : undefined}
-                class="card card-hover group flex flex-col overflow-hidden"
-                data-reveal
-                data-reveal-delay={(i % 2) * 100}
-              >
-                <div class={`relative aspect-[16/9] w-full bg-gradient-to-br ${g.accent}`}>
-                  <div class="absolute inset-0 grid-backdrop opacity-40" />
-                  <div class="absolute left-5 top-5">
-                    {g.status === 'live' ? (
-                      <span class="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink-900">
-                        <span class="h-1.5 w-1.5 rounded-full bg-ink-900" /> Live
-                      </span>
-                    ) : (
-                      <span class="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-ink-900/40 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-accent-300">
-                        Custom sim
-                      </span>
-                    )}
-                  </div>
-                  <div class="absolute bottom-4 right-5 font-display text-5xl font-bold text-paper/15">
-                    {g.title.split(' ')[0]}
-                  </div>
-                </div>
+        <!-- Category 1: our own live games -->
+        <div class="mt-14 flex items-center gap-4" data-reveal>
+          <h3 class="font-display text-xl font-semibold text-paper">Our games</h3>
+          <span class="font-mono text-xs uppercase tracking-wider text-ink-500">Live &amp; playable</span>
+          <span class="h-px flex-1 bg-ink-700/60"></span>
+        </div>
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+          {titles.map((g, i) => <GameCard game={g} delay={(i % 2) * 100} />)}
+        </div>
 
-                <div class="flex flex-1 flex-col p-7">
-                  <p class="font-mono text-xs uppercase tracking-wider text-accent-400">
-                    {g.domain}
-                  </p>
-                  <h3 class="mt-2 font-display text-2xl font-bold text-paper transition group-hover:text-accent-300">
-                    {g.title}
-                  </h3>
-                  <p class="mt-3 flex-1 text-[15px] leading-relaxed text-ink-300">{g.blurb}</p>
-                  <div class="mt-6 flex items-center justify-between border-t border-ink-700/60 pt-4">
-                    <span class="text-sm text-ink-200">{g.outcome}</span>
-                    <span class="text-sm font-semibold text-accent-300">
-                      {g.status === 'live' ? 'Play ↗' : 'Enquire →'}
-                    </span>
-                  </div>
-                </div>
-              </a>
-            ))
-          }
+        <!-- Category 2: custom simulations built for clients -->
+        <div class="mt-16 flex items-center gap-4" data-reveal>
+          <h3 class="font-display text-xl font-semibold text-paper">Custom simulations</h3>
+          <span class="font-mono text-xs uppercase tracking-wider text-ink-500">Built for your team</span>
+          <span class="h-px flex-1 bg-ink-700/60"></span>
+        </div>
+        <div class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {customSims.map((g, i) => <GameCard game={g} delay={(i % 3) * 100} />)}
         </div>
       </div>
     </section>
@@ -334,7 +320,7 @@ const process = [
           <div data-reveal>
             <p class="eyebrow">The evidence</p>
             <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              Play isn’t a gimmick. It’s the most efficient way people learn.
+              Simulation isn’t a nice-to-have. It’s the most efficient way people learn to perform.
             </h2>
             <p class="mt-5 text-lg leading-relaxed text-ink-200">
               Decades of learning science point the same direction: active, experiential practice
@@ -376,7 +362,7 @@ const process = [
         <div class="max-w-2xl" data-reveal>
           <p class="eyebrow">How we work</p>
           <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-            From learning goal to playable proof
+            From learning goal to working simulation
           </h2>
         </div>
 
@@ -401,24 +387,30 @@ const process = [
           <div data-reveal>
             <p class="eyebrow">About XAD Labs</p>
             <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              A studio at the intersection of games and learning science
+              A studio at the intersection of simulation, modelling, and learning science
             </h2>
             <div class="mt-5 space-y-4 text-lg leading-relaxed text-ink-200">
               <p>
-                XAD Labs designs and builds educational games and simulations for the
-                professionals, operators, and teams who don’t have time for training
-                that doesn’t work.
+                XAD Labs designs and builds simulations and models that train professionals,
+                operators, and teams for the procedures, scenarios, and operations they can’t
+                afford to get wrong.
               </p>
               <p>
-                We pair game design craft with evidence from cognitive and learning research, then
-                measure the result. Our own title, <a
+                We pair simulation and game-design craft with evidence from cognitive and learning
+                research, then measure the result. Our own titles, <a
                   href="https://rtagi.online"
                   target="_blank"
                   rel="noopener"
                   class="text-accent-300 underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
                   >Race to AGI</a
-                >, is proof of the philosophy: a genuinely fun strategy game that quietly teaches
-                risk, trade-offs, and long-term thinking.
+                > and <a
+                  href="https://cloudsims.online"
+                  target="_blank"
+                  rel="noopener"
+                  class="text-accent-300 underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
+                  >CloudSims</a
+                >, are proof of the philosophy: engaging on the surface, quietly teaching real
+                decision-making underneath.
               </p>
             </div>
           </div>
@@ -428,7 +420,7 @@ const process = [
               [
                 { k: 'Simulation-first', v: 'Learning by doing, not by slides' },
                 { k: 'Evidence-led', v: 'Grounded in learning-science research' },
-                { k: 'Outcome-measured', v: 'Analytics built into every title' },
+                { k: 'Outcome-measured', v: 'Analytics built into every build' },
                 { k: 'Workforce-focused', v: 'Designed for professional learners' },
               ].map((c) => (
                 <div class="rounded-2xl border border-ink-700/60 bg-ink-800/40 p-6">
@@ -460,9 +452,9 @@ const process = [
               Bring simulation to your team
             </h2>
             <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-200">
-              Tell us the skill you need people to actually have. We’ll show you what training-as-a-game
-              can do for retention, confidence, and time-to-competence. No form — just email us and
-              we’ll get back to you within one business day.
+              Tell us the procedure, role, or scenario your staff need to master. We’ll show you what
+              simulation-based training can do for retention, confidence, and time-to-competence.
+              No form — just email us and we’ll get back to you within one business day.
             </p>
 
             <a
