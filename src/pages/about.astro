@@ -1,0 +1,189 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const facts = [
+  { k: 'Headquarters', v: 'Colombo, Sri Lanka' },
+  { k: 'Focus', v: 'Simulation, games & learning' },
+  { k: 'Model', v: 'Independent, research-first studio' },
+  { k: 'Live products', v: 'Race to AGI · CloudSims' },
+];
+---
+
+<Base
+  title="About — XAD Labs"
+  description="XAD Labs is an independent research and development studio in Colombo, Sri Lanka, exploring the intersection of simulations, games, and learning. Founded and led by Mohammed Zameer."
+>
+  <Nav base="/" />
+
+  <main>
+    <!-- ================= INTRO ================= -->
+    <section class="relative overflow-hidden border-b border-ink-800">
+      <div class="absolute inset-0 grid-backdrop opacity-60"></div>
+      <div
+        class="pointer-events-none absolute -top-40 left-1/2 h-[460px] w-[760px] -translate-x-1/2 rounded-full opacity-60 blur-3xl"
+        style="background: radial-gradient(closest-side, rgba(0,214,143,0.16), transparent 70%);"
+      >
+      </div>
+
+      <div class="container-x relative py-20 sm:py-28">
+        <div class="max-w-3xl" data-reveal>
+          <span
+            class="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-800/60 px-4 py-1.5 font-mono text-xs text-ink-200"
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+            Colombo, Sri Lanka
+          </span>
+
+          <h1
+            class="mt-6 font-display text-4xl font-bold leading-[1.08] tracking-tight text-paper sm:text-5xl lg:text-6xl"
+          >
+            An independent studio for the science of learning by doing.
+          </h1>
+
+          <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
+            XAD Labs is a research and development studio exploring the intersection of
+            simulations, games, and learning. We design experiences that turn training into
+            genuine practice — and study what makes that learning last.
+          </p>
+        </div>
+
+        <!-- Facts -->
+        <div class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-ink-700/70 bg-ink-700/50 sm:grid-cols-2 lg:grid-cols-4" data-reveal data-reveal-delay="120">
+          {
+            facts.map((f) => (
+              <div class="bg-ink-900/80 p-6">
+                <p class="font-mono text-[11px] uppercase tracking-wider text-accent-400">{f.k}</p>
+                <p class="mt-2 font-display text-base font-semibold text-paper">{f.v}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MISSION ================= -->
+    <section class="border-b border-ink-800">
+      <div class="container-x py-20 sm:py-24">
+        <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+          <div data-reveal>
+            <p class="eyebrow">What we research</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
+              Where simulation, games, and learning meet
+            </h2>
+          </div>
+          <div class="space-y-5 text-lg leading-relaxed text-ink-200" data-reveal data-reveal-delay="100">
+            <p>
+              Most training tells people what to do. We are interested in the harder — and far more
+              effective — path: letting them do it. XAD Labs sits at the meeting point of three
+              disciplines, simulation, game design, and learning science, and builds at that
+              intersection.
+            </p>
+            <p>
+              Our own titles, <a
+                href="https://rtagi.online"
+                target="_blank"
+                rel="noopener"
+                class="text-accent-300 underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
+                >Race to AGI</a
+              > and <a
+                href="https://cloudsims.online"
+                target="_blank"
+                rel="noopener"
+                class="text-accent-300 underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
+                >CloudSims</a
+              >, double as public products and living research — testbeds for how people acquire and
+              retain complex skills. That same thinking carries into the custom simulations we build
+              for organisations training staff on critical procedures, operations, and onboarding.
+            </p>
+            <p>
+              We keep the studio deliberately lean and evidence-led: prove the idea, measure the
+              outcome, then scale what works.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LEADERSHIP ================= -->
+    <section class="border-b border-ink-800 bg-ink-900/40">
+      <div class="container-x py-20 sm:py-24">
+        <div class="max-w-2xl" data-reveal>
+          <p class="eyebrow">Leadership</p>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
+            Founded &amp; led by Mohammed Zameer
+          </h2>
+        </div>
+
+        <div class="mt-10 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+          <div class="space-y-5 text-lg leading-relaxed text-ink-200" data-reveal>
+            <p>
+              XAD Labs is founded and led by <strong class="font-semibold text-paper"
+                >Mohammed Zameer</strong
+              >, who runs the studio alongside a demanding day role. By day he works as a
+              <strong class="font-semibold text-paper">Senior Technical Consultant</strong> to a
+              European startup — an engagement delivered through a Sri Lankan–Norwegian software
+              partnership — where he has built deep expertise in product development, software
+              architecture, and scaling systems.
+            </p>
+            <p>
+              XAD Labs is where he channels that engineering discipline into a longer-standing
+              interest: how people actually learn. It is a founder-led, research-first venture —
+              built in the margins of full-time work, and all the more focused for it.
+            </p>
+            <a
+              href="https://www.linkedin.com/in/zameermfm/"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-ghost mt-2"
+            >
+              Connect on LinkedIn ↗
+            </a>
+          </div>
+
+          <div class="rounded-2xl border border-ink-700/60 bg-ink-800/40 p-8" data-reveal data-reveal-delay="120">
+            <p class="font-display text-2xl font-bold text-paper">Mohammed Zameer</p>
+            <p class="mt-1 text-sm text-accent-300">Founder &amp; CEO, XAD Labs</p>
+            <dl class="mt-6 space-y-4 text-sm">
+              <div>
+                <dt class="font-mono text-[11px] uppercase tracking-wider text-ink-500">Day role</dt>
+                <dd class="mt-1 text-ink-200">Senior Technical Consultant, European startup</dd>
+              </div>
+              <div>
+                <dt class="font-mono text-[11px] uppercase tracking-wider text-ink-500">Expertise</dt>
+                <dd class="mt-1 text-ink-200">Product development · Architecture · Scaling</dd>
+              </div>
+              <div>
+                <dt class="font-mono text-[11px] uppercase tracking-wider text-ink-500">Based in</dt>
+                <dd class="mt-1 text-ink-200">Colombo, Sri Lanka</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="border-b border-ink-800">
+      <div class="container-x py-20 sm:py-24">
+        <div class="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center" data-reveal>
+          <div>
+            <h2 class="font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+              Want to build or research with us?
+            </h2>
+            <p class="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-300">
+              From custom simulations to research collaborations, we’d like to hear from you.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a href="/#contact" class="btn btn-primary">Get in touch</a>
+            <a href="/#collaborate" class="btn btn-ghost">Research collaboration</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
