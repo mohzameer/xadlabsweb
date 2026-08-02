@@ -50,17 +50,17 @@ const titles = [
     title: 'Race to AGI',
     domain: 'Strategy · AI Safety',
     status: 'live',
-    href: 'https://rtagi.online',
+    href: 'https://rtagi.cloudsims.online',
     blurb:
       'Run a frontier AI lab racing three rivals to build AGI. The twist: getting there first isn’t the win — getting there safely is. A browser strategy sim about long-term thinking under pressure.',
     outcome: 'Teaches risk, governance & trade-off reasoning',
     accent: 'from-accent/25 to-spark/20',
   },
   {
-    title: 'CloudSims',
-    domain: 'Management Sim · Cloud Ops',
+    title: 'CloudArchitect',
+    domain: 'Management Sim · Cloud Architecture',
     status: 'live',
-    href: 'https://cloudsims.online',
+    href: 'https://cloudarch.cloudsims.online',
     blurb:
       'Run a live cloud environment and juggle cost, latency, and availability under pressure. A terminal-styled management sim that teaches real infrastructure trade-offs — with an assessment mode for hiring and upskilling.',
     outcome: 'Builds cloud cost & reliability judgment',
@@ -275,6 +275,13 @@ const process = [
           <h3 class="font-display text-xl font-semibold text-paper">Our games</h3>
           <span class="font-mono text-xs uppercase tracking-wider text-ink-500">Live &amp; playable</span>
           <span class="h-px flex-1 bg-ink-700/60"></span>
+          <a
+            href="https://cloudsims.online"
+            target="_blank"
+            rel="noopener"
+            class="shrink-0 whitespace-nowrap text-sm font-semibold text-accent-300 transition hover:text-accent"
+            >Games catalogue ↗</a
+          >
         </div>
         <div class="mt-6 grid gap-6 md:grid-cols-2">
           {titles.map((g, i) => <GameCard game={g} delay={(i % 2) * 100} />)}
@@ -400,17 +407,17 @@ const process = [
               <p>
                 We pair simulation and game-design craft with evidence from cognitive and learning
                 research, then measure the result. Our own titles, <a
-                  href="https://rtagi.online"
+                  href="https://rtagi.cloudsims.online"
                   target="_blank"
                   rel="noopener"
                   class="text-accent-300 underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
                   >Race to AGI</a
                 > and <a
-                  href="https://cloudsims.online"
+                  href="https://cloudarch.cloudsims.online"
                   target="_blank"
                   rel="noopener"
                   class="text-accent-300 underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
-                  >CloudSims</a
+                  >CloudArchitect</a
                 >, are proof of the philosophy: engaging on the surface, quietly teaching real
                 decision-making underneath.
               </p>
@@ -548,7 +555,7 @@ const process = [
                 class="btn btn-primary w-full sm:w-auto">Email us</a
               >
               <a
-                href="https://rtagi.online"
+                href="https://rtagi.cloudsims.online"
                 target="_blank"
                 rel="noopener"
                 class="btn btn-ghost w-full sm:w-auto">Try Race to AGI first ↗</a
