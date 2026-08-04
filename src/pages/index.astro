@@ -5,47 +5,114 @@ import Footer from '../components/Footer.astro';
 import GameCard from '../components/GameCard.astro';
 
 // ---------------------------------------------------------------------------
-// Headline research stats. Sources are named in full in the Research section.
+// The engagement — four fixed phases.
 // ---------------------------------------------------------------------------
-const heroStats = [
-  { value: '4×', label: 'faster to train with immersive simulation', source: 'PwC, 2020' },
-  { value: '75%', label: 'retained by learning-by-doing vs. ~5% from lecture', source: 'NTL' },
-  { value: '275%', label: 'more confident to act after immersive practice', source: 'PwC, 2020' },
-  { value: '9 in 10', label: 'employees more productive when learning is gamified', source: 'TalentLMS' },
+const phases = [
+  {
+    n: '1',
+    name: 'Discovery',
+    what:
+      "We sit with the people who designed the process and the people who'll run it. We identify the specific decisions that carry risk.",
+    dur: '1 week',
+  },
+  {
+    n: '2',
+    name: 'Build',
+    what:
+      'We model those decisions and calibrate against your own numbers — volumes, targets, staffing assumptions.',
+    dur: '2–3 weeks',
+  },
+  {
+    n: '3',
+    name: 'Run',
+    what:
+      'Two cohorts go through it. Browser and mobile — no installs, no facilitator required on site.',
+    dur: '1 week',
+  },
+  {
+    n: '4',
+    name: 'Report & revise',
+    what:
+      'We show you where understanding broke and where the design broke. One revision to the simulation.',
+    dur: '1 week',
+  },
+];
+
+const receive = [
+  'A working simulation of your process, running on our infrastructure',
+  'A model diagram your ops lead can read and correct — plain enough to argue with',
+  "Per-participant results: where each person's decisions diverged from the intended outcome",
+  'A findings report separating “people didn’t understand X” from “X doesn’t work as designed”',
+  'A record of every assumption we calibrated and who confirmed it',
 ];
 
 // ---------------------------------------------------------------------------
-// What we build — the three pillars of the practice.
+// What this is not for.
 // ---------------------------------------------------------------------------
-const pillars = [
+const notFor = [
   {
-    icon: '◎',
-    title: 'Simulations that mirror the job',
-    body:
-      'Decision-driven environments where learners run the real scenario — a market, a patient, a plant floor — and feel the consequences. Skills form in context, so they transfer to the field.',
+    lead: 'If your problem is people not following a known procedure',
+    body: ' — one right answer, known in advance — this is the wrong tool. That’s a drill, and cheaper options exist.',
   },
   {
-    icon: '⬡',
-    title: 'Models of the scenarios that matter',
-    body:
-      'We recreate the procedures, operations, and edge cases staff have to get right — routine onboarding through high-pressure exceptions — so they can rehearse safely, as many times as it takes.',
+    lead: 'If people understand the new process and don’t want it',
+    body: ', a simulation won’t fix that. That’s a different problem and we’ll tell you so.',
   },
   {
-    icon: '⟳',
-    title: 'Measurable, research-backed design',
-    body:
-      'Built on retrieval practice, spaced repetition, and deliberate difficulty. We instrument outcomes so L&D teams can prove retention, confidence, and on-the-job impact.',
+    lead: 'If the decision has no genuine tradeoff',
+    body: ' — if two experienced people at your company would always agree on the right move — there is nothing to rehearse.',
   },
 ];
 
 // ---------------------------------------------------------------------------
-// Portfolio, in two categories:
-//   `titles`     — our own live games, playable now
-//   `customSims` — simulations we design & build for a client's training need
-// TO ADD A REAL GAME: drop an image in /public and set `image`, then fill in
-// `href` (store/play link), `status: 'live'`, and the copy below.
+// Why not build it in-house.
 // ---------------------------------------------------------------------------
-const titles = [
+const inHouse = [
+  {
+    lead: 'You could build the software.',
+    body: 'It isn’t the hard part, and it gets easier every month. The hard part is the reduction — finding the one decision that actually carries the risk and cutting everything else away. Build it internally and you tend to get a faithful replica of the whole process, which teaches nothing, because everything is in it.',
+  },
+  {
+    lead: 'An internal build validates the design its own authors wrote.',
+    body: 'The value here is partly that someone outside the room is checking whether the process holds up. That doesn’t work if the checker reports to the designer.',
+  },
+  {
+    lead: 'It becomes nobody’s job.',
+    body: 'The person who could build it has a day job. It ships at 70% and quietly dies. You have seen this happen.',
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Pricing — bracketed figures are placeholders to fill in.
+// ---------------------------------------------------------------------------
+const pricing = [
+  { name: 'Dry Run', desc: 'As scoped above.', price: '[fixed fee]' },
+  { name: 'Additional cohorts', desc: 'Beyond the first two.', price: '[per cohort]' },
+  { name: 'Ongoing use for future intakes', desc: 'Optional — only if you want it.', price: '[annual]' },
+];
+
+// ---------------------------------------------------------------------------
+// Starting — smallest useful first step, in order of preference.
+// ---------------------------------------------------------------------------
+const starting = [
+  {
+    lead: 'Send us the process document',
+    body: ' — the design, the new rules, the deck. We’ll tell you within a week whether there’s a real simulation in it, and if there isn’t, we’ll tell you that too.',
+  },
+  {
+    lead: 'Ninety minutes with the people who’ll run it.',
+    body: ' We’ll run one of our existing simulations with them. If they don’t come out of it arguing about a decision they got wrong, there’s nothing here for you.',
+  },
+  {
+    lead: 'Your last three incident or post-mortem reviews.',
+    body: ' If the same failure appears twice, that’s the simulation — and you’ve already documented the model for us.',
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Live work — real, playable proof.
+// ---------------------------------------------------------------------------
+const liveWork = [
   {
     title: 'Race to AGI',
     domain: 'Strategy · AI Safety',
@@ -68,88 +135,7 @@ const titles = [
   },
 ];
 
-const customSims = [
-  {
-    title: 'Field & Technical Ops',
-    domain: 'Frontline · Onboarding',
-    status: 'custom',
-    href: '#contact',
-    blurb:
-      'Guided simulations for technical and field roles — equipment, workflows, and troubleshooting rehearsed before the first real shift. Cut time-to-competence for new hires.',
-    outcome: 'Shortens time-to-competence on the floor',
-    accent: 'from-spark/15 to-accent/20',
-  },
-  {
-    title: 'Safety & Compliance Sim',
-    domain: 'Corporate · High-risk operations',
-    status: 'custom',
-    href: '#contact',
-    blurb:
-      'Branching scenario training for safety-critical environments — hazard recognition, protocol under pressure, and the cost of shortcuts. Compliance that people remember, not click through.',
-    outcome: 'Builds procedural recall & hazard judgment',
-    accent: 'from-spark/20 to-accent/15',
-  },
-  {
-    title: 'Leadership & Soft-Skills Lab',
-    domain: 'Corporate · L&D',
-    status: 'custom',
-    href: '#contact',
-    blurb:
-      'Practice the hard conversations — feedback, conflict, change — with responsive characters and no real-world fallout. Confidence built through reps, not slideware.',
-    outcome: 'Grows confidence & communication skill',
-    accent: 'from-accent/20 to-spark/15',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Who it's for.
-// ---------------------------------------------------------------------------
-const audiences = [
-  { title: 'Corporate L&D', body: 'Onboarding, compliance, and leadership programs that move the needle on retention and behavior — not just completion rates.' },
-  { title: 'High-stakes & safety', body: 'Healthcare, energy, manufacturing, and aviation, where rehearsing failure in a sim is far cheaper than living it in the field.' },
-  { title: 'Frontline & field teams', body: 'Technical, operational, and customer-facing roles that need judgment and muscle memory before day one.' },
-  { title: 'Professional & continuing education', body: 'Programs for working professionals who are busy, skeptical of theory, and want skills that obviously apply to their work.' },
-];
-
-// ---------------------------------------------------------------------------
-// Research findings — the evidence behind the approach.
-// ---------------------------------------------------------------------------
-const research = [
-  {
-    stat: '4× faster',
-    finding:
-      'In PwC’s controlled study, employees trained in immersive simulation learned up to four times faster than in the classroom, were 275% more confident applying what they learned, and were 4× more focused than e-learning peers.',
-    source: 'PwC, “The Effectiveness of VR Soft Skills Training,” 2020',
-  },
-  {
-    stat: 'd ≈ 0.36',
-    finding:
-      'A meta-analysis of serious games across dozens of studies found learners taught with games retained knowledge significantly better than those in conventional instruction — and learned more overall.',
-    source: 'Wouters et al., Journal of Educational Psychology, 2013',
-  },
-  {
-    stat: '75% vs 5%',
-    finding:
-      'Learners retain a far larger share of what they practice by doing than what they hear in a lecture — the core reason simulation-based training transfers to real performance.',
-    source: 'NTL Institute, learning-by-doing research',
-  },
-  {
-    stat: '89%',
-    finding:
-      'Nearly nine in ten employees report they’re more productive when learning is gamified, and 88% say it makes them happier at work — engagement that translates into completion and recall.',
-    source: 'TalentLMS, Gamification at Work Survey',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Process.
-// ---------------------------------------------------------------------------
-const process = [
-  { n: '01', title: 'Map the outcome', body: 'We start from the behavior you need to change and the metric that proves it — then work backward to the mechanics.' },
-  { n: '02', title: 'Design the loop', body: 'A core interaction loop where every choice teaches, tuned with learning science: retrieval, spacing, and productive difficulty.' },
-  { n: '03', title: 'Build & instrument', body: 'We ship a playable simulation wired with analytics, so progress and mastery are visible, not assumed.' },
-  { n: '04', title: 'Measure & iterate', body: 'Retention, confidence, and transfer data feed the next iteration. Learning that improves with evidence.' },
-];
+const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20process%20document';
 ---
 
 <Base>
@@ -157,466 +143,372 @@ const process = [
 
   <main>
     <!-- ================= HERO ================= -->
-    <section
-      class="relative flex overflow-hidden sm:min-h-[calc(100svh-4rem)] sm:items-center"
-    >
-      <div class="absolute inset-0 grid-backdrop opacity-70"></div>
+    <section class="relative overflow-hidden border-b border-ink-800">
+      <div class="absolute inset-0 grid-backdrop opacity-60"></div>
       <div
-        class="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full opacity-60 blur-3xl"
-        style="background: radial-gradient(closest-side, rgba(0,214,143,0.20), transparent 70%);"
+        class="pointer-events-none absolute -top-40 left-1/2 h-[460px] w-[820px] -translate-x-1/2 rounded-full opacity-60 blur-3xl"
+        style="background: radial-gradient(closest-side, rgba(0,214,143,0.16), transparent 70%);"
       >
       </div>
 
-      <div class="container-x relative w-full py-14 sm:py-16">
-        <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <div class="container-x relative py-24 sm:py-32">
+        <div class="mx-auto max-w-3xl" data-reveal>
           <span
             class="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-800/60 px-4 py-1.5 font-mono text-xs text-ink-200"
           >
             <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
-            Simulation &amp; modelling studio for training
+            Dry Run · process rehearsal before rollout
           </span>
 
           <h1
-            class="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight text-paper sm:text-6xl lg:text-7xl"
+            class="mt-6 font-display text-4xl font-bold leading-[1.08] tracking-tight text-paper sm:text-5xl lg:text-6xl"
           >
-            Training that
-            <span class="relative whitespace-nowrap">
-              <span class="relative z-10 text-accent">sticks.</span>
-              <span class="absolute inset-x-0 bottom-1 z-0 h-3 bg-accent/20"></span>
-            </span>
-            <br class="hidden sm:block" />
-            Because they lived it.
+            You’ve designed a new process. Nobody has run it yet.
           </h1>
 
-          <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
-            XAD Labs builds simulations that let your team rehearse the real work — critical
-            procedures, live operations, day-one onboarding — until they can do it for real.
-            Skills form in context, so they show up on the job, not just in the test.
+          <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
+            A <strong class="font-semibold text-paper">Dry Run</strong> is a rehearsal of your new
+            process — with your people, against your own numbers — before it goes live. Your team
+            makes the hard calls once in a session where being wrong costs nothing, and you find out
+            where the design breaks while it’s still cheap to change.
           </p>
 
-          <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a href="#approach" class="btn btn-primary w-full sm:w-auto">See how it works</a>
-            <a href="#contact" class="btn btn-ghost w-full sm:w-auto">Get in touch</a>
+          <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a href={mailto} class="btn btn-primary">Send us the process document</a>
+            <a href="#what-we-do" class="btn btn-ghost">How it works</a>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Stat band -->
-        <div
-          class="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink-700/70 bg-ink-700/50 sm:mt-14 lg:grid-cols-4"
-          data-reveal
-          data-reveal-delay="120"
-        >
-          {
-            heroStats.map((s) => (
-              <div class="bg-ink-900/80 p-6 text-center sm:p-7">
-                <div class="font-display text-3xl font-bold text-accent sm:text-4xl">{s.value}</div>
-                <p class="mt-2 text-sm leading-snug text-ink-200">{s.label}</p>
-                <p class="mt-2 font-mono text-[11px] uppercase tracking-wider text-ink-500">
-                  {s.source}
-                </p>
-              </div>
-            ))
-          }
+    <!-- ================= THE PROBLEM ================= -->
+    <section id="problem" class="border-b border-ink-800">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl" data-reveal>
+          <p class="eyebrow">The problem this addresses</p>
+          <div class="mt-6 space-y-5 text-lg leading-relaxed text-ink-200">
+            <p>
+              You have designed a new process. A new client account, a new staffing model, a new
+              workflow, a new way of running the floor.
+            </p>
+            <p>
+              It exists as a document, a deck, and a set of assumptions. It has never been run by the
+              people who will run it.
+            </p>
+            <p>
+              So it gets rolled out. Memos, town halls, Slack, a training session. And then, over the
+              following weeks, you find out which parts of the design didn’t survive contact —
+              usually from the people who were supposed to have understood it, and usually after it
+              has cost something.
+            </p>
+          </div>
+          <blockquote
+            class="mt-8 border-l-2 border-accent pl-6 font-display text-2xl font-semibold leading-snug text-paper"
+          >
+            The gap isn’t that people weren’t told. It’s that nobody rehearsed the decisions the new
+            process asks them to make.
+          </blockquote>
         </div>
       </div>
     </section>
 
-    <!-- ================= APPROACH ================= -->
-    <section id="approach" class="border-t border-ink-800 bg-ink-900/40">
-      <div class="container-x py-24 sm:py-28">
-        <div class="max-w-2xl" data-reveal>
-          <p class="eyebrow">The approach</p>
-          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-            People don’t remember what they’re told. They remember what they do.
-          </h2>
-          <p class="mt-4 text-lg leading-relaxed text-ink-200">
-            People learn by acting, failing safely, and trying again. We design that loop
-            deliberately — grounded in learning science, delivered as a working simulation.
+    <!-- ================= WHAT WE DO ================= -->
+    <section id="what-we-do" class="border-b border-ink-800 bg-ink-900/40">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl">
+          <div data-reveal>
+            <p class="eyebrow">What we do</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
+              A rehearsal, not a walkthrough
+            </h2>
+            <div class="mt-6 space-y-5 text-lg leading-relaxed text-ink-200">
+              <p>
+                A Dry Run is a rehearsal of your new process, with your people, against your own
+                numbers, before it goes live. We build a simulation of the process and run your team
+                through it.
+              </p>
+              <p>
+                Not a walkthrough of the steps. A working model of the decisions — where the
+                tradeoffs are, what compounds, what happens when two priorities collide at 11am on a
+                Tuesday.
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-8 text-sm font-medium uppercase tracking-wider text-ink-400" data-reveal>
+            You get two things out of it
+          </p>
+          <div class="mt-4 grid gap-5 sm:grid-cols-2" data-reveal data-reveal-delay="100">
+            <div class="card p-7">
+              <span class="font-mono text-sm text-accent-500">01</span>
+              <p class="mt-3 text-[15px] leading-relaxed text-ink-200">
+                <strong class="font-semibold text-paper">Your people have made the hard calls once
+                  already</strong>, in a session where being wrong cost nothing.
+              </p>
+            </div>
+            <div class="card p-7">
+              <span class="font-mono text-sm text-accent-500">02</span>
+              <p class="mt-3 text-[15px] leading-relaxed text-ink-200">
+                <strong class="font-semibold text-paper">You find out where your design breaks</strong>
+                — which rules are ambiguous, which thresholds are wrong, which edge case nobody
+                thought about — while it is still cheap to change.
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-8 text-lg leading-relaxed text-ink-100" data-reveal>
+            The second one is the part nobody else offers.
+            <span class="text-accent-300"
+              >Training assumes the process is correct. A rehearsal tests it.</span
+            >
           </p>
         </div>
-
-        <div class="mt-14 grid gap-6 md:grid-cols-3">
-          {
-            pillars.map((p, i) => (
-              <div class="card card-hover p-8" data-reveal data-reveal-delay={i * 100}>
-                <div class="grid h-11 w-11 place-items-center rounded-xl bg-accent/10 text-2xl text-accent">
-                  {p.icon}
-                </div>
-                <h3 class="mt-5 font-display text-xl font-semibold text-paper">{p.title}</h3>
-                <p class="mt-3 text-[15px] leading-relaxed text-ink-300">{p.body}</p>
-              </div>
-            ))
-          }
-        </div>
       </div>
     </section>
 
-    <!-- ================= GAMES ================= -->
-    <section id="games" class="border-t border-ink-800">
-      <div class="container-x py-24 sm:py-28">
-        <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end" data-reveal>
-          <div class="max-w-2xl">
-            <p class="eyebrow">The portfolio</p>
+    <!-- ================= THE ENGAGEMENT ================= -->
+    <section id="engagement" class="border-b border-ink-800">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl">
+          <div data-reveal>
+            <p class="eyebrow">The engagement</p>
             <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              Simulations built to train
+              Fixed scope. Fixed price. Finite.
             </h2>
             <p class="mt-4 text-lg leading-relaxed text-ink-200">
-              From our own live titles to custom simulations we build for teams — each one designed
-              around a specific learning outcome.
+              Every Dry Run runs the same shape.
             </p>
           </div>
-          <a href="#contact" class="hidden shrink-0 text-sm font-semibold text-accent-300 hover:text-accent sm:inline-flex"
-            >Commission a custom sim →</a
-          >
-        </div>
 
-        <!-- Category 1: our own live games -->
-        <div class="mt-14 flex items-center gap-4" data-reveal>
-          <h3 class="font-display text-xl font-semibold text-paper">Our games</h3>
-          <span class="font-mono text-xs uppercase tracking-wider text-ink-500">Live &amp; playable</span>
-          <span class="h-px flex-1 bg-ink-700/60"></span>
-          <a
-            href="https://cloudsims.online"
-            target="_blank"
-            rel="noopener"
-            class="shrink-0 whitespace-nowrap text-sm font-semibold text-accent-300 transition hover:text-accent"
-            >Games catalogue ↗</a
-          >
-        </div>
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          {titles.map((g, i) => <GameCard game={g} delay={(i % 2) * 100} />)}
-        </div>
-
-        <!-- Category 2: custom simulations built for clients -->
-        <div class="mt-16 flex items-center gap-4" data-reveal>
-          <h3 class="font-display text-xl font-semibold text-paper">Custom simulations</h3>
-          <span class="font-mono text-xs uppercase tracking-wider text-ink-500">Built for your team</span>
-          <span class="h-px flex-1 bg-ink-700/60"></span>
-        </div>
-        <div class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {customSims.map((g, i) => <GameCard game={g} delay={(i % 3) * 100} />)}
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= AUDIENCES ================= -->
-    <section class="border-t border-ink-800 bg-ink-900/40">
-      <div class="container-x py-24 sm:py-28">
-        <div class="max-w-2xl" data-reveal>
-          <p class="eyebrow">Who it’s for</p>
-          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-            Built for the fields where getting it wrong is expensive
-          </h2>
-        </div>
-
-        <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {
-            audiences.map((a, i) => (
-              <div class="rounded-2xl border border-ink-700/60 p-7" data-reveal data-reveal-delay={i * 80}>
-                <h3 class="font-display text-lg font-semibold text-paper">{a.title}</h3>
-                <p class="mt-3 text-[15px] leading-relaxed text-ink-300">{a.body}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= RESEARCH ================= -->
-    <section id="research" class="border-t border-ink-800">
-      <div class="container-x py-24 sm:py-28">
-        <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-          <div data-reveal>
-            <p class="eyebrow">The evidence</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              Simulation isn’t a nice-to-have. It’s the most efficient way people learn to perform.
-            </h2>
-            <p class="mt-5 text-lg leading-relaxed text-ink-200">
-              Decades of learning science point the same direction: active, experiential practice
-              beats passive instruction on retention, confidence, and transfer to the real world.
-              Here’s the research we build on.
-            </p>
-            <a href="#contact" class="btn btn-primary mt-8">Talk to us about outcomes</a>
-          </div>
-
-          <div class="space-y-5">
+          <!-- Phase table -->
+          <div class="mt-8 border-y border-ink-800" data-reveal>
             {
-              research.map((r, i) => (
-                <div class="card p-7" data-reveal data-reveal-delay={i * 90}>
-                  <div class="flex items-baseline gap-4">
-                    <span class="shrink-0 font-display text-2xl font-bold text-accent">
-                      {r.stat}
-                    </span>
-                    <p class="text-[15px] leading-relaxed text-ink-200">{r.finding}</p>
+              phases.map((p) => (
+                <div class="grid gap-2 border-t border-ink-800 py-6 first:border-t-0 sm:grid-cols-[13rem_1fr_auto] sm:items-baseline sm:gap-8">
+                  <div class="flex items-baseline gap-3">
+                    <span class="font-mono text-sm text-accent-500">{p.n}</span>
+                    <span class="font-display text-lg font-semibold text-paper">{p.name}</span>
                   </div>
-                  <p class="mt-4 border-t border-ink-700/60 pt-3 font-mono text-[11px] uppercase tracking-wider text-ink-500">
-                    {r.source}
-                  </p>
+                  <p class="text-[15px] leading-relaxed text-ink-300">{p.what}</p>
+                  <span class="whitespace-nowrap font-mono text-xs uppercase tracking-wider text-ink-400 sm:text-right">
+                    {p.dur}
+                  </span>
                 </div>
               ))
             }
-            <p class="pt-1 text-xs leading-relaxed text-ink-500">
-              Figures reflect published third-party studies of simulation, VR, and game-based
-              learning; exact results vary by program and context. We instrument every build so your
-              own outcome data replaces industry averages.
-            </p>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ================= PROCESS ================= -->
-    <section class="border-t border-ink-800 bg-ink-900/40">
-      <div class="container-x py-24 sm:py-28">
-        <div class="max-w-2xl" data-reveal>
-          <p class="eyebrow">How we work</p>
-          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-            From learning goal to working simulation
-          </h2>
-        </div>
+          <p class="mt-6 text-lg text-ink-100" data-reveal>
+            <strong class="font-semibold text-paper">Total: 5–6 weeks.</strong> Then we hand over the
+            results and go.
+          </p>
 
-        <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {
-            process.map((p, i) => (
-              <div class="relative" data-reveal data-reveal-delay={i * 80}>
-                <span class="font-mono text-sm font-medium text-accent-500">{p.n}</span>
-                <h3 class="mt-3 font-display text-lg font-semibold text-paper">{p.title}</h3>
-                <p class="mt-2 text-[15px] leading-relaxed text-ink-300">{p.body}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= ABOUT ================= -->
-    <section id="about" class="border-t border-ink-800">
-      <div class="container-x py-24 sm:py-28">
-        <div class="grid gap-14 lg:grid-cols-[1fr_1fr] lg:gap-20 lg:items-center">
-          <div data-reveal>
-            <p class="eyebrow">About XAD Labs</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              A studio at the intersection of simulation, modelling, and learning science
-            </h2>
-            <div class="mt-5 space-y-4 text-lg leading-relaxed text-ink-200">
-              <p>
-                XAD Labs designs and builds simulations and models that train professionals,
-                operators, and teams for the procedures, scenarios, and operations they can’t
-                afford to get wrong.
-              </p>
-              <p>
-                We pair simulation and game-design craft with evidence from cognitive and learning
-                research, then measure the result. Our own titles, <a
-                  href="https://rtagi.cloudsims.online"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-accent-300 underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
-                  >Race to AGI</a
-                > and <a
-                  href="https://cloudarch.cloudsims.online"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-accent-300 underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
-                  >CloudArchitect</a
-                >, are proof of the philosophy: engaging on the surface, quietly teaching real
-                decision-making underneath.
+          <!-- Receive / don't receive -->
+          <div class="mt-12 grid gap-8 lg:grid-cols-2" data-reveal>
+            <div>
+              <h3 class="font-display text-lg font-semibold text-paper">What you receive</h3>
+              <ul class="mt-5 space-y-3">
+                {
+                  receive.map((item) => (
+                    <li class="flex gap-3 text-[15px] leading-relaxed text-ink-200">
+                      <span class="mt-0.5 text-accent" aria-hidden="true">
+                        ✓
+                      </span>
+                      <span set:html={item} />
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-semibold text-paper">What you don’t receive</h3>
+              <p class="mt-5 text-[15px] leading-relaxed text-ink-300">
+                No system to maintain. No licence to renew. No integration into your stack. If you
+                want the simulation kept alive for future cohorts, that is a separate conversation you
+                can have later, or not at all.
               </p>
             </div>
-
-            <a
-              href="/about"
-              class="mt-6 inline-flex items-center text-sm font-semibold text-accent-300 transition hover:text-accent"
-            >
-              Read the full story →
-            </a>
-          </div>
-
-          <div class="grid grid-cols-2 gap-5" data-reveal data-reveal-delay="120">
-            {
-              [
-                { k: 'Simulation-first', v: 'Learning by doing, not by slides' },
-                { k: 'Evidence-led', v: 'Grounded in learning-science research' },
-                { k: 'Outcome-measured', v: 'Analytics built into every build' },
-                { k: 'Workforce-focused', v: 'Designed for professional learners' },
-              ].map((c) => (
-                <div class="rounded-2xl border border-ink-700/60 bg-ink-800/40 p-6">
-                  <p class="font-display text-lg font-semibold text-accent-300">{c.k}</p>
-                  <p class="mt-2 text-sm leading-relaxed text-ink-300">{c.v}</p>
-                </div>
-              ))
-            }
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= RESEARCH COLLABORATION ================= -->
-    <section id="collaborate" class="border-t border-ink-800 bg-ink-900/40">
+    <!-- ================= NOT FOR ================= -->
+    <section id="not-for" class="border-b border-ink-800 bg-ink-900/40">
       <div class="container-x py-20 sm:py-24">
-        <div
-          class="flex flex-col gap-8 rounded-3xl border border-ink-700/70 bg-ink-800/40 p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between"
-          data-reveal
-        >
-          <div class="max-w-2xl">
-            <p class="eyebrow">Research collaboration</p>
-            <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
-              Open to working with universities &amp; research institutes
-            </h2>
-            <p class="mt-4 text-[15px] leading-relaxed text-ink-200 sm:text-base">
-              We welcome collaborations with universities and esteemed research institutes on
-              simulation and learning-science research projects — from study design to building the
-              simulation itself. Where the partnering institution can cover the infrastructure
-              costs, we’re glad to bring the studio’s design and engineering to the table.
+        <div class="mx-auto max-w-3xl">
+          <div data-reveal>
+            <p class="eyebrow">What this is not for</p>
+            <p class="mt-4 text-lg leading-relaxed text-ink-200">
+              Worth saying plainly, because it will save us both time.
             </p>
           </div>
-          <div class="relative shrink-0">
-            <button
-              id="collab-toggle"
-              type="button"
-              class="btn btn-primary"
-              aria-expanded="false"
-              aria-controls="collab-card"
-            >
-              Propose a project
-            </button>
+          <ul class="mt-6 space-y-4" data-reveal>
+            {
+              notFor.map((n) => (
+                <li class="flex gap-3 text-lg leading-relaxed text-ink-200">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-500" aria-hidden="true" />
+                  <span>
+                    <strong class="font-semibold text-paper">{n.lead}</strong>
+                    {n.body}
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+          <blockquote
+            class="mt-8 border-l-2 border-accent pl-6 text-lg leading-relaxed text-ink-100"
+            data-reveal
+          >
+            The test we apply: <em class="text-paper"
+              >can two competent people here disagree about the right call, and would running it
+              settle the argument?</em
+            > If yes, this works. If no, we’ll say so before you spend anything.
+          </blockquote>
+        </div>
+      </div>
+    </section>
 
-            <!-- Contact card revealed on click -->
-            <div
-              id="collab-card"
-              class="absolute right-0 top-full z-40 mt-3 w-72 origin-top-right rounded-2xl border border-ink-700 bg-ink-900 p-5 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.8)]"
-              hidden
-            >
-              <p class="eyebrow">Email your proposal to</p>
-              <a
-                href="mailto:zameer@xadlabs.com?subject=Research%20collaboration%20%E2%80%94%20XAD%20Labs"
-                class="mt-2 block font-display text-lg font-semibold text-accent-300 transition hover:text-accent"
-              >
-                zameer@xadlabs.com
-              </a>
-              <div class="mt-4 flex items-center gap-2">
-                <button
-                  id="collab-copy"
-                  type="button"
-                  data-email="zameer@xadlabs.com"
-                  class="btn btn-primary flex-1 !px-4 !py-2 text-xs"
-                >
-                  Copy address
-                </button>
-                <a
-                  href="mailto:zameer@xadlabs.com?subject=Research%20collaboration%20%E2%80%94%20XAD%20Labs"
-                  class="btn btn-ghost !px-4 !py-2 text-xs"
-                >
-                  Open mail
-                </a>
-              </div>
-              <p class="mt-3 text-xs leading-relaxed text-ink-500">
-                Tell us the institution and the project. We reply within one business day.
-              </p>
-            </div>
+    <!-- ================= WHY NOT IN-HOUSE ================= -->
+    <section id="in-house" class="border-b border-ink-800">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl">
+          <div data-reveal>
+            <p class="eyebrow">Why not build it in-house</p>
+            <p class="mt-4 text-lg leading-relaxed text-ink-200">
+              A fair question, and the honest answers:
+            </p>
+          </div>
+          <div class="mt-6 space-y-6" data-reveal>
+            {
+              inHouse.map((x) => (
+                <p class="text-lg leading-relaxed text-ink-200">
+                  <strong class="font-semibold text-paper">{x.lead}</strong> {x.body}
+                </p>
+              ))
+            }
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= CONTACT / CTA ================= -->
-    <section id="contact" class="border-t border-ink-800">
-      <div class="container-x py-24 sm:py-28">
-        <div
-          class="relative overflow-hidden rounded-3xl border border-ink-700/70 bg-ink-800/50 px-8 py-16 text-center sm:px-16 sm:py-20"
-          data-reveal
-        >
-          <div class="absolute inset-0 grid-backdrop opacity-40"></div>
-          <div
-            class="pointer-events-none absolute -bottom-24 left-1/2 h-72 w-[640px] -translate-x-1/2 rounded-full opacity-70 blur-3xl"
-            style="background: radial-gradient(closest-side, rgba(0,214,143,0.22), transparent 70%);"
-          >
-          </div>
-          <div class="relative">
-            <h2 class="font-display text-3xl font-bold tracking-tight text-paper sm:text-5xl">
-              Bring simulation to your team
+    <!-- ================= PRICING ================= -->
+    <section id="pricing" class="border-b border-ink-800 bg-ink-900/40">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl">
+          <div data-reveal>
+            <p class="eyebrow">Pricing</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
+              Priced per engagement, not per seat, not per year
             </h2>
-            <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-200">
-              Tell us the procedure, role, or scenario your staff need to master. We’ll show you what
-              simulation-based training can do for retention, confidence, and time-to-competence.
-              No form — just email us and we’ll get back to you within one business day.
-            </p>
-
-            <a
-              href="mailto:zameer@xadlabs.com?subject=Simulation%20enquiry%20%E2%80%94%20XAD%20Labs"
-              class="mt-8 inline-flex items-center gap-3 rounded-2xl border border-ink-700/70 bg-ink-900/50 px-6 py-4 font-display text-xl font-semibold text-paper transition hover:border-accent/50 hover:text-accent-300 sm:text-2xl"
-            >
-              <span aria-hidden="true">✉</span>
-              zameer@xadlabs.com
-            </a>
-
-            <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href="mailto:zameer@xadlabs.com?subject=Simulation%20enquiry%20%E2%80%94%20XAD%20Labs"
-                class="btn btn-primary w-full sm:w-auto">Email us</a
-              >
-              <a
-                href="https://rtagi.cloudsims.online"
-                target="_blank"
-                rel="noopener"
-                class="btn btn-ghost w-full sm:w-auto">Try Race to AGI first ↗</a
-              >
-            </div>
           </div>
+
+          <div class="mt-8 border-y border-ink-800" data-reveal>
+            {
+              pricing.map((p) => (
+                <div class="flex flex-col gap-1 border-t border-ink-800 py-5 first:border-t-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                  <div>
+                    <p class="font-display text-lg font-semibold text-paper">{p.name}</p>
+                    <p class="text-sm text-ink-400">{p.desc}</p>
+                  </div>
+                  <span class="whitespace-nowrap font-mono text-sm text-accent-300">{p.price}</span>
+                </div>
+              ))
+            }
+          </div>
+
+          <p class="mt-5 text-[15px] leading-relaxed text-ink-200" data-reveal>
+            No per-participant licensing. Run it with fifteen people or eighty; the price is the same.
+          </p>
+          <p class="mt-2 text-xs leading-relaxed text-ink-500" data-reveal>
+            Bracketed figures are placeholders — final pricing is quoted per engagement.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STARTING ================= -->
+    <section id="start" class="border-b border-ink-800">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl">
+          <div data-reveal>
+            <p class="eyebrow">Starting</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
+              The smallest useful first step
+            </h2>
+            <p class="mt-4 text-lg leading-relaxed text-ink-200">In order of preference:</p>
+          </div>
+
+          <ol class="mt-8 space-y-6" data-reveal>
+            {
+              starting.map((s, i) => (
+                <li class="flex gap-4">
+                  <span class="font-display text-xl font-bold text-accent-500">{i + 1}</span>
+                  <p class="text-lg leading-relaxed text-ink-200">
+                    <strong class="font-semibold text-paper">{s.lead}</strong>
+                    {s.body}
+                  </p>
+                </li>
+              ))
+            }
+          </ol>
+
+          <div class="mt-10 flex flex-col gap-3 sm:flex-row" data-reveal>
+            <a href={mailto} class="btn btn-primary">Send the process document</a>
+            <a href="mailto:zameer@xadlabs.com" class="btn btn-ghost">zameer@xadlabs.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LIVE WORK ================= -->
+    <section id="work" class="border-b border-ink-800 bg-ink-900/40">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl">
+          <div class="flex items-end justify-between gap-4" data-reveal>
+            <div>
+              <p class="eyebrow">Live work</p>
+              <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+                Simulations you can play right now
+              </h2>
+            </div>
+            <a
+              href="https://cloudsims.online"
+              target="_blank"
+              rel="noopener"
+              class="hidden shrink-0 whitespace-nowrap text-sm font-semibold text-accent-300 transition hover:text-accent sm:inline-flex"
+              >Games catalogue ↗</a
+            >
+          </div>
+
+          <div class="mt-8 grid gap-6 sm:grid-cols-2">
+            {liveWork.map((g, i) => <GameCard game={g} delay={(i % 2) * 100} />)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl text-center" data-reveal>
+          <p class="font-display text-xl font-bold text-paper">
+            <span class="text-accent">xad</span> labs
+          </p>
+          <p class="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-ink-400">
+            Simulation &amp; modelling studio
+          </p>
+          <a
+            href={mailto}
+            class="mt-6 inline-flex items-center gap-3 rounded-2xl border border-ink-700/70 bg-ink-900/50 px-6 py-4 font-display text-xl font-semibold text-paper transition hover:border-accent/50 hover:text-accent-300 sm:text-2xl"
+          >
+            <span aria-hidden="true">✉</span>
+            zameer@xadlabs.com
+          </a>
         </div>
       </div>
     </section>
   </main>
 
   <Footer />
-
-  <script>
-    // Research-collaboration contact card: click to reveal the email, copy it,
-    // dismiss on outside-click or Escape.
-    const toggle = document.getElementById('collab-toggle');
-    const card = document.getElementById('collab-card');
-    const copyBtn = document.getElementById('collab-copy') as HTMLButtonElement | null;
-
-    if (toggle && card) {
-      const open = () => {
-        card.hidden = false;
-        toggle.setAttribute('aria-expanded', 'true');
-      };
-      const close = () => {
-        card.hidden = true;
-        toggle.setAttribute('aria-expanded', 'false');
-      };
-
-      toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        card.hidden ? open() : close();
-      });
-
-      // Keep clicks inside the card from bubbling to the outside-click handler.
-      card.addEventListener('click', (e) => e.stopPropagation());
-
-      document.addEventListener('click', () => {
-        if (!card.hidden) close();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !card.hidden) {
-          close();
-          toggle.focus();
-        }
-      });
-
-      copyBtn?.addEventListener('click', async () => {
-        const email = copyBtn.dataset.email ?? '';
-        const label = copyBtn.textContent;
-        try {
-          await navigator.clipboard.writeText(email);
-          copyBtn.textContent = 'Copied ✓';
-        } catch {
-          copyBtn.textContent = 'Copy failed';
-        }
-        window.setTimeout(() => {
-          copyBtn.textContent = label;
-        }, 1800);
-      });
-    }
-  </script>
 </Base>
