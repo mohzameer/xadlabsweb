@@ -42,7 +42,7 @@ const phases = [
 const receive = [
   'A working simulation of your process, running on our infrastructure',
   'A model diagram your ops lead can read and correct — plain enough to argue with',
-  "Per-participant results: where each person's decisions diverged from the intended outcome",
+  'Group-level results: where divergence concentrates — by team, site, and shift',
   'A findings report separating “people didn’t understand X” from “X doesn’t work as designed”',
   'A record of every assumption we calibrated and who confirmed it',
 ];
@@ -152,20 +152,19 @@ const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20proces
             class="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-800/60 px-4 py-1.5 font-mono text-xs text-ink-200"
           >
             <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
-            Dry Run · process rehearsal before rollout
+            Dry Run · what actually landed
           </span>
 
           <h1
             class="mt-6 font-display text-4xl font-bold leading-[1.08] tracking-tight text-paper sm:text-5xl lg:text-6xl"
           >
-            You’ve designed a new process. Nobody has run it yet.
+            You rolled it out. Did it land?
           </h1>
 
           <p class="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
-            A <strong class="font-semibold text-paper">Dry Run</strong> is a rehearsal of your new
-            process — with your people, against your own numbers — before it goes live. Your team
-            makes the hard calls once in a session where being wrong costs nothing, and you find out
-            where the design breaks while it’s still cheap to change.
+            Everyone was briefed. Completion is at 94%. But nobody knows whether your people are
+            actually making the calls the new process intended — or where the gap is by team, site,
+            or shift. A <strong class="font-semibold text-paper">Dry Run</strong> finds out.
           </p>
 
           <div class="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -183,25 +182,22 @@ const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20proces
           <p class="eyebrow">The problem this addresses</p>
           <div class="mt-6 space-y-5 text-lg leading-relaxed text-ink-200">
             <p>
-              You have designed a new process. A new client account, a new staffing model, a new
-              workflow, a new way of running the floor.
+              You introduced the new model. Memos, town halls, a training session, sign-offs
+              collected.
             </p>
             <p>
-              It exists as a document, a deck, and a set of assumptions. It has never been run by the
-              people who will run it.
+              Now someone has to say whether it worked. And the only evidence available is completion
+              rates, a survey, and whatever the site managers are willing to report upward.
             </p>
             <p>
-              So it gets rolled out. Memos, town halls, Slack, a training session. And then, over the
-              following weeks, you find out which parts of the design didn’t survive contact —
-              usually from the people who were supposed to have understood it, and usually after it
-              has cost something.
+              None of that tells you whether a team lead facing two competing escalations at 11am on a
+              Tuesday makes the call the new process intended.
             </p>
           </div>
           <blockquote
             class="mt-8 border-l-2 border-accent pl-6 font-display text-2xl font-semibold leading-snug text-paper"
           >
-            The gap isn’t that people weren’t told. It’s that nobody rehearsed the decisions the new
-            process asks them to make.
+            Attendance isn’t adoption.
           </blockquote>
         </div>
       </div>
@@ -214,18 +210,17 @@ const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20proces
           <div data-reveal>
             <p class="eyebrow">What we do</p>
             <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              A rehearsal, not a walkthrough
+              A measurement, not a survey
             </h2>
             <div class="mt-6 space-y-5 text-lg leading-relaxed text-ink-200">
               <p>
-                A Dry Run is a rehearsal of your new process, with your people, against your own
-                numbers, before it goes live. We build a simulation of the process and run your team
-                through it.
+                We build a simulation of your new process and put your people through it. Not a quiz
+                on the memo — a working model of the decisions, where the tradeoffs are, what happens
+                when two priorities collide at 11am on a Tuesday.
               </p>
               <p>
-                Not a walkthrough of the steps. A working model of the decisions — where the
-                tradeoffs are, what compounds, what happens when two priorities collide at 11am on a
-                Tuesday.
+                Then we compare the calls they actually make against the ones the design intended, and
+                show you where the two diverge.
               </p>
             </div>
           </div>
@@ -237,16 +232,18 @@ const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20proces
             <div class="card p-7">
               <span class="font-mono text-sm text-accent-500">01</span>
               <p class="mt-3 text-[15px] leading-relaxed text-ink-200">
-                <strong class="font-semibold text-paper">Your people have made the hard calls once
-                  already</strong>, in a session where being wrong cost nothing.
+                <strong class="font-semibold text-paper">You find out what actually landed.</strong>
+                Not who attended. Which decisions are being made the way the design intended, and
+                where the divergence is concentrated.
               </p>
             </div>
             <div class="card p-7">
               <span class="font-mono text-sm text-accent-500">02</span>
               <p class="mt-3 text-[15px] leading-relaxed text-ink-200">
-                <strong class="font-semibold text-paper">You find out where your design breaks</strong>
-                — which rules are ambiguous, which thresholds are wrong, which edge case nobody
-                thought about — while it is still cheap to change.
+                <strong class="font-semibold text-paper">You find out where the design is at
+                  fault.</strong> Some gaps aren’t comprehension. A rule that reads clearly and
+                collapses under two simultaneous escalations is a design defect, not a training
+                failure. The report separates them.
               </p>
             </div>
           </div>
@@ -254,9 +251,44 @@ const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20proces
           <p class="mt-8 text-lg leading-relaxed text-ink-100" data-reveal>
             The second one is the part nobody else offers.
             <span class="text-accent-300"
-              >Training assumes the process is correct. A rehearsal tests it.</span
+              >Completion rates tell you people attended. Running the decisions tells you which ones
+              your design gets wrong.</span
             >
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GROUP-LEVEL, NOT INDIVIDUAL ================= -->
+    <section id="reporting" class="border-b border-ink-800">
+      <div class="container-x py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl">
+          <div
+            class="rounded-3xl border border-accent/25 bg-ink-800/40 p-8 sm:p-12"
+            data-reveal
+          >
+            <div class="flex items-center gap-4">
+              <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent">
+                <Icon name="users" class="h-6 w-6" />
+              </div>
+              <div>
+                <p class="eyebrow">Non-negotiable</p>
+                <h2 class="mt-1 font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
+                  Group-level, not individual
+                </h2>
+              </div>
+            </div>
+            <div class="mt-6 space-y-4 text-lg leading-relaxed text-ink-200">
+              <p>
+                Leadership sees the pattern — which sites, which shifts, which decisions. Individuals
+                see their own results and nobody else’s.
+              </p>
+              <p>
+                This isn’t diplomacy. If people believe they’re being personally graded, they play to
+                look correct instead of deciding naturally, and the data stops being worth having.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
