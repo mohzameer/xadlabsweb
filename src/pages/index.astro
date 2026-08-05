@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import GameCard from '../components/GameCard.astro';
+import Icon from '../components/Icon.astro';
 
 // ---------------------------------------------------------------------------
 // The engagement — four fixed phases.
@@ -47,38 +48,32 @@ const receive = [
 ];
 
 // ---------------------------------------------------------------------------
-// What this is not for.
+// What makes a good Dry Run — the kinds of decisions worth rehearsing.
 // ---------------------------------------------------------------------------
-const notFor = [
-  {
-    lead: 'If your problem is people not following a known procedure',
-    body: ' — one right answer, known in advance — this is the wrong tool. That’s a drill, and cheaper options exist.',
-  },
-  {
-    lead: 'If people understand the new process and don’t want it',
-    body: ', a simulation won’t fix that. That’s a different problem and we’ll tell you so.',
-  },
-  {
-    lead: 'If the decision has no genuine tradeoff',
-    body: ' — if two experienced people at your company would always agree on the right move — there is nothing to rehearse.',
-  },
+const dryRunFits = [
+  { icon: 'file', text: 'A new client account with SLAs nobody has run against.' },
+  { icon: 'swap', text: 'A staffing model that trades cost against coverage.' },
+  { icon: 'alert', text: 'An escalation rule that sounds clear — until two things escalate at once.' },
 ];
 
 // ---------------------------------------------------------------------------
-// Why not build it in-house.
+// What you're actually buying — not the software, but these three.
 // ---------------------------------------------------------------------------
-const inHouse = [
+const buying = [
   {
-    lead: 'You could build the software.',
-    body: 'It isn’t the hard part, and it gets easier every month. The hard part is the reduction — finding the one decision that actually carries the risk and cutting everything else away. Build it internally and you tend to get a faithful replica of the whole process, which teaches nothing, because everything is in it.',
+    icon: 'target',
+    title: 'The reduction',
+    body: 'Finding the one decision that carries the risk and cutting everything else away. The hard part — and what decides whether a simulation teaches anything. Model the whole process and you get a faithful replica that teaches nothing, because everything is in it.',
   },
   {
-    lead: 'An internal build validates the design its own authors wrote.',
-    body: 'The value here is partly that someone outside the room is checking whether the process holds up. That doesn’t work if the checker reports to the designer.',
+    icon: 'eye',
+    title: 'An outside read',
+    body: 'Someone who didn’t design the process, checking whether it holds up. Structurally hard to do in-house.',
   },
   {
-    lead: 'It becomes nobody’s job.',
-    body: 'The person who could build it has a day job. It ships at 70% and quietly dies. You have seen this happen.',
+    icon: 'calendar',
+    title: 'A date',
+    body: 'Five to six weeks, fixed scope, fixed price. Internal projects with no client waiting tend to ship at 70% and stall.',
   },
 ];
 
@@ -333,58 +328,85 @@ const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20proces
       </div>
     </section>
 
-    <!-- ================= NOT FOR ================= -->
-    <section id="not-for" class="border-b border-ink-800 bg-ink-900/40">
+    <!-- ================= WHAT MAKES A GOOD DRY RUN ================= -->
+    <section id="fit" class="border-b border-ink-800 bg-ink-900/40">
       <div class="container-x py-20 sm:py-24">
         <div class="mx-auto max-w-3xl">
           <div data-reveal>
-            <p class="eyebrow">What this is not for</p>
+            <p class="eyebrow">What makes a good Dry Run</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
+              A decision worth arguing about
+            </h2>
             <p class="mt-4 text-lg leading-relaxed text-ink-200">
-              Worth saying plainly, because it will save us both time.
+              The strongest candidates share one thing: a decision where two experienced people at
+              your company would disagree.
             </p>
           </div>
-          <ul class="mt-6 space-y-4" data-reveal>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-3">
             {
-              notFor.map((n) => (
-                <li class="flex gap-3 text-lg leading-relaxed text-ink-200">
-                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-500" aria-hidden="true" />
-                  <span>
-                    <strong class="font-semibold text-paper">{n.lead}</strong>
-                    {n.body}
-                  </span>
-                </li>
+              dryRunFits.map((f, i) => (
+                <div class="card card-hover group p-6" data-reveal data-reveal-delay={i * 100}>
+                  <div class="grid h-10 w-10 place-items-center rounded-xl bg-accent/10 text-accent transition duration-300 group-hover:scale-110">
+                    <Icon name={f.icon} />
+                  </div>
+                  <p class="mt-4 text-[15px] leading-relaxed text-ink-200">{f.text}</p>
+                </div>
               ))
             }
-          </ul>
+          </div>
+          <p class="mt-4 text-sm leading-relaxed text-ink-400" data-reveal>
+            Anywhere the new process asks someone to choose, and choosing wrong is expensive.
+          </p>
+
           <blockquote
             class="mt-8 border-l-2 border-accent pl-6 text-lg leading-relaxed text-ink-100"
             data-reveal
           >
-            The test we apply: <em class="text-paper"
+            That’s the test we apply before we quote: <em class="text-paper"
               >can two competent people here disagree about the right call, and would running it
               settle the argument?</em
-            > If yes, this works. If no, we’ll say so before you spend anything.
+            >
           </blockquote>
+
+          <p class="mt-6 text-[15px] leading-relaxed text-ink-400" data-reveal>
+            If the answer is no — if there’s one right way and people just need to learn it — we’ll
+            say so, and point you somewhere cheaper. That conversation takes a week and costs nothing.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ================= WHY NOT IN-HOUSE ================= -->
-    <section id="in-house" class="border-b border-ink-800">
+    <!-- ================= WHAT YOU'RE ACTUALLY BUYING ================= -->
+    <section id="buying" class="border-b border-ink-800">
       <div class="container-x py-20 sm:py-24">
         <div class="mx-auto max-w-3xl">
           <div data-reveal>
-            <p class="eyebrow">Why not build it in-house</p>
+            <p class="eyebrow">What you’re actually buying</p>
+            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
+              Not the software
+            </h2>
             <p class="mt-4 text-lg leading-relaxed text-ink-200">
-              A fair question, and the honest answers:
+              That part gets easier every month. Three things instead.
             </p>
           </div>
-          <div class="mt-6 space-y-6" data-reveal>
+
+          <div class="mt-8 space-y-4">
             {
-              inHouse.map((x) => (
-                <p class="text-lg leading-relaxed text-ink-200">
-                  <strong class="font-semibold text-paper">{x.lead}</strong> {x.body}
-                </p>
+              buying.map((b, i) => (
+                <div
+                  class="card card-hover group flex gap-5 p-6 sm:p-7"
+                  data-reveal
+                  data-reveal-delay={i * 100}
+                >
+                  <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent transition duration-300 group-hover:scale-110">
+                    <Icon name={b.icon} class="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 class="font-display text-lg font-semibold text-paper">{b.title}</h3>
+                    <p class="mt-2 text-[15px] leading-relaxed text-ink-300">{b.body}</p>
+                  </div>
+                </div>
               ))
             }
           </div>
