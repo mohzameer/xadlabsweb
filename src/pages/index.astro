@@ -48,12 +48,12 @@ const receive = [
 ];
 
 // ---------------------------------------------------------------------------
-// What makes a good Dry Run — the kinds of decisions worth rehearsing.
+// Where rollouts leak — the kinds of decisions that quietly diverge.
 // ---------------------------------------------------------------------------
 const dryRunFits = [
   { icon: 'file', text: 'A new client account with SLAs nobody has run against.' },
   { icon: 'swap', text: 'A staffing model that trades cost against coverage.' },
-  { icon: 'alert', text: 'An escalation rule that sounds clear — until two things escalate at once.' },
+  { icon: 'alert', text: 'An escalation rule that reads clearly, until two things escalate at once.' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -360,18 +360,18 @@ const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20proces
       </div>
     </section>
 
-    <!-- ================= WHAT MAKES A GOOD DRY RUN ================= -->
-    <section id="fit" class="border-b border-ink-800 bg-ink-900/40">
+    <!-- ================= WHERE ROLLOUTS LEAK ================= -->
+    <section id="leak" class="border-b border-ink-800 bg-ink-900/40">
       <div class="container-x py-20 sm:py-24">
         <div class="mx-auto max-w-3xl">
           <div data-reveal>
-            <p class="eyebrow">What makes a good Dry Run</p>
+            <p class="eyebrow">Where rollouts leak</p>
             <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              A decision worth arguing about
+              Rollouts don’t fail on the steps. They fail on the decisions.
             </h2>
             <p class="mt-4 text-lg leading-relaxed text-ink-200">
-              The strongest candidates share one thing: a decision where two experienced people at
-              your company would disagree.
+              Nobody forgets which button to press. What goes wrong is the moment the new process
+              asks someone to choose — and two experienced people would choose differently.
             </p>
           </div>
 
@@ -387,23 +387,25 @@ const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20proces
               ))
             }
           </div>
-          <p class="mt-4 text-sm leading-relaxed text-ink-400" data-reveal>
-            Anywhere the new process asks someone to choose, and choosing wrong is expensive.
+
+          <p class="mt-6 text-lg leading-relaxed text-ink-200" data-reveal>
+            Every one of those is a place where your design meets someone’s judgment, and where a
+            briefing can’t tell you what will happen. That’s where a rollout quietly diverges — one
+            site interpreting it one way, another site the other, and nobody finding out for a
+            quarter.
           </p>
 
           <blockquote
             class="mt-8 border-l-2 border-accent pl-6 text-lg leading-relaxed text-ink-100"
             data-reveal
           >
-            That’s the test we apply before we quote: <em class="text-paper"
-              >can two competent people here disagree about the right call, and would running it
-              settle the argument?</em
+            So the question we ask first is simple: <em class="text-paper"
+              >where in this process would two of your best people disagree?</em
             >
           </blockquote>
 
           <p class="mt-6 text-[15px] leading-relaxed text-ink-400" data-reveal>
-            If the answer is no — if there’s one right way and people just need to learn it — we’ll
-            say so, and point you somewhere cheaper. That conversation takes a week and costs nothing.
+            Point at those, and we can tell you within a week whether a Dry Run answers it.
           </p>
         </div>
       </div>
