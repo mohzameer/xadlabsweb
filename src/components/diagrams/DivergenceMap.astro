@@ -1,0 +1,60 @@
+---
+// The flagship visual: a divergence heatmap. Shows "what actually landed" by
+// site and shift — the pattern a completion rate can never surface.
+const cols = ['Day', 'Swing', 'Night'];
+const rows = [
+  { site: 'Site A', cells: [0, 0, 1] },
+  { site: 'Site B', cells: [0, 1, 2] },
+  { site: 'Site C', cells: [0, 0, 0] },
+  { site: 'Site D', cells: [1, 2, 2] },
+];
+const sev = [
+  { bg: 'bg-accent', label: 'Aligned' },
+  { bg: 'bg-[#F5B544]', label: 'Drifting' },
+  { bg: 'bg-[#FF6B6B]', label: 'Diverged' },
+];
+---
+
+<div class="card p-6 sm:p-8">
+  <p class="font-display text-base font-semibold text-paper">
+    Where the escalation rule actually gets followed
+  </p>
+  <p class="mt-1 text-sm text-ink-400">
+    By site and shift — the pattern a completion rate can’t show.
+  </p>
+
+  <div class="mt-6 grid max-w-md grid-cols-[4.5rem_repeat(3,1fr)] gap-2 sm:gap-3">
+    <div></div>
+    {
+      cols.map((c) => (
+        <div class="pb-1 text-center font-mono text-[11px] uppercase tracking-wider text-ink-400">
+          {c}
+        </div>
+      ))
+    }
+    {
+      rows.map((r) => (
+        <Fragment>
+          <div class="flex items-center font-mono text-xs text-ink-300">{r.site}</div>
+          {r.cells.map((v, i) => (
+            <div
+              class={`h-11 rounded-md opacity-90 sm:h-12 ${sev[v].bg}`}
+              aria-label={`${r.site} ${cols[i]}: ${sev[v].label}`}
+            />
+          ))}
+        </Fragment>
+      ))
+    }
+  </div>
+
+  <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2">
+    {
+      sev.map((s) => (
+        <span class="inline-flex items-center gap-2 text-xs text-ink-300">
+          <span class={`h-3 w-3 rounded ${s.bg}`} />
+          {s.label}
+        </span>
+      ))
+    }
+  </div>
+</div>

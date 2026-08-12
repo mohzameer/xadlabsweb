@@ -1,0 +1,40 @@
+---
+// Problem visual: the evidence a rollout leaves you (visible) vs. the one thing
+// that actually matters (invisible).
+import Icon from '../Icon.astro';
+
+const have = ['Completion rate — 94%', 'A post-rollout survey', 'Whatever managers report upward'];
+---
+
+<div class="grid gap-4 sm:grid-cols-2">
+  <div class="card p-6">
+    <p class="font-mono text-[11px] uppercase tracking-wider text-accent-400">
+      What the rollout gives you
+    </p>
+    <ul class="mt-4 space-y-3">
+      {
+        have.map((x) => (
+          <li class="flex items-center gap-3 text-[15px] text-ink-200">
+            <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
+              <Icon name="check" class="h-3.5 w-3.5" />
+            </span>
+            {x}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="rounded-2xl border border-dashed border-ink-600 bg-ink-800/30 p-6">
+    <p class="font-mono text-[11px] uppercase tracking-wider text-ink-400">What it can’t tell you</p>
+    <div class="mt-4 flex items-start gap-3">
+      <span
+        class="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink-500 font-mono text-sm text-ink-400"
+        >?</span
+      >
+      <p class="text-[15px] leading-relaxed text-ink-200">
+        Whether a team lead facing two escalations at 11am makes the call the new process intended.
+      </p>
+    </div>
+  </div>
+</div>

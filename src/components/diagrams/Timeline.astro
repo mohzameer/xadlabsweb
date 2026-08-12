@@ -1,0 +1,58 @@
+---
+// The engagement as a proportional timeline: one bar showing the shape of the
+// 5–6 weeks (Build is the long phase), plus compact per-phase detail.
+const phases = [
+  {
+    name: 'Discovery',
+    dur: '1 week',
+    weeks: 1,
+    what: 'We sit with the people who designed the process and those who’ll run it, and pin down the decisions that carry risk.',
+  },
+  {
+    name: 'Build',
+    dur: '2–3 weeks',
+    weeks: 2.5,
+    what: 'We model those decisions and calibrate against your own numbers — volumes, targets, staffing.',
+  },
+  {
+    name: 'Run',
+    dur: '1 week',
+    weeks: 1,
+    what: 'Two cohorts go through it. Browser and mobile — no installs, no facilitator required on site.',
+  },
+  {
+    name: 'Report & revise',
+    dur: '1 week',
+    weeks: 1,
+    what: 'We show you where understanding broke and where the design broke. One revision to the simulation.',
+  },
+];
+const shades = ['bg-accent/30', 'bg-accent/50', 'bg-accent/75', 'bg-accent'];
+---
+
+<div class="card p-6 sm:p-8">
+  <!-- Proportional bar -->
+  <div class="flex gap-1.5" aria-hidden="true">
+    {phases.map((p, i) => <div style={`flex:${p.weeks} 1 0`} class={`h-3 rounded-full ${shades[i]}`} />)}
+  </div>
+  <div class="mt-2 flex justify-between font-mono text-[11px] uppercase tracking-wider text-ink-500">
+    <span>Week 1</span>
+    <span>Week 6 · hand-off</span>
+  </div>
+
+  <!-- Per-phase detail -->
+  <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      phases.map((p, i) => (
+        <div>
+          <div class="flex items-center gap-2">
+            <span class={`h-2.5 w-2.5 shrink-0 rounded-full ${shades[i]}`} />
+            <span class="font-mono text-[11px] uppercase tracking-wider text-ink-400">{p.dur}</span>
+          </div>
+          <h3 class="mt-2 font-display text-base font-semibold text-paper">{p.name}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-ink-300">{p.what}</p>
+        </div>
+      ))
+    }
+  </div>
+</div>

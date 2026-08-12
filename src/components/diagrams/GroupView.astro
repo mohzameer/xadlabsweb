@@ -1,0 +1,45 @@
+---
+// Group-level, not individual: leadership sees the whole pattern; each person
+// sees only their own cell. Same grid, two very different views.
+import Icon from '../Icon.astro';
+
+// 0 aligned · 1 drifting · 2 diverged — a compact 4×3 pattern.
+const pattern = [0, 0, 1, 0, 1, 2, 0, 0, 0, 1, 2, 2];
+const sev = ['bg-accent', 'bg-[#F5B544]', 'bg-[#FF6B6B]'];
+// The one cell an individual is allowed to see.
+const own = 4;
+---
+
+<div class="grid gap-4 sm:grid-cols-2">
+  <div class="card p-6">
+    <div class="flex items-center gap-2 text-accent">
+      <Icon name="users" class="h-4 w-4" />
+      <p class="font-mono text-[11px] uppercase tracking-wider text-accent-400">Leadership sees</p>
+    </div>
+    <p class="mt-2 font-display text-lg font-semibold text-paper">The whole pattern</p>
+    <div class="mt-4 grid max-w-[168px] grid-cols-3 gap-1.5">
+      {pattern.map((v) => <div class={`h-9 rounded ${sev[v]} opacity-90`} />)}
+    </div>
+    <p class="mt-3 text-xs leading-relaxed text-ink-400">Which sites, which shifts, which decisions.</p>
+  </div>
+
+  <div class="card p-6">
+    <div class="flex items-center gap-2 text-ink-300">
+      <Icon name="user" class="h-4 w-4" />
+      <p class="font-mono text-[11px] uppercase tracking-wider text-ink-400">Each person sees</p>
+    </div>
+    <p class="mt-2 font-display text-lg font-semibold text-paper">Their own result</p>
+    <div class="mt-4 grid max-w-[168px] grid-cols-3 gap-1.5">
+      {
+        pattern.map((v, i) =>
+          i === own ? (
+            <div class={`h-9 rounded ${sev[v]} opacity-90`} />
+          ) : (
+            <div class="h-9 rounded border border-dashed border-ink-600" />
+          )
+        )
+      }
+    </div>
+    <p class="mt-3 text-xs leading-relaxed text-ink-400">And nobody else’s.</p>
+  </div>
+</div>
