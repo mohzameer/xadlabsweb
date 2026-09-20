@@ -96,16 +96,6 @@ const capabilities = [
     body: 'Statements, invoices, certificates and letters rendered from your records at run scale — the same engine behind PodPDF templates.',
   },
   {
-    icon: 'compress',
-    title: 'Compression & optimisation',
-    body: 'Cut archive size against a quality floor you set, with before-and-after figures for every file.',
-  },
-  {
-    icon: 'redact',
-    title: 'Redaction & sanitisation',
-    body: 'Remove sensitive text and images for real, not cover them — plus metadata, embedded scripts and attachments.',
-  },
-  {
     icon: 'stamp',
     title: 'Stamping & numbering',
     body: 'Watermarks, Bates numbering, headers and footers applied consistently across the whole corpus.',
@@ -456,11 +446,21 @@ const mailtoProject =
               </div>
             ))
           }
-        </div>
 
-        <p class="mt-8 text-sm text-slate-500">
-          Something not on this list? It is usually still a pipeline stage — ask.
-        </p>
+          <!-- Fills the last row, and doubles as the prompt to ask. -->
+          <div class="flex flex-col justify-center bg-white p-7 sm:col-span-2">
+            <p class="font-display text-[15px] font-semibold text-slate-900">
+              Something not on this list?
+            </p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">
+              It is usually still a pipeline stage. Tell us what the documents need to do and we
+              will say plainly whether it is something we build.
+            </p>
+            <a href="#contact" class="mt-4 text-sm font-semibold text-brand-600 hover:underline"
+              >Ask us →</a
+            >
+          </div>
+        </div>
       </div>
     </section>
 

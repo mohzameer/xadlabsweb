@@ -62,6 +62,10 @@ Everything on the landing page is driven by arrays at the top of
 `capabilities`, `principles`, `steps` and `pricing`. Edit those rather than
 the markup.
 
+What we do and do not offer is tracked in
+[`docs/pdf-use-cases.md`](docs/pdf-use-cases.md) — keep the `capabilities`
+array and that document in step.
+
 **Placeholders to fill in:** bracketed values such as `[fixed fee]`,
 `[quoted]`, `[turnaround]` and `[duration]` in the `pricing` and `steps`
 arrays.
