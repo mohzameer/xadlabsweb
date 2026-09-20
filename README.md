@@ -1,8 +1,9 @@
 # XAD Labs — Web
 
-Marketing site for [XAD Labs](https://xadlabs.com) — an educational gaming &
-simulation studio building serious games for corporate, workforce, and field
-learning. Built with [Astro](https://astro.build) + [Tailwind CSS](https://tailwindcss.com).
+Marketing site for [XAD Labs](https://xadlabs.com) — an independent engineering
+company building custom document processing pipelines for runs of ten thousand
+to several million PDFs, and the team behind [PodPDF](https://podpdf.com).
+Built with [Astro](https://astro.build) + [Tailwind CSS](https://tailwindcss.com).
 
 ## Develop
 
@@ -22,30 +23,57 @@ npm run preview    # preview the production build locally
 
 ## Deploy (Vercel)
 
-1. Push this repo to GitHub.
-2. Import the repo into Vercel.
-3. Vercel auto-detects Astro — no config needed. The build command is `npm run build` and the output directory is `dist`.
+Vercel auto-detects Astro — no config needed. Build command `npm run build`,
+output directory `dist`.
 
 ## Structure
 
 ```
 src/
-  layouts/Base.astro       # HTML shell, fonts, meta, scroll-reveal
-  components/Nav.astro      # sticky top navigation
+  layouts/Base.astro        # HTML shell, fonts, meta
+  components/Nav.astro      # sticky nav; variant="overlay" for dark-hero pages
   components/Footer.astro   # site footer
-  pages/index.astro         # single-page landing (hero, approach, games, research, about, contact)
-  styles/global.css         # tailwind entry, design-system component classes
-  content/blog/             # optional article route (/blog/<slug>), unlinked from nav
-public/                     # static assets (favicon, game cover images)
-tailwind.config.mjs         # brand palette (ink / accent / spark) + fonts
+  components/Logo.astro     # wordmark; tone="light" for dark grounds
+  components/Icon.astro     # inline line-icon set
+  pages/index.astro         # the landing page — all sections live here
+  pages/about.astro         # longer company / founder page
+  styles/global.css         # tailwind entry + design-system component classes
+  content/blog/             # article route (/blog/<slug>), unlinked from nav
+public/                     # favicon, logo
+tailwind.config.mjs         # brand palette (brand / slate / mist) + fonts
 ```
 
-## Adding a real game to the portfolio
+### Design system
 
-Games are defined in the `games` array at the top of `src/pages/index.astro`.
-To feature a live title: drop a 16:9 cover image in `/public`, then set the
-card's `href` (play/store link), `status: 'live'`, and copy. In-development
-slots use `status: 'dev'` and link to `#contact`.
+- **Palette** — white and `mist` grounds, a light-blue `brand` scale for
+  accents, a cool-grey `slate` scale for text and borders. Legacy `ink` /
+  `accent` / `spark` tokens are kept only so the archived pages still compile.
+- **Type** — Source Serif 4 for headlines (`font-serif`, the `.h2` class),
+  Inter for everything structural, JetBrains Mono for eyebrows and metadata.
+- **Hero** — dark blue ground (`.hero-ground`) with the nav overlaid on top.
+  Pages that open with it pass `variant="overlay"` to `Nav` and add `pt-16`
+  to the hero section; the nav turns solid white once the page is scrolled.
+- No scroll animations, by design.
+
+## Editing content
+
+Everything on the landing page is driven by arrays at the top of
+`src/pages/index.astro`: `strip`, `runStages`, `limits`, `reportFindings`,
+`capabilities`, `principles`, `steps` and `pricing`. Edit those rather than
+the markup.
+
+**Placeholders to fill in:** bracketed values such as `[fixed fee]`,
+`[quoted]`, `[turnaround]` and `[duration]` in the `pricing` and `steps`
+arrays.
+
+## Archived
+
+The previous simulation/games site is kept but unrouted (Astro ignores
+`src/pages/` files prefixed with `_`):
+
+- `src/pages/_legacy-dryrun.astro` — the old Dry Run landing page
+- `src/pages/_legacy-about.astro` — the old about page
+- `src/components/diagrams/`, `src/components/GameCard.astro` — used by those
 
 ## Contact
 

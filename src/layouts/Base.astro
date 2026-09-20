@@ -7,8 +7,9 @@ interface Props {
 }
 
 const {
-  title = 'XAD Labs — Dry Run: did the new process actually land?',
-  description = 'Everyone was briefed and completion is high — but is your team actually making the calls the new process intended? A Dry Run finds out what landed, and where the gap is by team, site, and shift. From XAD Labs, a simulation and educational games studio.',
+  title = 'XAD Labs — Custom PDF processing pipelines at scale',
+  description =
+    'XAD Labs designs, builds and operates custom document processing pipelines — from ten thousand PDFs to several million. Start with a free corpus report on your own archive. The team behind PodPDF.',
 } = Astro.props;
 ---
 
@@ -33,42 +34,16 @@ const {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <meta name="theme-color" content="#0B1020" />
+    <meta name="theme-color" content="#FFFFFF" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap"
     />
   </head>
   <body>
     <slot />
-
-    <script>
-      // Lightweight scroll-reveal: fade + rise elements marked [data-reveal]
-      // as they enter the viewport. Respects reduced-motion preferences.
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
-      if (reduce || !('IntersectionObserver' in window)) {
-        targets.forEach((el) => el.classList.add('is-visible'));
-      } else {
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                const el = entry.target as HTMLElement;
-                const delay = el.dataset.revealDelay;
-                if (delay) el.style.transitionDelay = `${delay}ms`;
-                el.classList.add('is-visible');
-                io.unobserve(el);
-              }
-            }
-          },
-          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
-        );
-        targets.forEach((el) => io.observe(el));
-      }
-    </script>
   </body>
 </html>

@@ -2,52 +2,189 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import GameCard from '../components/GameCard.astro';
 import Icon from '../components/Icon.astro';
-import SignalGap from '../components/diagrams/SignalGap.astro';
-import VisibleGap from '../components/diagrams/VisibleGap.astro';
-import DivergenceMap from '../components/diagrams/DivergenceMap.astro';
-import Timeline from '../components/diagrams/Timeline.astro';
-import GroupView from '../components/diagrams/GroupView.astro';
 
 // ---------------------------------------------------------------------------
-// The engagement — what you receive. (Phase timeline lives in Timeline.astro.)
+// Hero scale strip — capability statements, not claimed metrics.
 // ---------------------------------------------------------------------------
-const receive = [
-  'A working simulation of your process, running on our infrastructure',
-  'A model diagram your ops lead can read and correct — plain enough to argue with',
-  'Group-level results: where divergence concentrates — by team, site, and shift',
-  'A findings report separating “people didn’t understand X” from “X doesn’t work as designed”',
-  'A record of every assumption we calibrated and who confirmed it',
+const strip = [
+  { k: 'Run size', v: '10k → millions' },
+  { k: 'Pipelines', v: 'Built per customer' },
+  { k: 'First step', v: 'Free corpus report' },
+  { k: 'Self-serve', v: 'podpdf.com' },
+];
+
+// Stages shown in the hero's illustrative run panel.
+const runStages = [
+  { label: 'Ingest & inventory', note: 'done', state: 'done' },
+  { label: 'OCR & text layer', note: 'done', state: 'done' },
+  { label: 'Extraction', note: 'running', state: 'running' },
+  { label: 'Validation', note: 'queued', state: 'queued' },
+  { label: 'Delivery', note: 'queued', state: 'queued' },
 ];
 
 // ---------------------------------------------------------------------------
-// Where rollouts leak — the kinds of decisions that quietly diverge.
+// Where a generic tool stops being the right answer.
 // ---------------------------------------------------------------------------
-const dryRunFits = [
-  { icon: 'file', text: 'A new client account with SLAs nobody has run against.' },
-  { icon: 'swap', text: 'A staffing model that trades cost against coverage.' },
-  { icon: 'alert', text: 'An escalation rule that reads clearly, until two things escalate at once.' },
-];
-
-// ---------------------------------------------------------------------------
-// What you're actually buying — not the software, but these three.
-// ---------------------------------------------------------------------------
-const buying = [
+const limits = [
+  {
+    icon: 'layers',
+    title: 'The volume changes the problem',
+    body: 'A script that converts a thousand files does not survive two million. Retries, partial failure, cost per document and the length of the run itself all become the design.',
+  },
+  {
+    icon: 'alert',
+    title: 'Real archives are not uniform',
+    body: 'Scans without a text layer, password-protected files, corrupt objects, four layout generations of the same form. The exceptions are the work, not the edge case.',
+  },
   {
     icon: 'target',
-    title: 'The reduction',
-    body: 'Finding the one decision that carries the risk and cutting everything else away. The hard part — and what decides whether a simulation teaches anything. Model the whole process and you get a faithful replica that teaches nothing, because everything is in it.',
+    title: 'The rules are yours alone',
+    body: 'Where to split, which fields matter, what counts as a valid output, where it lands afterwards. That logic is specific to your documents, so the pipeline is built for them.',
+  },
+];
+
+// ---------------------------------------------------------------------------
+// What the corpus report tells you before any money changes hands.
+// ---------------------------------------------------------------------------
+const reportFindings = [
+  'Page counts and file sizes — the real distribution, not the average',
+  'Which files are encrypted, corrupt, or will not open at all',
+  'Which already carry a searchable text layer, and which need OCR',
+  'How many distinct layouts and document types are actually in there',
+  'Where the processing cost concentrates — usually a small fraction of the files',
+  'Whether the job is worth doing at all, said plainly',
+];
+
+// ---------------------------------------------------------------------------
+// Pipeline operations — the stages we compose into a customer's run.
+// ---------------------------------------------------------------------------
+const capabilities = [
+  {
+    icon: 'inbox',
+    title: 'Ingest & normalise',
+    body: 'Pull from S3, SFTP, a network share or a shipped drive. Inventory every file, hash it, repair or quarantine what will not open.',
   },
   {
-    icon: 'eye',
-    title: 'An outside read',
-    body: 'Someone who didn’t design the process, checking whether it holds up. Structurally hard to do in-house.',
+    icon: 'split',
+    title: 'Split & burst',
+    body: 'Break a 40,000-page bundle into documents on barcodes, separator sheets, text markers or a page-count rule.',
   },
   {
-    icon: 'calendar',
-    title: 'A date',
-    body: 'Five to six weeks, fixed scope, fixed price. Internal projects with no client waiting tend to ship at 70% and stall.',
+    icon: 'merge',
+    title: 'Merge & assemble',
+    body: 'Recombine documents into packets in a defined order, with covers, inserts, tables of contents and bookmarks.',
+  },
+  {
+    icon: 'scan',
+    title: 'OCR & text layer',
+    body: 'Make scans searchable, with per-page confidence scores so low-quality output is flagged rather than quietly shipped.',
+  },
+  {
+    icon: 'extract',
+    title: 'Extraction to structured data',
+    body: 'Fields and tables out of every document as JSON or CSV, validated against a schema you approve.',
+  },
+  {
+    icon: 'tag',
+    title: 'Classification & routing',
+    body: 'Sort documents by type, then send each class down its own branch of the pipeline with its own rules.',
+  },
+  {
+    icon: 'file',
+    title: 'Generation from your data',
+    body: 'Statements, invoices, certificates and letters rendered from your records at run scale — the same engine behind PodPDF templates.',
+  },
+  {
+    icon: 'compress',
+    title: 'Compression & optimisation',
+    body: 'Cut archive size against a quality floor you set, with before-and-after figures for every file.',
+  },
+  {
+    icon: 'redact',
+    title: 'Redaction & sanitisation',
+    body: 'Remove sensitive text and images for real, not cover them — plus metadata, embedded scripts and attachments.',
+  },
+  {
+    icon: 'stamp',
+    title: 'Stamping & numbering',
+    body: 'Watermarks, Bates numbering, headers and footers applied consistently across the whole corpus.',
+  },
+  {
+    icon: 'shield',
+    title: 'Validation & QA',
+    body: 'Page counts, text-layer presence, schema conformance and sampled human review before anything is signed off.',
+  },
+  {
+    icon: 'ledger',
+    title: 'Delivery & manifest',
+    body: 'Output back to your storage or API, with a manifest that accounts for every input file and what became of it.',
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Architecture principles — how the run holds up at volume.
+// ---------------------------------------------------------------------------
+const principles = [
+  {
+    icon: 'repeat',
+    title: 'Idempotent per document',
+    body: 'Each file is its own unit of work. Re-running one, or ten thousand, changes nothing else and duplicates nothing.',
+  },
+  {
+    icon: 'queue',
+    title: 'Durable queue, real backpressure',
+    body: 'Work is persisted before it is attempted. Workers pull at the rate they can sustain, so a slow stage throttles instead of dropping.',
+  },
+  {
+    icon: 'gauge',
+    title: 'Scale-out, with a cost ceiling',
+    body: 'Throughput is a dial: add workers until the run fits your window. We size it against an agreed budget, not an open tap.',
+  },
+  {
+    icon: 'ledger',
+    title: 'Checkpointed and resumable',
+    body: 'A run that stops at 1.4 million documents resumes at 1.4 million. No restart from zero, ever.',
+  },
+  {
+    icon: 'lock',
+    title: 'Isolated per customer',
+    body: 'Your corpus runs in its own environment with its own credentials and retention window. Nothing is pooled with anyone else.',
+  },
+  {
+    icon: 'check',
+    title: 'Every document accounted for',
+    body: 'One audit row per file from ingest to delivery. At the end of a run you can prove what happened to any single document.',
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Engagement — four steps, each with an exit.
+// ---------------------------------------------------------------------------
+const steps = [
+  {
+    n: '01',
+    title: 'Corpus report',
+    meta: 'Free · [turnaround]',
+    body: 'Send a representative sample. We come back with what is actually in the archive, what it will take to process, and whether we are the right people for it.',
+  },
+  {
+    n: '02',
+    title: 'Scoped pilot',
+    meta: 'Fixed fee · [duration]',
+    body: 'We build the pipeline and run it over a real slice of your corpus. You see genuine output, genuine failure cases and a firm per-document cost before committing to the full run.',
+  },
+  {
+    n: '03',
+    title: 'Production run',
+    meta: 'Quoted per corpus',
+    body: 'The full archive, monitored end to end, against an agreed delivery date. You get progress you can watch and a manifest that reconciles against your own file count.',
+  },
+  {
+    n: '04',
+    title: 'Operate or hand over',
+    meta: 'Optional',
+    body: 'If documents keep arriving, we run the pipeline as a service. If you would rather own it, you take the code and the infrastructure definitions and we help you land it.',
   },
 ];
 
@@ -55,464 +192,432 @@ const buying = [
 // Pricing — bracketed figures are placeholders to fill in.
 // ---------------------------------------------------------------------------
 const pricing = [
-  { name: 'Dry Run', desc: 'As scoped above.', price: '[fixed fee]' },
-  { name: 'Additional cohorts', desc: 'Beyond the first two.', price: '[per cohort]' },
-  { name: 'Ongoing use for future intakes', desc: 'Optional — only if you want it.', price: '[annual]' },
-];
-
-// ---------------------------------------------------------------------------
-// Starting — smallest useful first step, in order of preference.
-// ---------------------------------------------------------------------------
-const starting = [
   {
-    lead: 'Send us the process document',
-    body: ' — the design, the new rules, the deck. We’ll tell you within a week whether there’s a real simulation in it, and if there isn’t, we’ll tell you that too.',
+    name: 'Corpus report',
+    price: 'Free',
+    note: 'No commitment',
+    desc: 'A full read of your archive before you spend anything.',
+    points: ['Sample analysed', 'Findings written up', 'Honest go / no-go'],
+    cta: { label: 'Request a report', href: '#corpus-report' },
   },
   {
-    lead: 'Ninety minutes with the people who’ll run it.',
-    body: ' We’ll run one of our existing simulations with them. If they don’t come out of it arguing about a decision they got wrong, there’s nothing here for you.',
+    name: 'Scoped pilot',
+    price: '[fixed fee]',
+    note: 'One slice, real output',
+    desc: 'The pipeline built and proven on a representative subset.',
+    points: ['Pipeline designed and built', 'Run over a real sample', 'Firm per-document cost'],
+    featured: true,
+    cta: { label: 'Talk about a pilot', href: '#contact' },
   },
   {
-    lead: 'Your last three incident or post-mortem reviews.',
-    body: ' If the same failure appears twice, that’s the simulation — and you’ve already documented the model for us.',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Live work — real, playable proof.
-// ---------------------------------------------------------------------------
-const liveWork = [
-  {
-    title: 'Race to AGI',
-    domain: 'Strategy · AI Safety',
-    status: 'live',
-    href: 'https://rtagi.cloudsims.online',
-    blurb:
-      'Run a frontier AI lab racing three rivals to build AGI. The twist: getting there first isn’t the win — getting there safely is. A browser strategy sim about long-term thinking under pressure.',
-    outcome: 'Teaches risk, governance & trade-off reasoning',
-    accent: 'from-accent/25 to-spark/20',
-  },
-  {
-    title: 'CloudArchitect',
-    domain: 'Management Sim · Cloud Architecture',
-    status: 'live',
-    href: 'https://cloudarch.cloudsims.online',
-    blurb:
-      'Run a live cloud environment and juggle cost, latency, and availability under pressure. A terminal-styled management sim that teaches real infrastructure trade-offs — with an assessment mode for hiring and upskilling.',
-    outcome: 'Builds cloud cost & reliability judgment',
-    accent: 'from-spark/25 to-accent/20',
+    name: 'Production & operation',
+    price: '[quoted]',
+    note: 'Per corpus, or monthly',
+    desc: 'The full run, then ongoing processing if you need it.',
+    points: ['Whole-corpus run', 'Delivery date committed', 'Optional managed operation'],
+    cta: { label: 'Get a quote', href: '#contact' },
   },
 ];
 
-const mailto = 'mailto:zameer@xadlabs.com?subject=Dry%20Run%20%E2%80%94%20process%20document';
+const mailto =
+  'mailto:zameer@xadlabs.com?subject=Corpus%20report%20request%20%E2%80%94%20XAD%20Labs';
+const mailtoProject =
+  'mailto:zameer@xadlabs.com?subject=Document%20pipeline%20enquiry%20%E2%80%94%20XAD%20Labs';
 ---
 
 <Base>
-  <Nav />
+  <Nav variant="overlay" />
 
   <main>
     <!-- ================= HERO ================= -->
-    <section class="relative overflow-hidden border-b border-ink-800">
-      <div class="absolute inset-0 grid-backdrop opacity-60"></div>
-      <div
-        class="pointer-events-none absolute -top-40 left-1/2 h-[460px] w-[820px] -translate-x-1/2 rounded-full opacity-60 blur-3xl"
-        style="background: radial-gradient(closest-side, rgba(0,214,143,0.16), transparent 70%);"
-      >
-      </div>
+    <section class="relative overflow-hidden pt-16 text-white">
+      <div class="absolute inset-0 hero-ground"></div>
 
-      <div class="container-x relative py-24 sm:py-28 lg:py-32">
-        <div class="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div data-reveal>
-            <span
-              class="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-800/60 px-4 py-1.5 font-mono text-xs text-ink-200"
-            >
-              <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
-              Dry Run · what actually landed
-            </span>
+      <div class="container-x relative">
+        <div
+          class="grid items-center gap-14 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-28"
+        >
+          <div>
+            <p class="eyebrow-light">The team behind PodPDF</p>
 
             <h1
-              class="mt-6 font-display text-4xl font-bold leading-[1.08] tracking-tight text-paper sm:text-5xl lg:text-6xl"
+              class="mt-5 font-serif text-[2.5rem] font-normal leading-[1.08] sm:text-[3.25rem] lg:text-[3.55rem]"
             >
-              You rolled it out. Did it land?
+              Document processing, engineered for volume
             </h1>
 
-            <p class="mt-6 text-lg leading-relaxed text-ink-200">
-              Everyone was briefed. Completion is at 94%. But nobody knows whether your people are
-              actually making the calls the new process intended — or where the gap is by team, site,
-              or shift. A <strong class="font-semibold text-paper">Dry Run</strong> finds out.
+            <p class="mt-6 max-w-xl text-lg leading-relaxed text-brand-100">
+              Custom PDF pipelines for runs of ten thousand to several million documents — designed,
+              built and operated around your archive and your rules.
             </p>
 
-            <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href={mailto} class="btn btn-primary">Send us the process document</a>
-              <a href="#what-we-do" class="btn btn-ghost">How it works</a>
+            <div class="mt-9 flex flex-wrap gap-3">
+              <a href="#corpus-report" class="btn btn-on-dark">Request a free corpus report</a>
+              <a href="#capabilities" class="btn btn-ghost-on-dark">See what we take on</a>
             </div>
-          </div>
 
-          <div data-reveal data-reveal-delay="120">
-            <SignalGap />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= THE PROBLEM ================= -->
-    <section id="problem" class="border-b border-ink-800">
-      <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl" data-reveal>
-          <p class="eyebrow">The problem this addresses</p>
-          <p class="mt-4 max-w-2xl text-lg leading-relaxed text-ink-200" data-reveal>
-            You introduced the new model — memos, town halls, a training session, sign-offs
-            collected. Now someone has to say whether it worked. This is the evidence they have:
-          </p>
-
-          <div class="mt-8" data-reveal data-reveal-delay="100">
-            <VisibleGap />
-          </div>
-
-          <blockquote
-            class="mt-8 border-l-2 border-accent pl-6 font-display text-2xl font-semibold leading-snug text-paper"
-            data-reveal
-          >
-            Attendance isn’t adoption.
-          </blockquote>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= WHAT WE DO ================= -->
-    <section id="what-we-do" class="border-b border-ink-800 bg-ink-900/40">
-      <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl">
-          <div data-reveal>
-            <p class="eyebrow">What we do</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              A measurement, not a survey
-            </h2>
-            <p class="mt-6 text-lg leading-relaxed text-ink-200">
-              We build a simulation of your new process and put your people through it — a working
-              model of the decisions, not a quiz on the memo. Then we compare the calls they make
-              against the ones the design intended.
+            <p class="mt-6 text-sm text-brand-200">
+              Smaller, self-serve volumes are already covered by
+              <a
+                href="https://podpdf.com"
+                target="_blank"
+                rel="noopener"
+                class="font-medium text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
+                >PodPDF</a
+              > — our API and app, at $0.01 per PDF.
             </p>
           </div>
 
-          <div class="mt-8" data-reveal data-reveal-delay="100">
-            <DivergenceMap />
-          </div>
-
-          <p class="mt-10 text-sm font-medium uppercase tracking-wider text-ink-400" data-reveal>
-            You get two things out of it
-          </p>
-          <div class="mt-4 grid gap-5 sm:grid-cols-2" data-reveal data-reveal-delay="100">
-            <div class="card p-7">
-              <span class="font-mono text-sm text-accent-500">01</span>
-              <p class="mt-3 text-[15px] leading-relaxed text-ink-200">
-                <strong class="font-semibold text-paper">You find out what actually landed.</strong>
-                Not who attended. Which decisions are being made the way the design intended, and
-                where the divergence is concentrated.
-              </p>
-            </div>
-            <div class="card p-7">
-              <span class="font-mono text-sm text-accent-500">02</span>
-              <p class="mt-3 text-[15px] leading-relaxed text-ink-200">
-                <strong class="font-semibold text-paper">You find out where the design is at
-                  fault.</strong> Some gaps aren’t comprehension. A rule that reads clearly and
-                collapses under two simultaneous escalations is a design defect, not a training
-                failure. The report separates them.
-              </p>
-            </div>
-          </div>
-
-          <p class="mt-8 text-lg leading-relaxed text-ink-100" data-reveal>
-            The second one is the part nobody else offers.
-            <span class="text-accent-300"
-              >Completion rates tell you people attended. Running the decisions tells you which ones
-              your design gets wrong.</span
-            >
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= GROUP-LEVEL, NOT INDIVIDUAL ================= -->
-    <section id="reporting" class="border-b border-ink-800">
-      <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl">
+          <!-- Illustrative run panel -->
           <div
-            class="rounded-3xl border border-accent/25 bg-ink-800/40 p-8 sm:p-12"
-            data-reveal
+            class="rounded-2xl border border-white/20 bg-white p-6 text-slate-700 shadow-[0_34px_90px_-34px_rgba(3,20,40,0.9)] sm:p-7"
           >
-            <div class="flex items-center gap-4">
-              <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent">
-                <Icon name="users" class="h-6 w-6" />
-              </div>
-              <div>
-                <p class="eyebrow">Non-negotiable</p>
-                <h2 class="mt-1 font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
-                  Group-level, not individual
-                </h2>
-              </div>
-            </div>
-            <div class="mt-6 space-y-4 text-lg leading-relaxed text-ink-200">
-              <p>
-                Leadership sees the pattern — which sites, which shifts, which decisions. Individuals
-                see their own results and nobody else’s.
+            <div class="flex items-center justify-between">
+              <p class="font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                Example run
               </p>
-              <p>
-                This isn’t diplomacy. If people believe they’re being personally graded, they play to
-                look correct instead of deciding naturally, and the data stops being worth having.
-              </p>
+              <span class="chip">illustrative</span>
             </div>
 
-            <div class="mt-8">
-              <GroupView />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= THE ENGAGEMENT ================= -->
-    <section id="engagement" class="border-b border-ink-800">
-      <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl">
-          <div data-reveal>
-            <p class="eyebrow">The engagement</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              Fixed scope. Fixed price. Finite.
-            </h2>
-            <p class="mt-4 text-lg leading-relaxed text-ink-200">
-              Every Dry Run runs the same shape.
+            <p class="mt-5 font-serif text-[2.1rem] leading-none text-slate-900">
+              2,418,640
+              <span class="font-sans text-sm font-medium text-slate-500">documents</span>
             </p>
-          </div>
 
-          <!-- Phase timeline -->
-          <div class="mt-8" data-reveal>
-            <Timeline />
-          </div>
+            <div class="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+              <div class="h-full w-[62%] rounded-full bg-brand-500"></div>
+            </div>
+            <div class="mt-2 flex justify-between font-mono text-[11px] text-slate-500">
+              <span>1,499,556 processed</span>
+              <span>62%</span>
+            </div>
 
-          <p class="mt-6 text-lg text-ink-100" data-reveal>
-            <strong class="font-semibold text-paper">Total: 5–6 weeks.</strong> Then we hand over the
-            results and go.
-          </p>
-
-          <!-- Receive / don't receive -->
-          <div class="mt-12 grid gap-8 lg:grid-cols-2" data-reveal>
-            <div>
-              <h3 class="font-display text-lg font-semibold text-paper">What you receive</h3>
-              <ul class="mt-5 space-y-3">
-                {
-                  receive.map((item) => (
-                    <li class="flex gap-3 text-[15px] leading-relaxed text-ink-200">
-                      <span class="mt-0.5 text-accent" aria-hidden="true">
-                        ✓
+            <ul class="mt-6 space-y-3.5 border-t border-slate-200 pt-5">
+              {
+                runStages.map((st) => (
+                  <li class="flex items-center justify-between gap-4">
+                    <span class="flex items-center gap-2.5 text-sm text-slate-700">
+                      <span
+                        class={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${
+                          st.state === 'done'
+                            ? 'bg-brand-500 text-white'
+                            : st.state === 'running'
+                              ? 'bg-brand-100 text-brand-600'
+                              : 'bg-slate-100 text-slate-400'
+                        }`}
+                      >
+                        {st.state === 'done' ? (
+                          <Icon name="check" class="h-2.5 w-2.5" />
+                        ) : (
+                          <span class="h-1.5 w-1.5 rounded-full bg-current" />
+                        )}
                       </span>
-                      <span set:html={item} />
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
-            <div>
-              <h3 class="font-display text-lg font-semibold text-paper">What you don’t receive</h3>
-              <p class="mt-5 text-[15px] leading-relaxed text-ink-300">
-                No system to maintain. No licence to renew. No integration into your stack. If you
-                want the simulation kept alive for future cohorts, that is a separate conversation you
-                can have later, or not at all.
-              </p>
-            </div>
+                      {st.label}
+                    </span>
+                    <span class="font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                      {st.note}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+
+            <p class="mt-5 border-t border-slate-200 pt-4 text-xs leading-relaxed text-slate-500">
+              Checkpointed: stop the run and it resumes at the same document, not from zero.
+            </p>
+          </div>
+        </div>
+
+        <!-- Scale strip -->
+        <div class="relative border-t border-white/15 py-10">
+          <p class="eyebrow-light text-center">Built for runs of this shape</p>
+          <div class="mt-7 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {
+              strip.map((s) => (
+                <div class="text-center">
+                  <p class="font-serif text-xl text-white">{s.v}</p>
+                  <p class="mt-1 font-mono text-[11px] uppercase tracking-wider text-brand-200">
+                    {s.k}
+                  </p>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= WHERE ROLLOUTS LEAK ================= -->
-    <section id="leak" class="border-b border-ink-800 bg-ink-900/40">
+    <!-- ================= WHY CUSTOM ================= -->
+    <section class="border-b border-slate-200 bg-white">
       <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl">
-          <div data-reveal>
-            <p class="eyebrow">Where rollouts leak</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              Rollouts don’t fail on the steps. They fail on the decisions.
-            </h2>
-            <p class="mt-4 text-lg leading-relaxed text-ink-200">
-              Nobody forgets which button to press. What goes wrong is the moment the new process
-              asks someone to choose — and two experienced people would choose differently.
-            </p>
-          </div>
-
-          <div class="mt-8 grid gap-4 sm:grid-cols-3">
-            {
-              dryRunFits.map((f, i) => (
-                <div class="card card-hover group p-6" data-reveal data-reveal-delay={i * 100}>
-                  <div class="grid h-10 w-10 place-items-center rounded-xl bg-accent/10 text-accent transition duration-300 group-hover:scale-110">
-                    <Icon name={f.icon} />
-                  </div>
-                  <p class="mt-4 text-[15px] leading-relaxed text-ink-200">{f.text}</p>
-                </div>
-              ))
-            }
-          </div>
-
-          <p class="mt-6 text-lg leading-relaxed text-ink-200" data-reveal>
-            Every one of those is a place where your design meets someone’s judgment, and where a
-            briefing can’t tell you what will happen. That’s where a rollout quietly diverges — one
-            site interpreting it one way, another site the other, and nobody finding out for a
-            quarter.
+        <div class="max-w-2xl">
+          <p class="eyebrow">Where generic tooling stops</p>
+          <h2 class="h2 mt-3">Three things break at scale</h2>
+          <p class="lede mt-4">
+            Most document work is fine until it isn't. These are the points where a general-purpose
+            converter stops being the right answer and a purpose-built pipeline starts.
           </p>
         </div>
+
+        <div class="mt-12 grid gap-6 lg:grid-cols-3">
+          {
+            limits.map((l) => (
+              <div class="card p-7">
+                <span class="icon-tile">
+                  <Icon name={l.icon} class="h-5 w-5" />
+                </span>
+                <h3 class="mt-5 font-display text-lg font-semibold text-slate-900">{l.title}</h3>
+                <p class="mt-2.5 text-[15px] leading-relaxed text-slate-600">{l.body}</p>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </section>
 
-    <!-- ================= WHAT YOU'RE ACTUALLY BUYING ================= -->
-    <section id="buying" class="border-b border-ink-800">
+    <!-- ================= CORPUS REPORT ================= -->
+    <section id="corpus-report" class="border-b border-slate-200 bg-mist">
       <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl">
-          <div data-reveal>
-            <p class="eyebrow">What you’re actually buying</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              Not the software
-            </h2>
-            <p class="mt-4 text-lg leading-relaxed text-ink-200">
-              That part gets easier every month. Three things instead.
+        <div class="grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+          <div>
+            <p class="eyebrow">Start here</p>
+            <h2 class="h2 mt-3">A free report on your own archive</h2>
+            <p class="lede mt-4">
+              Before anything is quoted, send us a representative sample. We tell you what is
+              actually in it — at no charge and with nothing to sign.
             </p>
+            <p class="mt-4 text-[15px] leading-relaxed text-slate-600">
+              Most people are surprised by their own archive: the scans nobody knew were scans, the
+              encrypted batch from one vendor, the 2% of files carrying half the page count. Better
+              to find that now than three weeks into a run.
+            </p>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href={mailto} class="btn btn-primary">Request a corpus report</a>
+              <a href="#process" class="btn btn-ghost">How a project runs</a>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-2">
+              <span class="chip">no charge</span>
+              <span class="chip">no commitment</span>
+              <span class="chip">NDA on request</span>
+            </div>
           </div>
 
-          <div class="mt-8 space-y-4">
-            {
-              buying.map((b, i) => (
-                <div
-                  class="card card-hover group flex gap-5 p-6 sm:p-7"
-                  data-reveal
-                  data-reveal-delay={i * 100}
-                >
-                  <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent transition duration-300 group-hover:scale-110">
-                    <Icon name={b.icon} class="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 class="font-display text-lg font-semibold text-paper">{b.title}</h3>
-                    <p class="mt-2 text-[15px] leading-relaxed text-ink-300">{b.body}</p>
-                  </div>
-                </div>
-              ))
-            }
+          <div class="card bg-white p-8 sm:p-9">
+            <p class="font-mono text-[11px] uppercase tracking-wider text-brand-600">
+              What comes back
+            </p>
+            <ul class="mt-6 space-y-4">
+              {
+                reportFindings.map((f) => (
+                  <li class="flex gap-3.5">
+                    <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                      <Icon name="check" class="h-3 w-3" />
+                    </span>
+                    <span class="text-[15px] leading-relaxed text-slate-700">{f}</span>
+                  </li>
+                ))
+              }
+            </ul>
+            <p class="mt-7 border-t border-slate-200 pt-5 text-sm text-slate-500">
+              Sample size is up to you — a few hundred files is usually enough to be representative.
+            </p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ================= CAPABILITIES ================= -->
+    <section id="capabilities" class="border-b border-slate-200 bg-white">
+      <div class="container-x py-20 sm:py-24">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Capabilities</p>
+          <h2 class="h2 mt-3">The operations we compose</h2>
+          <p class="lede mt-4">
+            A pipeline is assembled from these stages, in the order your documents need and with
+            your rules at each step. Few projects use all of them; none use only one.
+          </p>
+        </div>
+
+        <div
+          class="mt-12 grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {
+            capabilities.map((c) => (
+              <div class="bg-white p-7 transition hover:bg-brand-50/40">
+                <span class="icon-tile">
+                  <Icon name={c.icon} class="h-5 w-5" />
+                </span>
+                <h3 class="mt-5 font-display text-[15px] font-semibold text-slate-900">
+                  {c.title}
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-600">{c.body}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <p class="mt-8 text-sm text-slate-500">
+          Something not on this list? It is usually still a pipeline stage — ask.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= ARCHITECTURE ================= -->
+    <section id="architecture" class="border-b border-slate-200 bg-mist">
+      <div class="container-x py-20 sm:py-24">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Architecture</p>
+          <h2 class="h2 mt-3">What a run of millions actually looks like</h2>
+          <p class="lede mt-4">
+            Throughput is the easy half. The hard half is what happens when a run is four days long,
+            part of the corpus fails, and the whole thing has to be answerable afterwards.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            principles.map((p) => (
+              <div>
+                <span class="inline-flex text-brand-600">
+                  <Icon name={p.icon} class="h-5 w-5" />
+                </span>
+                <h3 class="mt-3 font-display text-[15px] font-semibold text-slate-900">
+                  {p.title}
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-600">{p.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROCESS ================= -->
+    <section id="process" class="border-b border-slate-200 bg-white">
+      <div class="container-x py-20 sm:py-24">
+        <div class="max-w-2xl">
+          <p class="eyebrow">How it works</p>
+          <h2 class="h2 mt-3">Four steps, and you can stop after any of them</h2>
+          <p class="lede mt-4">
+            Nobody should commit a million-document archive to a supplier they have not seen work.
+            Each step is priced and useful on its own.
+          </p>
+        </div>
+
+        <ol class="mt-12 grid gap-6 lg:grid-cols-4">
+          {
+            steps.map((s) => (
+              <li class="card p-7">
+                <span class="font-mono text-xs font-medium text-brand-500">{s.n}</span>
+                <h3 class="mt-3 font-display text-lg font-semibold text-slate-900">{s.title}</h3>
+                <p class="mt-1.5 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                  {s.meta}
+                </p>
+                <p class="mt-3.5 text-sm leading-relaxed text-slate-600">{s.body}</p>
+              </li>
+            ))
+          }
+        </ol>
       </div>
     </section>
 
     <!-- ================= PRICING ================= -->
-    <section id="pricing" class="border-b border-ink-800 bg-ink-900/40">
+    <section id="pricing" class="border-b border-slate-200 bg-mist">
       <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl">
-          <div data-reveal>
-            <p class="eyebrow">Pricing</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              Priced per engagement, not per seat, not per year
-            </h2>
-          </div>
-
-          <div class="mt-8 border-y border-ink-800" data-reveal>
-            {
-              pricing.map((p) => (
-                <div class="flex flex-col gap-1 border-t border-ink-800 py-5 first:border-t-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
-                  <div>
-                    <p class="font-display text-lg font-semibold text-paper">{p.name}</p>
-                    <p class="text-sm text-ink-400">{p.desc}</p>
-                  </div>
-                  <span class="whitespace-nowrap font-mono text-sm text-accent-300">{p.price}</span>
-                </div>
-              ))
-            }
-          </div>
-
-          <p class="mt-5 text-[15px] leading-relaxed text-ink-200" data-reveal>
-            No per-participant licensing. Run it with fifteen people or eighty; the price is the same.
+        <div class="max-w-2xl">
+          <p class="eyebrow">Pricing</p>
+          <h2 class="h2 mt-3">Priced per corpus, not per seat</h2>
+          <p class="lede mt-4">
+            Every archive is a different amount of work, so the production figure comes after the
+            report — not before it. What does not change is that the first step is free.
           </p>
-          <p class="mt-2 text-xs leading-relaxed text-ink-500" data-reveal>
-            Bracketed figures are placeholders — final pricing is quoted per engagement.
-          </p>
+        </div>
+
+        <div class="mt-12 grid gap-6 lg:grid-cols-3">
+          {
+            pricing.map((p) => (
+              <div class={`card flex h-full flex-col bg-white p-8 ${p.featured ? 'ring-1 ring-brand-300' : ''}`}>
+                {p.featured && (
+                  <span class="mb-4 inline-flex rounded-full bg-brand-50 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-brand-700">
+                    Most projects start here
+                  </span>
+                )}
+                <h3 class="font-display text-lg font-semibold text-slate-900">{p.name}</h3>
+                <p class="mt-4 font-serif text-[2rem] leading-none text-slate-900">{p.price}</p>
+                <p class="mt-2 text-xs text-slate-500">{p.note}</p>
+                <p class="mt-5 text-sm leading-relaxed text-slate-600">{p.desc}</p>
+                <ul class="mt-6 flex-1 space-y-2.5 border-t border-slate-200 pt-6">
+                  {p.points.map((pt) => (
+                    <li class="flex gap-2.5 text-sm text-slate-600">
+                      <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={p.cta.href}
+                  class={`btn mt-7 w-full ${p.featured ? 'btn-primary' : 'btn-ghost'}`}
+                >
+                  {p.cta.label}
+                </a>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
-    <!-- ================= STARTING ================= -->
-    <section id="start" class="border-b border-ink-800">
-      <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl">
-          <div data-reveal>
-            <p class="eyebrow">Starting</p>
-            <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-paper sm:text-4xl">
-              The smallest useful first step
+    <!-- ================= PODPDF ================= -->
+    <section class="border-b border-slate-200 bg-white">
+      <div class="container-x py-16 sm:py-20">
+        <div
+          class="card flex flex-col items-start justify-between gap-6 p-8 sm:flex-row sm:items-center sm:p-10"
+        >
+          <div class="max-w-2xl">
+            <p class="eyebrow">Self-serve</p>
+            <h2 class="mt-3 font-serif text-[1.75rem] leading-tight text-slate-900">
+              Not a pipeline project yet?
             </h2>
-            <p class="mt-4 text-lg leading-relaxed text-ink-200">In order of preference:</p>
+            <p class="mt-3 text-[15px] leading-relaxed text-slate-600">
+              PodPDF is our own product and the same engine underneath: a REST API and web app for
+              generating, converting, merging and editing PDFs, at $0.01 per document with credits
+              that never expire. Start there, and talk to us when the volume outgrows it.
+            </p>
           </div>
-
-          <ol class="mt-8 space-y-6" data-reveal>
-            {
-              starting.map((s, i) => (
-                <li class="flex gap-4">
-                  <span class="font-display text-xl font-bold text-accent-500">{i + 1}</span>
-                  <p class="text-lg leading-relaxed text-ink-200">
-                    <strong class="font-semibold text-paper">{s.lead}</strong>
-                    {s.body}
-                  </p>
-                </li>
-              ))
-            }
-          </ol>
-
-          <div class="mt-10 flex flex-col gap-3 sm:flex-row" data-reveal>
-            <a href={mailto} class="btn btn-primary">Send the process document</a>
-            <a href="mailto:zameer@xadlabs.com" class="btn btn-ghost">zameer@xadlabs.com</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= LIVE WORK ================= -->
-    <section id="work" class="border-b border-ink-800 bg-ink-900/40">
-      <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl">
-          <div class="flex items-end justify-between gap-4" data-reveal>
-            <div>
-              <p class="eyebrow">Live work</p>
-              <h2 class="mt-3 font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
-                Simulations you can play right now
-              </h2>
-            </div>
-            <a
-              href="https://cloudsims.online"
-              target="_blank"
-              rel="noopener"
-              class="hidden shrink-0 whitespace-nowrap text-sm font-semibold text-accent-300 transition hover:text-accent sm:inline-flex"
-              >Games catalogue ↗</a
-            >
-          </div>
-
-          <div class="mt-8 grid gap-6 sm:grid-cols-2">
-            {liveWork.map((g, i) => <GameCard game={g} delay={(i % 2) * 100} />)}
-          </div>
+          <a
+            href="https://podpdf.com"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-ghost shrink-0">Visit podpdf.com ↗</a
+          >
         </div>
       </div>
     </section>
 
     <!-- ================= CONTACT ================= -->
-    <section id="contact">
+    <section id="contact" class="border-b border-slate-200 bg-white">
       <div class="container-x py-20 sm:py-24">
-        <div class="mx-auto max-w-3xl text-center" data-reveal>
-          <p class="font-display text-xl font-bold text-paper">
-            <span class="text-accent">xad</span> labs
-          </p>
-          <p class="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-ink-400">
-            Simulation &amp; educational games studio
-          </p>
-          <a
-            href={mailto}
-            class="mt-6 inline-flex items-center gap-3 rounded-2xl border border-ink-700/70 bg-ink-900/50 px-6 py-4 font-display text-xl font-semibold text-paper transition hover:border-accent/50 hover:text-accent-300 sm:text-2xl"
-          >
-            <span aria-hidden="true">✉</span>
-            zameer@xadlabs.com
-          </a>
+        <div class="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
+          <div class="max-w-xl">
+            <p class="eyebrow">Get in touch</p>
+            <h2 class="h2 mt-3">Tell us what is in the archive</h2>
+            <p class="lede mt-4">
+              A rough file count and a sentence about what needs to happen to them is enough to
+              start. We will tell you quickly whether this is a project for us.
+            </p>
+            <p class="mt-5 text-sm text-slate-600">
+              Direct:
+              <a href="mailto:zameer@xadlabs.com" class="font-medium text-brand-600 hover:underline"
+                >zameer@xadlabs.com</a
+              >
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a href={mailto} class="btn btn-primary">Request a corpus report</a>
+            <a href={mailtoProject} class="btn btn-ghost">Discuss a project</a>
+          </div>
         </div>
       </div>
     </section>

@@ -11,11 +11,11 @@
   }
 
   body {
-    @apply bg-ink text-ink-100 font-sans antialiased;
+    @apply bg-paper text-slate-700 font-sans antialiased;
   }
 
   ::selection {
-    @apply bg-accent text-ink-900;
+    @apply bg-brand-100 text-brand-800;
   }
 
   /* Anchored sections clear the sticky nav. */
@@ -31,66 +31,109 @@
   }
 
   .eyebrow {
-    @apply font-mono text-xs font-medium uppercase tracking-[0.22em] text-accent-400;
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-brand-600;
+  }
+
+  /* Section heading pair. */
+  .h2 {
+    @apply font-serif text-[2rem] font-normal leading-[1.15] text-slate-900 sm:text-[2.6rem];
+  }
+  .lede {
+    @apply text-lg leading-relaxed text-slate-600;
   }
 
   /* ---- Buttons ---- */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition duration-200;
   }
   .btn-primary {
-    @apply bg-accent text-ink-900 hover:bg-accent-400 hover:shadow-[0_0_0_4px_rgba(0,214,143,0.18)];
+    @apply bg-brand-500 text-white shadow-sm hover:bg-brand-600;
   }
   .btn-ghost {
-    @apply border border-ink-600 text-ink-100 hover:border-accent hover:text-accent-300;
+    @apply border border-slate-300 bg-white text-slate-700 hover:border-brand-300 hover:text-brand-600;
   }
   .btn-dark {
-    @apply bg-ink-900 text-paper hover:bg-ink-800;
+    @apply bg-slate-900 text-white hover:bg-slate-800;
   }
 
-  /* ---- Cards ---- */
+  /* ---- Surfaces ---- */
   .card {
-    @apply rounded-2xl border border-ink-700/70 bg-ink-800/40 backdrop-blur-sm transition duration-300;
+    @apply rounded-xl border border-slate-200 bg-white shadow-card transition duration-300;
   }
   .card-hover:hover {
-    @apply border-accent/50 -translate-y-1 shadow-[0_18px_40px_-24px_rgba(0,214,143,0.5)];
+    @apply -translate-y-0.5 border-brand-200 shadow-lift;
   }
 
-  /* ---- Reveal-on-scroll ---- */
-  [data-reveal] {
-    opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
-  }
-  [data-reveal].is-visible {
-    opacity: 1;
-    transform: none;
+  /* Small square icon tile that sits at the top of a card. */
+  .icon-tile {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-600 ring-1 ring-inset ring-brand-100;
   }
 
-  /* ---- Decorative grid backdrop ---- */
-  .grid-backdrop {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-    background-size: 44px 44px;
+  /* Monospace metadata chip. */
+  .chip {
+    @apply inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-[11px] text-slate-600;
   }
 
-  .accent-glow {
-    background: radial-gradient(
-      600px circle at var(--gx, 50%) var(--gy, 0%),
-      rgba(0, 214, 143, 0.16),
-      transparent 60%
-    );
+  /* ---- Hero (dark ground) ---- */
+  .hero-ground {
+    background:
+      radial-gradient(900px circle at 78% 8%, rgba(85, 165, 236, 0.34), transparent 62%),
+      radial-gradient(700px circle at 8% 92%, rgba(13, 76, 139, 0.55), transparent 65%),
+      linear-gradient(140deg, #0A2545 0%, #10355C 48%, #0D3F72 100%);
   }
+  .eyebrow-light {
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-brand-200;
+  }
+  .btn-on-dark {
+    @apply bg-white text-brand-800 shadow-sm hover:bg-brand-50;
+  }
+  .btn-ghost-on-dark {
+    @apply border border-white/30 text-white hover:border-white/70 hover:bg-white/5;
+  }
+
+  /* ---- Nav ---- */
+  .nav-menu > summary {
+    list-style: none;
+  }
+  .nav-menu > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Transparent over a dark hero, solid once scrolled. */
+  .nav-overlay {
+    @apply border-transparent bg-transparent;
+  }
+  .nav-overlay .nav-link {
+    @apply text-brand-100 hover:text-white;
+  }
+  .nav-overlay .nav-cta {
+    @apply bg-white text-brand-800 hover:bg-brand-50;
+  }
+  .nav-overlay .logo-dark {
+    @apply hidden;
+  }
+  .nav-overlay.is-stuck {
+    @apply border-slate-200 bg-white shadow-sm;
+  }
+  .nav-overlay.is-stuck .nav-link {
+    @apply text-slate-600 hover:text-brand-600;
+  }
+  .nav-overlay.is-stuck .nav-cta {
+    @apply bg-brand-500 text-white hover:bg-brand-600;
+  }
+  .nav-overlay.is-stuck .logo-light {
+    @apply hidden;
+  }
+  .nav-overlay.is-stuck .logo-dark {
+    @apply block;
+  }
+
 }
 
-/* ---- Article prose (kept for blog/insights routes) ---- */
+/* ---- Article prose (blog routes) ---- */
 @layer components {
   .prose {
-    @apply font-sans text-ink-100;
+    @apply font-sans text-slate-700;
     font-size: 1.125rem;
     line-height: 1.7;
   }
@@ -98,24 +141,24 @@
     margin-top: 1.5em;
   }
   .prose h2 {
-    @apply font-display font-bold tracking-tight text-paper;
+    @apply font-display font-semibold tracking-tight text-slate-900;
     font-size: 1.7rem;
     line-height: 1.25;
     margin-top: 2em;
   }
   .prose h3 {
-    @apply font-display font-semibold tracking-tight text-paper;
+    @apply font-display font-semibold tracking-tight text-slate-900;
     font-size: 1.3rem;
     margin-top: 1.6em;
   }
   .prose a {
-    @apply text-accent-300 underline decoration-accent/40 underline-offset-2 transition hover:decoration-accent;
+    @apply text-brand-600 underline decoration-brand-300 underline-offset-2 transition hover:decoration-brand-500;
   }
   .prose strong {
-    @apply font-semibold text-paper;
+    @apply font-semibold text-slate-900;
   }
   .prose blockquote {
-    @apply border-l-[3px] border-accent pl-5 italic text-ink-200;
+    @apply border-l-[3px] border-brand-300 pl-5 italic text-slate-600;
   }
   .prose ul {
     @apply list-disc pl-6;
@@ -127,19 +170,19 @@
     margin-top: 0.5em;
   }
   .prose code {
-    @apply rounded bg-ink-700 px-1.5 py-0.5 font-mono text-accent-300;
+    @apply rounded bg-slate-100 px-1.5 py-0.5 font-mono text-brand-700;
     font-size: 0.85em;
   }
   .prose pre {
-    @apply overflow-x-auto rounded-xl border border-ink-700 bg-ink-900 p-5 font-mono;
+    @apply overflow-x-auto rounded-xl border border-slate-200 bg-slate-50 p-5 font-mono text-slate-800;
     font-size: 0.9rem;
     line-height: 1.6;
   }
   .prose pre code {
-    @apply bg-transparent p-0 text-ink-100;
+    @apply bg-transparent p-0 text-slate-800;
   }
   .prose hr {
-    @apply border-ink-700;
+    @apply border-slate-200;
     margin: 2.4em 0;
   }
 }

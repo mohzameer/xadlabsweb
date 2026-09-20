@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="264" height="80" viewBox="0 0 264 80">
-  <text x="4" y="41" dominant-baseline="central"
-        font-family="'Space Grotesk', system-ui, -apple-system, Arial, sans-serif"
-        font-size="48" font-weight="700" letter-spacing="-2">
-    <tspan fill="#00D68F">xad</tspan><tspan fill="#E7E9EF" dx="9">labs</tspan>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="64" viewBox="0 0 240 64">
+  <text x="4" y="33" dominant-baseline="central"
+        font-family="Inter, system-ui, -apple-system, Arial, sans-serif"
+        font-size="32" font-weight="600" letter-spacing="-1">
+    <tspan fill="#0F5FAE">xad</tspan><tspan fill="#16202B" dx="7">labs</tspan>
   </text>
 </svg>

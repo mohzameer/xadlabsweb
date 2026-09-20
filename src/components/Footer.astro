@@ -3,64 +3,55 @@ import Logo from './Logo.astro';
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-ink-700/60 bg-ink-900">
+<footer class="border-t border-slate-200 bg-slate-50">
   <div class="container-x py-16">
-    <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div class="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
       <div>
-        <a href="/" class="inline-flex items-center transition hover:opacity-80" aria-label="XAD Labs home">
+        <a href="/" class="inline-flex transition hover:opacity-80" aria-label="XAD Labs home">
           <Logo size="md" />
         </a>
-        <p class="mt-4 max-w-xs text-sm leading-relaxed text-ink-300">
-          Dry Run measures whether your new process actually landed — which decisions your people
-          make, and where the gap is by team, site, and shift. A simulation &amp; educational games
-          studio in Colombo.
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-600">
+          Custom document processing pipelines — designed, built and operated for runs of ten
+          thousand to several million PDFs. Makers of
+          <a
+            href="https://podpdf.com"
+            target="_blank"
+            rel="noopener"
+            class="font-medium text-brand-600 hover:underline">PodPDF</a
+          >.
         </p>
       </div>
 
       <div>
         <h3 class="eyebrow">Explore</h3>
-        <ul class="mt-4 space-y-3 text-sm text-ink-200">
-          <li><a href="/#what-we-do" class="transition hover:text-accent-300">What we do</a></li>
-          <li><a href="/#engagement" class="transition hover:text-accent-300">Engagement</a></li>
-          <li><a href="/#pricing" class="transition hover:text-accent-300">Pricing</a></li>
-          <li><a href="/#work" class="transition hover:text-accent-300">Live work</a></li>
-          <li><a href="/about" class="transition hover:text-accent-300">About</a></li>
+        <ul class="mt-4 space-y-3 text-sm text-slate-600">
+          <li><a href="/#capabilities" class="transition hover:text-brand-600">Capabilities</a></li>
+          <li><a href="/#architecture" class="transition hover:text-brand-600">Architecture</a></li>
+          <li><a href="/#process" class="transition hover:text-brand-600">How it works</a></li>
+          <li><a href="/#pricing" class="transition hover:text-brand-600">Pricing</a></li>
+          <li><a href="/about" class="transition hover:text-brand-600">About</a></li>
         </ul>
       </div>
 
       <div>
         <h3 class="eyebrow">Get in touch</h3>
-        <ul class="mt-4 space-y-3 text-sm text-ink-200">
+        <ul class="mt-4 space-y-3 text-sm text-slate-600">
           <li>
-            <a href="mailto:zameer@xadlabs.com" class="transition hover:text-accent-300"
+            <a href="mailto:zameer@xadlabs.com" class="transition hover:text-brand-600"
               >zameer@xadlabs.com</a
             >
           </li>
           <li>
-            <a href="/#contact" class="transition hover:text-accent-300">Get in touch</a>
-          </li>
-          <li>
-            <a
-              href="https://rtagi.cloudsims.online"
-              target="_blank"
-              rel="noopener"
-              class="transition hover:text-accent-300">Play Race to AGI ↗</a
+            <a href="/#corpus-report" class="transition hover:text-brand-600"
+              >Request a corpus report</a
             >
           </li>
           <li>
             <a
-              href="https://cloudarch.cloudsims.online"
+              href="https://podpdf.com"
               target="_blank"
               rel="noopener"
-              class="transition hover:text-accent-300">Play CloudArchitect ↗</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://cloudsims.online"
-              target="_blank"
-              rel="noopener"
-              class="transition hover:text-accent-300">Games catalogue ↗</a
+              class="transition hover:text-brand-600">PodPDF — self-serve API ↗</a
             >
           </li>
         </ul>
@@ -68,10 +59,10 @@ const year = new Date().getFullYear();
     </div>
 
     <div
-      class="mt-14 flex flex-col items-start justify-between gap-4 border-t border-ink-700/60 pt-8 text-xs text-ink-500 sm:flex-row sm:items-center"
+      class="mt-14 flex flex-col items-start justify-between gap-4 border-t border-slate-200 pt-8 text-xs text-slate-500 sm:flex-row sm:items-center"
     >
       <p>&copy; {year} XAD Labs. All rights reserved.</p>
-      <p class="font-mono">Learning through simulation.</p>
+      <p class="font-mono">Document pipelines, built to your corpus.</p>
     </div>
   </div>
 </footer>
