@@ -76,6 +76,8 @@ Last reviewed: 2026-09-20.
 | Per-document audit trail from ingest to delivery | Managed | Covered |
 | Checkpointed, resumable runs | Managed | Covered |
 | Isolated per-customer environment, credentials and retention window | Managed | Covered |
+| Integration with the system the data lives in — ERP, billing platform, warehouse, internal API | Managed | Covered |
+| Automation connectors — n8n, Activepieces, MCP | PodPDF | Covered |
 | Webhooks — `job.completed`, `job.failed`, bulk job events, with retries | PodPDF | Covered |
 | Job history, API keys and usage dashboard | PodPDF | Covered |
 

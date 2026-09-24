@@ -400,7 +400,26 @@ const mailtoProject =
           }
         </div>
 
-        <div class="mt-14 rounded-xl border border-brand-200 bg-brand-50/60 p-8 sm:p-9">
+        <!-- Secondary note: integration is assumed, so it sits below the ten. -->
+        <div class="mt-12 flex gap-5 rounded-xl border border-slate-200 bg-slate-50 p-6 sm:p-7">
+          <span class="mt-0.5 hidden shrink-0 text-slate-400 sm:inline-flex">
+            <Icon name="swap" class="h-5 w-5" />
+          </span>
+          <div>
+            <h3 class="font-display text-[15px] font-semibold text-slate-900">
+              Built into your systems, not beside them
+            </h3>
+            <p class="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">
+              A run of a million documents starts from data you already hold, so the pipeline
+              connects to the system holding it — your ERP, billing platform, warehouse, object
+              storage or an internal API — rather than waiting on an export. PodPDF already ships a
+              REST API, webhooks and connectors for n8n, Activepieces and MCP; a managed pipeline is
+              built to whatever you run.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-xl border border-brand-200 bg-brand-50/60 p-8 sm:p-9">
           <p class="font-serif text-[1.5rem] leading-tight text-slate-900">
             Yours not quite on the list?
           </p>
