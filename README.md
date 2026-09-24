@@ -58,8 +58,8 @@ tailwind.config.mjs         # brand palette (brand / slate / mist) + fonts
 ## Editing content
 
 Everything on the landing page is driven by arrays at the top of
-`src/pages/index.astro`: `strip`, `runStages`, `limits`, `reportFindings`,
-`capabilities`, `principles`, `steps` and `pricing`. Edit those rather than
+`src/pages/index.astro`: `strip`, `runStages`, `useCases`,
+`reportFindings`, `capabilities`, `principles`, `steps` and `pricing`. Edit those rather than
 the markup.
 
 What we do and do not offer is tracked in
