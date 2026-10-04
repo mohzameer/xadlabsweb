@@ -1,0 +1,168 @@
+---
+// Not linked from the single-view homepage. It exists so search engines have
+// something substantial to index about the company, and so anyone who lands
+// here from a search result gets a page that stands on its own.
+// Discovery is via /sitemap.xml and /robots.txt.
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+
+const year = new Date().getFullYear();
+
+const facts = [
+  { k: 'What we do', v: 'High-volume PDF generation and document pipelines' },
+  { k: 'Run size', v: 'Thousands to several million documents' },
+  { k: 'Platform', v: 'PodPDF — podpdf.com' },
+  { k: 'Based in', v: 'Colombo, Sri Lanka' },
+];
+---
+
+<Base
+  title="About XAD Labs — document infrastructure for PDF at scale"
+  description="XAD Labs is an independent engineering company in Colombo, Sri Lanka, building and operating the document infrastructure behind high-volume PDF generation — from thousands of documents to several million. Makers of PodPDF."
+>
+  <div class="flex min-h-screen flex-col">
+    <header class="container-x shrink-0 border-b border-slate-200 py-5">
+      <a href="/" class="inline-flex transition hover:opacity-80" aria-label="XAD Labs home">
+        <Logo size="md" />
+      </a>
+    </header>
+
+    <main class="container-x flex-1 py-16 sm:py-20">
+      <div class="max-w-3xl">
+        <p class="eyebrow">About</p>
+        <h1 class="mt-4 font-serif text-[2rem] font-normal leading-[1.12] text-slate-900 sm:text-[2.75rem]">
+          An independent engineering company for documents at scale
+        </h1>
+        <p class="mt-6 text-lg leading-relaxed text-slate-600">
+          XAD Labs builds and operates the document infrastructure behind high-volume PDF
+          generation. We work at the end of the problem where general-purpose tools stop being the
+          right answer — runs that start in the tens of thousands of documents and go into the
+          millions, on pipelines built around one organisation's data and one organisation's rules.
+        </p>
+      </div>
+
+      <dl class="mt-12 grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          facts.map((f) => (
+            <div class="bg-white p-5">
+              <dt class="font-mono text-[11px] uppercase tracking-wider text-brand-600">{f.k}</dt>
+              <dd class="mt-1.5 text-[15px] font-semibold text-slate-900">{f.v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <div class="mt-16 grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <section>
+          <h2 class="font-serif text-[1.6rem] leading-tight text-slate-900">
+            PDF generation at scale
+          </h2>
+          <div class="mt-4 space-y-4 text-[15px] leading-relaxed text-slate-600">
+            <p>
+              Most document work is straightforward until the volume changes the problem. A script
+              that converts a thousand files does not survive two million: retries, partial failure,
+              cost per document and the length of the run itself all become part of the design
+              rather than details to sort out later.
+            </p>
+            <p>
+              We design the pipeline for that from the start. Statements, invoices, certificates and
+              letters rendered from your own records, at run scale, with the same branding and
+              layout on every page however long the run takes. Documents split out of enormous
+              bundles, assembled into packets, read into structured data, or carried through a
+              migration where every file has to be accounted for.
+            </p>
+            <p>
+              The pipeline connects to the system the data already lives in — an ERP, a billing
+              platform, a warehouse, object storage or an internal API — rather than waiting on
+              someone to produce an export.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-serif text-[1.6rem] leading-tight text-slate-900">
+            And the reliability to match
+          </h2>
+          <div class="mt-4 space-y-4 text-[15px] leading-relaxed text-slate-600">
+            <p>
+              Throughput is the easy half. The hard half is what happens when a run is four days
+              long, part of the corpus fails, and the whole thing has to be answerable afterwards.
+            </p>
+            <p>
+              Each document is its own unit of work, so re-running one changes nothing else and
+              duplicates nothing. Work is persisted before it is attempted, and workers pull at the
+              rate they can sustain, so a slow stage throttles instead of dropping. Runs are
+              checkpointed: one that stops at 1.4 million documents resumes at 1.4 million, never
+              from zero. Every file carries an audit row from ingest to delivery, so at the end of a
+              run you can say what happened to any single document.
+            </p>
+            <p>
+              Each engagement runs in its own environment, with its own credentials and its own
+              retention window.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <section class="mt-16 max-w-3xl">
+        <h2 class="font-serif text-[1.6rem] leading-tight text-slate-900">PodPDF, our platform</h2>
+        <div class="mt-4 space-y-4 text-[15px] leading-relaxed text-slate-600">
+          <p>
+            <a
+              href="https://podpdf.com"
+              target="_blank"
+              rel="noopener"
+              class="font-medium text-brand-600 underline decoration-brand-300 underline-offset-2 hover:decoration-brand-500"
+              >PodPDF</a
+            > is our own product and the self-serve end of the same engine: a REST API and web app for
+            generating, converting, merging and editing PDFs. HTML, Markdown, images and URLs in; a
+            visual template editor for invoices, receipts, labels and certificates; bulk jobs,
+            webhooks and a dashboard. Credit packs at $0.01 per document, with credits that never
+            expire.
+          </p>
+          <p>
+            We build it, run it and scale it ourselves, which is where most of what we know about
+            PDFs at volume came from. When a project outgrows self-serve — a large archive, a run
+            with a delivery date, documents that need handling rather than converting — that is the
+            managed work described above.
+          </p>
+        </div>
+      </section>
+
+      <section class="mt-16 max-w-3xl">
+        <h2 class="font-serif text-[1.6rem] leading-tight text-slate-900">Get in touch</h2>
+        <p class="mt-4 text-[15px] leading-relaxed text-slate-600">
+          A rough document count and a sentence about what needs to happen to them is enough to
+          start. Write to
+          <a href="mailto:zameer@xadlabs.com" class="font-medium text-brand-600 hover:underline"
+            >zameer@xadlabs.com</a
+          > and we will tell you quickly whether it is a project for us.
+        </p>
+        <a href="mailto:zameer@xadlabs.com" class="btn btn-primary mt-6">Start a conversation</a>
+      </section>
+    </main>
+
+    <footer class="container-x shrink-0 border-t border-slate-200 py-6">
+      <div
+        class="flex flex-col items-start justify-between gap-3 text-sm text-slate-500 sm:flex-row sm:items-center"
+      >
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <a href="/" class="font-medium transition hover:text-brand-600">XAD Labs</a>
+          <a
+            href="https://podpdf.com"
+            target="_blank"
+            rel="noopener"
+            class="transition hover:text-brand-600">PodPDF ↗</a
+          >
+          <a
+            href="https://www.linkedin.com/in/zameermfm/"
+            target="_blank"
+            rel="noopener"
+            class="transition hover:text-brand-600">LinkedIn ↗</a
+          >
+        </div>
+        <p class="font-mono text-xs">&copy; {year} XAD Labs</p>
+      </div>
+    </footer>
+  </div>
+</Base>

@@ -40,9 +40,10 @@ src/
   components/Footer.astro   # used only by archived pages
   components/Icon.astro     # inline line-icon set
   pages/index.astro         # the live single-view page
+  pages/about.astro         # unlinked, for indexing (see below)
   styles/global.css         # tailwind entry + design-system component classes
   content/blog/             # article route (/blog/<slug>), unlinked
-public/                     # favicon, logo
+public/                     # favicon, logo, robots.txt, sitemap.xml
 docs/pdf-use-cases.md       # what we do and do not offer
 tailwind.config.mjs         # brand palette (brand / slate / mist) + fonts
 ```
@@ -63,6 +64,20 @@ re-check `document.documentElement.scrollHeight` against `window.innerHeight`
 at both sizes. On phones the service chips and the standalone email link are
 hidden (`hidden sm:flex` / `hidden sm:inline`) to buy the room — that is what
 keeps it fitting, so removing those classes will reintroduce scrolling.
+
+### The about page
+
+`/about` is deliberately not linked from the homepage. It exists so search
+engines have something substantial to index, and so anyone arriving from a
+search result gets a page that stands on its own.
+
+Crawlers find it through `public/sitemap.xml`, which `public/robots.txt`
+points at. **Both are hand-maintained** — add new routes to the sitemap, or
+swap in `@astrojs/sitemap` if the site grows past a handful of pages.
+
+An orphan page with no inbound links is indexed more slowly and ranks worse
+than a linked one. If indexing matters, either add a quiet footer link on the
+homepage or submit the sitemap in Google Search Console.
 
 ## Archived
 
