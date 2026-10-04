@@ -116,6 +116,8 @@ worth keeping clear in conversation.
 
 ## Keeping this in step
 
-The live capability list is the `capabilities` array at the top of
-`src/pages/index.astro`. When an item moves between Covered and Not offered,
-change it in both places.
+As of 2026-10-04 the public site is a single-view page and no longer publishes
+a capability list, so this document is the only place coverage is written
+down. It is the reference for sales conversations and for the copy of any
+fuller site that replaces the one-pager — the archived pipelines site at
+`src/pages/_legacy-pipelines.astro` carries the last published version.

@@ -1,695 +1,105 @@
 ---
 import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
-import Icon from '../components/Icon.astro';
+import Logo from '../components/Logo.astro';
 
-// ---------------------------------------------------------------------------
-// Hero scale strip — capability statements, not claimed metrics.
-// ---------------------------------------------------------------------------
-const strip = [
-  { k: 'Run size', v: '10k → millions' },
-  { k: 'Pipelines', v: 'Built per customer' },
-  { k: 'First step', v: 'Free corpus report' },
-  { k: 'Self-serve', v: 'podpdf.com' },
-];
+const year = new Date().getFullYear();
 
-// Stages shown in the hero's illustrative run panel.
-const runStages = [
-  { label: 'Ingest & inventory', note: 'done', state: 'done' },
-  { label: 'OCR & text layer', note: 'done', state: 'done' },
-  { label: 'Extraction', note: 'running', state: 'running' },
-  { label: 'Validation', note: 'queued', state: 'queued' },
-  { label: 'Delivery', note: 'queued', state: 'queued' },
-];
-
-// ---------------------------------------------------------------------------
-// The shapes of work people bring us. Written as jobs, not case studies.
-// ---------------------------------------------------------------------------
-const useCases = [
-  {
-    n: '01',
-    title: 'Thousands of PDFs, read into data',
-    body: 'An archive of contracts, claims or statements turned into one clean row per document — fields and tables out as JSON or CSV, checked against a schema you approve.',
-  },
-  {
-    n: '02',
-    title: 'A million documents generated, on brand',
-    body: 'A billing or statement run rendered from your own records, every page carrying the same branding, totals and layout, however long the run takes.',
-  },
-  {
-    n: '03',
-    title: 'A 40,000-page bundle split back into documents',
-    body: 'One enormous scan broken into the documents it was always made of, on barcodes, separator sheets or the text on the page itself.',
-  },
-  {
-    n: '04',
-    title: 'A decade of scans made searchable',
-    body: 'Paper records that have never been searchable given a real text layer, with per-page confidence scores so the weak pages are flagged rather than quietly shipped.',
-  },
-  {
-    n: '05',
-    title: 'A mixed archive sorted into its document types',
-    body: 'Everything in one folder, no two files alike. Each document classified, then routed down the branch of the pipeline that knows how to handle it.',
-  },
-  {
-    n: '06',
-    title: 'Case files assembled into deliverable bundles',
-    body: 'Documents gathered into packets in a defined order, with covers, inserts, bookmarks and consistent numbering across the whole set.',
-  },
-  {
-    n: '07',
-    title: 'A migration where nothing may go missing',
-    body: 'Every input file inventoried, hashed and accounted for, so the manifest at the end reconciles against your own count and you can prove it.',
-  },
-  {
-    n: '08',
-    title: 'Invoices arriving every day, not just once',
-    body: 'A pipeline that keeps running — documents picked up as they land, extracted, validated and pushed into your finance system without anyone watching it.',
-  },
-  {
-    n: '09',
-    title: 'Certificates issued at the end of every intake',
-    body: 'Thousands of personalised documents produced on a schedule from your records, numbered, and delivered where they need to go.',
-  },
-  {
-    n: '10',
-    title: 'An archive nobody has opened in years',
-    body: 'Before anything else, a corpus report: what is actually in there, what is broken, what needs OCR, and whether the job is worth doing at all.',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// What the corpus report tells you before any money changes hands.
-// ---------------------------------------------------------------------------
-const reportFindings = [
-  'Page counts and file sizes — the real distribution, not the average',
-  'Which files are encrypted, corrupt, or will not open at all',
-  'Which already carry a searchable text layer, and which need OCR',
-  'How many distinct layouts and document types are actually in there',
-  'Where the processing cost concentrates — usually a small fraction of the files',
-  'Whether the job is worth doing at all, said plainly',
-];
-
-// ---------------------------------------------------------------------------
-// Pipeline operations — the stages we compose into a customer's run.
-// ---------------------------------------------------------------------------
-const capabilities = [
-  {
-    icon: 'inbox',
-    title: 'Ingest & normalise',
-    body: 'Pull from S3, SFTP, a network share or a shipped drive. Inventory every file, hash it, repair or quarantine what will not open.',
-  },
-  {
-    icon: 'split',
-    title: 'Split & burst',
-    body: 'Break a 40,000-page bundle into documents on barcodes, separator sheets, text markers or a page-count rule.',
-  },
-  {
-    icon: 'merge',
-    title: 'Merge & assemble',
-    body: 'Recombine documents into packets in a defined order, with covers, inserts, tables of contents and bookmarks.',
-  },
-  {
-    icon: 'scan',
-    title: 'OCR & text layer',
-    body: 'Make scans searchable, with per-page confidence scores so low-quality output is flagged rather than quietly shipped.',
-  },
-  {
-    icon: 'extract',
-    title: 'Extraction to structured data',
-    body: 'Fields and tables out of every document as JSON or CSV, validated against a schema you approve.',
-  },
-  {
-    icon: 'tag',
-    title: 'Classification & routing',
-    body: 'Sort documents by type, then send each class down its own branch of the pipeline with its own rules.',
-  },
-  {
-    icon: 'file',
-    title: 'Generation from your data',
-    body: 'Statements, invoices, certificates and letters rendered from your records at run scale — the same engine behind PodPDF templates.',
-  },
-  {
-    icon: 'stamp',
-    title: 'Stamping & numbering',
-    body: 'Watermarks, Bates numbering, headers and footers applied consistently across the whole corpus.',
-  },
-  {
-    icon: 'shield',
-    title: 'Validation & QA',
-    body: 'Page counts, text-layer presence, schema conformance and sampled human review before anything is signed off.',
-  },
-  {
-    icon: 'ledger',
-    title: 'Delivery & manifest',
-    body: 'Output back to your storage or API, with a manifest that accounts for every input file and what became of it.',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Architecture principles — how the run holds up at volume.
-// ---------------------------------------------------------------------------
-const principles = [
-  {
-    icon: 'repeat',
-    title: 'Idempotent per document',
-    body: 'Each file is its own unit of work. Re-running one, or ten thousand, changes nothing else and duplicates nothing.',
-  },
-  {
-    icon: 'queue',
-    title: 'Durable queue, real backpressure',
-    body: 'Work is persisted before it is attempted. Workers pull at the rate they can sustain, so a slow stage throttles instead of dropping.',
-  },
-  {
-    icon: 'gauge',
-    title: 'Scale-out, with a cost ceiling',
-    body: 'Throughput is a dial: add workers until the run fits your window. We size it against an agreed budget, not an open tap.',
-  },
-  {
-    icon: 'ledger',
-    title: 'Checkpointed and resumable',
-    body: 'A run that stops at 1.4 million documents resumes at 1.4 million. No restart from zero, ever.',
-  },
-  {
-    icon: 'lock',
-    title: 'Isolated per customer',
-    body: 'Your corpus runs in its own environment with its own credentials and retention window. Nothing is pooled with anyone else.',
-  },
-  {
-    icon: 'check',
-    title: 'Every document accounted for',
-    body: 'One audit row per file from ingest to delivery. At the end of a run you can prove what happened to any single document.',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Engagement — four steps, each with an exit.
-// ---------------------------------------------------------------------------
-const steps = [
-  {
-    n: '01',
-    title: 'Corpus report',
-    meta: 'Free · [turnaround]',
-    body: 'Send a representative sample. We come back with what is actually in the archive, what it will take to process, and whether we are the right people for it.',
-  },
-  {
-    n: '02',
-    title: 'Scoped pilot',
-    meta: 'Fixed fee · [duration]',
-    body: 'We build the pipeline and run it over a real slice of your corpus. You see genuine output, genuine failure cases and a firm per-document cost before committing to the full run.',
-  },
-  {
-    n: '03',
-    title: 'Production run',
-    meta: 'Quoted per corpus',
-    body: 'The full archive, monitored end to end, against an agreed delivery date. You get progress you can watch and a manifest that reconciles against your own file count.',
-  },
-  {
-    n: '04',
-    title: 'Operate or hand over',
-    meta: 'Optional',
-    body: 'If documents keep arriving, we run the pipeline as a service. If you would rather own it, you take the code and the infrastructure definitions and we help you land it.',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Pricing — bracketed figures are placeholders to fill in.
-// ---------------------------------------------------------------------------
-const pricing = [
-  {
-    name: 'Corpus report',
-    price: 'Free',
-    note: 'No commitment',
-    desc: 'A full read of your archive before you spend anything.',
-    points: ['Sample analysed', 'Findings written up', 'Honest go / no-go'],
-    cta: { label: 'Request a report', href: '#corpus-report' },
-  },
-  {
-    name: 'Scoped pilot',
-    price: '[fixed fee]',
-    note: 'One slice, real output',
-    desc: 'The pipeline built and proven on a representative subset.',
-    points: ['Pipeline designed and built', 'Run over a real sample', 'Firm per-document cost'],
-    featured: true,
-    cta: { label: 'Talk about a pilot', href: '#contact' },
-  },
-  {
-    name: 'Production & operation',
-    price: '[quoted]',
-    note: 'Per corpus, or monthly',
-    desc: 'The full run, then ongoing processing if you need it.',
-    points: ['Whole-corpus run', 'Delivery date committed', 'Optional managed operation'],
-    cta: { label: 'Get a quote', href: '#contact' },
-  },
-];
-
-const mailto =
-  'mailto:zameer@xadlabs.com?subject=Corpus%20report%20request%20%E2%80%94%20XAD%20Labs';
-const mailtoProject =
-  'mailto:zameer@xadlabs.com?subject=Document%20pipeline%20enquiry%20%E2%80%94%20XAD%20Labs';
+// What we do, in three words each. Kept short so the page stays one screen.
+const services = ['Generation at scale', 'Custom pipelines', 'Integration with your systems'];
 ---
 
-<Base>
-  <Nav variant="overlay" />
+<Base
+  title="XAD Labs — PDF generation at scale"
+  description="XAD Labs builds and operates the document infrastructure behind high-volume PDF generation — thousands of documents to several million. Makers of PodPDF. Founded by Mohammed Zameer, Colombo, Sri Lanka."
+>
+  <div class="relative flex min-h-screen flex-col overflow-hidden">
+    <!-- Soft light-blue wash, top right. -->
+    <div
+      class="pointer-events-none absolute -right-40 -top-56 h-[760px] w-[760px] rounded-full opacity-70 blur-3xl"
+      style="background: radial-gradient(closest-side, rgba(20,118,210,0.14), transparent 70%);"
+    >
+    </div>
 
-  <main>
-    <!-- ================= HERO ================= -->
-    <section class="relative overflow-hidden pt-16 text-white">
-      <div class="absolute inset-0 hero-ground"></div>
+    <header class="container-x relative shrink-0 pt-6 sm:pt-8">
+      <Logo size="md" />
+    </header>
 
-      <div class="container-x relative">
-        <div
-          class="grid items-center gap-14 py-20 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-28"
-        >
-          <div>
-            <p class="eyebrow-light">The team behind PodPDF</p>
+    <main class="container-x relative flex flex-1 items-center py-6 sm:py-12">
+      <div class="grid w-full items-center gap-8 sm:gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+        <!-- Introduction -->
+        <div>
+          <p class="eyebrow">Document engineering · Colombo, Sri Lanka</p>
 
-            <h1
-              class="mt-5 font-serif text-[2.5rem] font-normal leading-[1.08] sm:text-[3.25rem] lg:text-[3.55rem]"
-            >
-              Document processing, engineered for volume
-            </h1>
-
-            <p class="mt-6 max-w-xl text-lg leading-relaxed text-brand-100">
-              Custom PDF pipelines for runs of ten thousand to several million documents — designed,
-              built and operated around your archive and your rules.
-            </p>
-
-            <div class="mt-9 flex flex-wrap gap-3">
-              <a href="#corpus-report" class="btn btn-on-dark">Request a free corpus report</a>
-              <a href="#capabilities" class="btn btn-ghost-on-dark">See what we take on</a>
-            </div>
-
-            <p class="mt-6 text-sm text-brand-200">
-              Smaller, self-serve volumes are already covered by
-              <a
-                href="https://podpdf.com"
-                target="_blank"
-                rel="noopener"
-                class="font-medium text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
-                >PodPDF</a
-              > — our API and app, at $0.01 per PDF.
-            </p>
-          </div>
-
-          <!-- Illustrative run panel -->
-          <div
-            class="rounded-2xl border border-white/20 bg-white p-6 text-slate-700 shadow-[0_34px_90px_-34px_rgba(3,20,40,0.9)] sm:p-7"
+          <h1
+            class="mt-4 font-serif text-[1.8rem] font-normal leading-[1.12] text-slate-900 sm:mt-5 sm:text-[2.6rem] lg:text-[3.2rem]"
           >
-            <div class="flex items-center justify-between">
-              <p class="font-mono text-[11px] uppercase tracking-wider text-slate-400">
-                Example run
-              </p>
-              <span class="chip">illustrative</span>
-            </div>
+            PDF generation at scale, built to be relied on.
+          </h1>
 
-            <p class="mt-5 font-serif text-[2.1rem] leading-none text-slate-900">
-              2,418,640
-              <span class="font-sans text-sm font-medium text-slate-500">documents</span>
-            </p>
-
-            <div class="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
-              <div class="h-full w-[62%] rounded-full bg-brand-500"></div>
-            </div>
-            <div class="mt-2 flex justify-between font-mono text-[11px] text-slate-500">
-              <span>1,499,556 processed</span>
-              <span>62%</span>
-            </div>
-
-            <ul class="mt-6 space-y-3.5 border-t border-slate-200 pt-5">
-              {
-                runStages.map((st) => (
-                  <li class="flex items-center justify-between gap-4">
-                    <span class="flex items-center gap-2.5 text-sm text-slate-700">
-                      <span
-                        class={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${
-                          st.state === 'done'
-                            ? 'bg-brand-500 text-white'
-                            : st.state === 'running'
-                              ? 'bg-brand-100 text-brand-600'
-                              : 'bg-slate-100 text-slate-400'
-                        }`}
-                      >
-                        {st.state === 'done' ? (
-                          <Icon name="check" class="h-2.5 w-2.5" />
-                        ) : (
-                          <span class="h-1.5 w-1.5 rounded-full bg-current" />
-                        )}
-                      </span>
-                      {st.label}
-                    </span>
-                    <span class="font-mono text-[11px] uppercase tracking-wider text-slate-400">
-                      {st.note}
-                    </span>
-                  </li>
-                ))
-              }
-            </ul>
-
-            <p class="mt-5 border-t border-slate-200 pt-4 text-xs leading-relaxed text-slate-500">
-              Checkpointed: stop the run and it resumes at the same document, not from zero.
-            </p>
-          </div>
-        </div>
-
-        <!-- Scale strip -->
-        <div class="relative border-t border-white/15 py-10">
-          <p class="eyebrow-light text-center">Built for runs of this shape</p>
-          <div class="mt-7 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {
-              strip.map((s) => (
-                <div class="text-center">
-                  <p class="font-serif text-xl text-white">{s.v}</p>
-                  <p class="mt-1 font-mono text-[11px] uppercase tracking-wider text-brand-200">
-                    {s.k}
-                  </p>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= USE CASES ================= -->
-    <section id="use-cases" class="border-b border-slate-200 bg-white">
-      <div class="container-x py-20 sm:py-24">
-        <div class="max-w-2xl">
-          <p class="eyebrow">What we take on</p>
-          <h2 class="h2 mt-3">The shape of the work</h2>
-          <p class="lede mt-4">
-            No two archives want the same thing done to them. These are the jobs that come up most
-            — each one a pipeline built around one corpus and one set of rules.
+          <p class="mt-4 max-w-xl text-[15px] leading-relaxed text-slate-600 sm:mt-6 sm:text-lg">
+            XAD Labs builds and operates the document infrastructure behind high-volume PDF
+            generation — from thousands of documents to several million, on pipelines built to
+            finish and account for every file.
           </p>
-        </div>
 
-        <div class="mt-14 grid gap-x-14 gap-y-9 lg:grid-cols-2">
-          {
-            useCases.map((u) => (
-              <div class="flex gap-5 border-t border-slate-200 pt-6">
-                <span class="mt-0.5 shrink-0 font-mono text-xs font-medium text-brand-500">
-                  {u.n}
-                </span>
-                <div>
-                  <h3 class="font-display text-[15px] font-semibold text-slate-900">{u.title}</h3>
-                  <p class="mt-2 text-sm leading-relaxed text-slate-600">{u.body}</p>
-                </div>
-              </div>
-            ))
-          }
-        </div>
+          <ul class="mt-5 hidden flex-wrap gap-2 sm:mt-7 sm:flex">
+            {services.map((s) => <li class="chip">{s}</li>)}
+          </ul>
 
-        <!-- Secondary note: integration is assumed, so it sits below the ten. -->
-        <div class="mt-12 flex gap-5 rounded-xl border border-slate-200 bg-slate-50 p-6 sm:p-7">
-          <span class="mt-0.5 hidden shrink-0 text-slate-400 sm:inline-flex">
-            <Icon name="swap" class="h-5 w-5" />
-          </span>
-          <div>
-            <h3 class="font-display text-[15px] font-semibold text-slate-900">
-              Built into your systems, not beside them
-            </h3>
-            <p class="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">
-              A run of a million documents starts from data you already hold, so the pipeline
-              connects to the system holding it — your ERP, billing platform, warehouse, object
-              storage or an internal API — rather than waiting on an export. PodPDF already ships a
-              REST API, webhooks and connectors for n8n, Activepieces and MCP; a managed pipeline is
-              built to whatever you run.
-            </p>
-          </div>
-        </div>
-
-        <div class="mt-8 rounded-xl border border-brand-200 bg-brand-50/60 p-8 sm:p-9">
-          <p class="font-serif text-[1.5rem] leading-tight text-slate-900">
-            Yours not quite on the list?
-          </p>
-          <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
-            Document problems rarely arrive with a name attached. Say the word and we will work
-            through it with you — what the documents are, what needs to happen to them, and
-            whether a pipeline is the right answer at all.
-          </p>
-          <a href="#contact" class="btn btn-primary mt-6">Talk it through with us</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= CORPUS REPORT ================= -->
-    <section id="corpus-report" class="border-b border-slate-200 bg-mist">
-      <div class="container-x py-20 sm:py-24">
-        <div class="grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-          <div>
-            <p class="eyebrow">Start here</p>
-            <h2 class="h2 mt-3">A free report on your own archive</h2>
-            <p class="lede mt-4">
-              Before anything is quoted, send us a representative sample. We tell you what is
-              actually in it — at no charge and with nothing to sign.
-            </p>
-            <p class="mt-4 text-[15px] leading-relaxed text-slate-600">
-              Most people are surprised by their own archive: the scans nobody knew were scans, the
-              encrypted batch from one vendor, the 2% of files carrying half the page count. Better
-              to find that now than three weeks into a run.
-            </p>
-
-            <div class="mt-8 flex flex-wrap gap-3">
-              <a href={mailto} class="btn btn-primary">Request a corpus report</a>
-              <a href="#process" class="btn btn-ghost">How a project runs</a>
-            </div>
-
-            <div class="mt-8 flex flex-wrap gap-2">
-              <span class="chip">no charge</span>
-              <span class="chip">no commitment</span>
-              <span class="chip">NDA on request</span>
-            </div>
-          </div>
-
-          <div class="card bg-white p-8 sm:p-9">
-            <p class="font-mono text-[11px] uppercase tracking-wider text-brand-600">
-              What comes back
-            </p>
-            <ul class="mt-6 space-y-4">
-              {
-                reportFindings.map((f) => (
-                  <li class="flex gap-3.5">
-                    <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
-                      <Icon name="check" class="h-3 w-3" />
-                    </span>
-                    <span class="text-[15px] leading-relaxed text-slate-700">{f}</span>
-                  </li>
-                ))
-              }
-            </ul>
-            <p class="mt-7 border-t border-slate-200 pt-5 text-sm text-slate-500">
-              Sample size is up to you — a few hundred files is usually enough to be representative.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= CAPABILITIES ================= -->
-    <section id="capabilities" class="border-b border-slate-200 bg-white">
-      <div class="container-x py-20 sm:py-24">
-        <div class="max-w-2xl">
-          <p class="eyebrow">Capabilities</p>
-          <h2 class="h2 mt-3">The operations we compose</h2>
-          <p class="lede mt-4">
-            A pipeline is assembled from these stages, in the order your documents need and with
-            your rules at each step. Few projects use all of them; none use only one.
-          </p>
-        </div>
-
-        <div
-          class="mt-12 grid gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {
-            capabilities.map((c) => (
-              <div class="bg-white p-7 transition hover:bg-brand-50/40">
-                <span class="icon-tile">
-                  <Icon name={c.icon} class="h-5 w-5" />
-                </span>
-                <h3 class="mt-5 font-display text-[15px] font-semibold text-slate-900">
-                  {c.title}
-                </h3>
-                <p class="mt-2 text-sm leading-relaxed text-slate-600">{c.body}</p>
-              </div>
-            ))
-          }
-
-          <!-- Fills the last row, and doubles as the prompt to ask. -->
-          <div class="flex flex-col justify-center bg-white p-7 sm:col-span-2">
-            <p class="font-display text-[15px] font-semibold text-slate-900">
-              Something not on this list?
-            </p>
-            <p class="mt-2 text-sm leading-relaxed text-slate-600">
-              It is usually still a pipeline stage. Tell us what the documents need to do and we
-              will say plainly whether it is something we build.
-            </p>
-            <a href="#contact" class="mt-4 text-sm font-semibold text-brand-600 hover:underline"
-              >Ask us →</a
+          <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm sm:mt-9">
+            <a href="mailto:zameer@xadlabs.com" class="btn btn-primary">Start a conversation</a>
+            <a
+              href="mailto:zameer@xadlabs.com"
+              class="hidden font-medium text-slate-600 transition hover:text-brand-600 sm:inline"
+              >zameer@xadlabs.com</a
             >
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ================= ARCHITECTURE ================= -->
-    <section id="architecture" class="border-b border-slate-200 bg-mist">
-      <div class="container-x py-20 sm:py-24">
-        <div class="max-w-2xl">
-          <p class="eyebrow">Architecture</p>
-          <h2 class="h2 mt-3">What a run of millions actually looks like</h2>
-          <p class="lede mt-4">
-            Throughput is the easy half. The hard half is what happens when a run is four days long,
-            part of the corpus fails, and the whole thing has to be answerable afterwards.
-          </p>
-        </div>
+        <!-- Portfolio -->
+        <div>
+          <p class="eyebrow">Our platform</p>
 
-        <div class="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
-          {
-            principles.map((p) => (
-              <div>
-                <span class="inline-flex text-brand-600">
-                  <Icon name={p.icon} class="h-5 w-5" />
-                </span>
-                <h3 class="mt-3 font-display text-[15px] font-semibold text-slate-900">
-                  {p.title}
-                </h3>
-                <p class="mt-2 text-sm leading-relaxed text-slate-600">{p.body}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= PROCESS ================= -->
-    <section id="process" class="border-b border-slate-200 bg-white">
-      <div class="container-x py-20 sm:py-24">
-        <div class="max-w-2xl">
-          <p class="eyebrow">How it works</p>
-          <h2 class="h2 mt-3">Four steps, and you can stop after any of them</h2>
-          <p class="lede mt-4">
-            Nobody should commit a million-document archive to a supplier they have not seen work.
-            Each step is priced and useful on its own.
-          </p>
-        </div>
-
-        <ol class="mt-12 grid gap-6 lg:grid-cols-4">
-          {
-            steps.map((s) => (
-              <li class="card p-7">
-                <span class="font-mono text-xs font-medium text-brand-500">{s.n}</span>
-                <h3 class="mt-3 font-display text-lg font-semibold text-slate-900">{s.title}</h3>
-                <p class="mt-1.5 font-mono text-[11px] uppercase tracking-wider text-slate-400">
-                  {s.meta}
-                </p>
-                <p class="mt-3.5 text-sm leading-relaxed text-slate-600">{s.body}</p>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-    </section>
-
-    <!-- ================= PRICING ================= -->
-    <section id="pricing" class="border-b border-slate-200 bg-mist">
-      <div class="container-x py-20 sm:py-24">
-        <div class="max-w-2xl">
-          <p class="eyebrow">Pricing</p>
-          <h2 class="h2 mt-3">Priced per corpus, not per seat</h2>
-          <p class="lede mt-4">
-            Every archive is a different amount of work, so the production figure comes after the
-            report — not before it. What does not change is that the first step is free.
-          </p>
-        </div>
-
-        <div class="mt-12 grid gap-6 lg:grid-cols-3">
-          {
-            pricing.map((p) => (
-              <div class={`card flex h-full flex-col bg-white p-8 ${p.featured ? 'ring-1 ring-brand-300' : ''}`}>
-                {p.featured && (
-                  <span class="mb-4 inline-flex rounded-full bg-brand-50 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-brand-700">
-                    Most projects start here
-                  </span>
-                )}
-                <h3 class="font-display text-lg font-semibold text-slate-900">{p.name}</h3>
-                <p class="mt-4 font-serif text-[2rem] leading-none text-slate-900">{p.price}</p>
-                <p class="mt-2 text-xs text-slate-500">{p.note}</p>
-                <p class="mt-5 text-sm leading-relaxed text-slate-600">{p.desc}</p>
-                <ul class="mt-6 flex-1 space-y-2.5 border-t border-slate-200 pt-6">
-                  {p.points.map((pt) => (
-                    <li class="flex gap-2.5 text-sm text-slate-600">
-                      <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
-                      {pt}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={p.cta.href}
-                  class={`btn mt-7 w-full ${p.featured ? 'btn-primary' : 'btn-ghost'}`}
-                >
-                  {p.cta.label}
-                </a>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= PODPDF ================= -->
-    <section class="border-b border-slate-200 bg-white">
-      <div class="container-x py-16 sm:py-20">
-        <div
-          class="card flex flex-col items-start justify-between gap-6 p-8 sm:flex-row sm:items-center sm:p-10"
-        >
-          <div class="max-w-2xl">
-            <p class="eyebrow">Self-serve</p>
-            <h2 class="mt-3 font-serif text-[1.75rem] leading-tight text-slate-900">
-              Not a pipeline project yet?
-            </h2>
-            <p class="mt-3 text-[15px] leading-relaxed text-slate-600">
-              PodPDF is our own product and the same engine underneath: a REST API and web app for
-              generating, converting, merging and editing PDFs, at $0.01 per document with credits
-              that never expire. Start there, and talk to us when the volume outgrows it.
-            </p>
-          </div>
           <a
             href="https://podpdf.com"
             target="_blank"
             rel="noopener"
-            class="btn btn-ghost shrink-0">Visit podpdf.com ↗</a
+            class="card card-hover mt-3 block p-5 sm:mt-4 sm:p-7"
           >
+            <div class="flex items-baseline justify-between gap-4">
+              <p class="font-display text-xl font-semibold text-slate-900">PodPDF</p>
+              <span class="shrink-0 text-sm font-medium text-brand-600">podpdf.com ↗</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
+              A REST API and web app for generating, converting, merging and editing PDFs — built,
+              run and scaled by us.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2 border-t border-slate-200 pt-4 sm:mt-5 sm:pt-5">
+              <span class="chip">REST API</span>
+              <span class="chip">Templates</span>
+              <span class="chip">Bulk jobs</span>
+              <span class="chip">$0.01 / PDF</span>
+            </div>
+          </a>
         </div>
       </div>
-    </section>
+    </main>
 
-    <!-- ================= CONTACT ================= -->
-    <section id="contact" class="border-b border-slate-200 bg-white">
-      <div class="container-x py-20 sm:py-24">
-        <div class="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
-          <div class="max-w-xl">
-            <p class="eyebrow">Get in touch</p>
-            <h2 class="h2 mt-3">Tell us what is in the archive</h2>
-            <p class="lede mt-4">
-              A rough file count and a sentence about what needs to happen to them is enough to
-              start. We will tell you quickly whether this is a project for us.
-            </p>
-            <p class="mt-5 text-sm text-slate-600">
-              Direct:
-              <a href="mailto:zameer@xadlabs.com" class="font-medium text-brand-600 hover:underline"
-                >zameer@xadlabs.com</a
-              >
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-3">
-            <a href={mailto} class="btn btn-primary">Request a corpus report</a>
-            <a href={mailtoProject} class="btn btn-ghost">Discuss a project</a>
-          </div>
-        </div>
+    <footer class="container-x relative shrink-0 border-t border-slate-200 py-5 sm:py-6">
+      <div
+        class="flex flex-col items-start justify-between gap-3 text-sm text-slate-500 sm:flex-row sm:items-center"
+      >
+        <p>
+          Founded by <strong class="font-semibold text-slate-700">Mohammed Zameer</strong> ·
+          <a
+            href="https://www.linkedin.com/in/zameermfm/"
+            target="_blank"
+            rel="noopener"
+            class="transition hover:text-brand-600">LinkedIn ↗</a
+          >
+        </p>
+        <p class="font-mono text-xs">&copy; {year} XAD Labs</p>
       </div>
-    </section>
-  </main>
-
-  <Footer />
+    </footer>
+  </div>
 </Base>

@@ -7,10 +7,43 @@ interface Props {
 }
 
 const {
-  title = 'XAD Labs — Custom PDF processing pipelines at scale',
+  title = 'XAD Labs — PDF generation at scale',
   description =
-    'XAD Labs designs, builds and operates custom document processing pipelines — from ten thousand PDFs to several million. Start with a free corpus report on your own archive. The team behind PodPDF.',
+    'XAD Labs builds and operates the document infrastructure behind high-volume PDF generation — from thousands of documents to several million. Makers of PodPDF. Colombo, Sri Lanka.',
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://xadlabs.com').href;
+
+// Organization markup, so search engines read the company, its platform and
+// its founder rather than inferring them from the page copy.
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'XAD Labs',
+  url: 'https://xadlabs.com',
+  description:
+    'XAD Labs builds and operates the document infrastructure behind high-volume PDF generation, from thousands of documents to several million.',
+  email: 'zameer@xadlabs.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Colombo',
+    addressCountry: 'LK',
+  },
+  founder: {
+    '@type': 'Person',
+    name: 'Mohammed Zameer',
+    sameAs: 'https://www.linkedin.com/in/zameermfm/',
+  },
+  sameAs: ['https://podpdf.com', 'https://www.linkedin.com/in/zameermfm/'],
+  makesOffer: {
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: 'High-volume PDF generation and document processing pipelines',
+      serviceType: 'Document processing',
+    },
+  },
+};
 ---
 
 <!doctype html>
@@ -23,14 +56,17 @@ const {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow" />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://xadlabs.com" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="XAD Labs" />
+    <meta property="og:locale" content="en" />
 
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
@@ -42,6 +78,8 @@ const {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap"
     />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema)}></script>
   </head>
   <body>
     <slot />

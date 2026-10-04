@@ -28,18 +28,22 @@ output directory `dist`.
 
 ## Structure
 
+The public site is a **single-view page** — one screen, no scrolling, at
+`src/pages/index.astro`. It introduces the company, carries PodPDF as the
+portfolio piece, and names the founder. Everything else is archived.
+
 ```
 src/
-  layouts/Base.astro        # HTML shell, fonts, meta
-  components/Nav.astro      # sticky nav; variant="overlay" for dark-hero pages
-  components/Footer.astro   # site footer
+  layouts/Base.astro        # HTML shell, fonts, SEO meta, Organization JSON-LD
   components/Logo.astro     # wordmark; tone="light" for dark grounds
+  components/Nav.astro      # used only by archived pages
+  components/Footer.astro   # used only by archived pages
   components/Icon.astro     # inline line-icon set
-  pages/index.astro         # the landing page — all sections live here
-  pages/about.astro         # longer company / founder page
+  pages/index.astro         # the live single-view page
   styles/global.css         # tailwind entry + design-system component classes
-  content/blog/             # article route (/blog/<slug>), unlinked from nav
+  content/blog/             # article route (/blog/<slug>), unlinked
 public/                     # favicon, logo
+docs/pdf-use-cases.md       # what we do and do not offer
 tailwind.config.mjs         # brand palette (brand / slate / mist) + fonts
 ```
 
@@ -47,37 +51,32 @@ tailwind.config.mjs         # brand palette (brand / slate / mist) + fonts
 
 - **Palette** — white and `mist` grounds, a light-blue `brand` scale for
   accents, a cool-grey `slate` scale for text and borders. Legacy `ink` /
-  `accent` / `spark` tokens are kept only so the archived pages still compile.
+  `accent` / `spark` tokens are kept only so the archived pages compile.
 - **Type** — Source Serif 4 for headlines (`font-serif`, the `.h2` class),
   Inter for everything structural, JetBrains Mono for eyebrows and metadata.
-- **Hero** — dark blue ground (`.hero-ground`) with the nav overlaid on top.
-  Pages that open with it pass `variant="overlay"` to `Nav` and add `pt-16`
-  to the hero section; the nav turns solid white once the page is scrolled.
 - No scroll animations, by design.
 
-## Editing content
+### Keeping the page to one view
 
-Everything on the landing page is driven by arrays at the top of
-`src/pages/index.astro`: `strip`, `runStages`, `useCases`,
-`reportFindings`, `capabilities`, `principles`, `steps` and `pricing`. Edit those rather than
-the markup.
-
-What we do and do not offer is tracked in
-[`docs/pdf-use-cases.md`](docs/pdf-use-cases.md) — keep the `capabilities`
-array and that document in step.
-
-**Placeholders to fill in:** bracketed values such as `[fixed fee]`,
-`[quoted]`, `[turnaround]` and `[duration]` in the `pricing` and `steps`
-arrays.
+It fits exactly one viewport at both desktop and 375x812. If you add content,
+re-check `document.documentElement.scrollHeight` against `window.innerHeight`
+at both sizes. On phones the service chips and the standalone email link are
+hidden (`hidden sm:flex` / `hidden sm:inline`) to buy the room — that is what
+keeps it fitting, so removing those classes will reintroduce scrolling.
 
 ## Archived
 
-The previous simulation/games site is kept but unrouted (Astro ignores
+Earlier versions of the site are kept but unrouted (Astro ignores
 `src/pages/` files prefixed with `_`):
 
-- `src/pages/_legacy-dryrun.astro` — the old Dry Run landing page
-- `src/pages/_legacy-about.astro` — the old about page
-- `src/components/diagrams/`, `src/components/GameCard.astro` — used by those
+- `_legacy-pipelines.astro` / `_legacy-pipelines-about.astro` — the
+  document-processing pipelines site (use cases, capabilities, architecture,
+  pricing). The fullest version of the business written down.
+- `_legacy-dryrun.astro` / `_legacy-about.astro` — the original simulation
+  and games studio site.
+- `src/components/diagrams/`, `src/components/GameCard.astro` — used by those.
+
+To bring one back, rename it to `index.astro` (and `about.astro`).
 
 ## Contact
 
